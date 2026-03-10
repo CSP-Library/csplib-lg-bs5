@@ -1,2 +1,33 @@
-body {
+@import url("https://fonts.googleapis.com/css?family=Merriweather+Sans:300,400,700&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Oswald&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Sorts+Mill+Goudy&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Material+Icons&display=swap");
+
+/*** BRANDING AREA ***/
+/* logo image */
+#library-logo img {
+    max-width: 100px;
+}
+
+/* text */
+#link-to-home {
+    font-family: "Oswald", sans-serif;
+}
+
+/* text hover */
+#link-to-home:hover {
+    text-decoration: none;
+    border-bottom: 4px solid #e6b220;
+}
+
+/* "Library" */
+#library-text {
+    font-size: 3em;
+    color: #003055;
+}
+
+/* "and Academic Support Services" */
+#library-text-small {
+    font-size: 2em;
+    color: #393939;
 }
