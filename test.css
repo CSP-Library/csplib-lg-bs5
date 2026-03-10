@@ -3,6 +3,10 @@
 @import url("https://fonts.googleapis.com/css?family=Sorts+Mill+Goudy&display=swap");
 @import url("https://fonts.googleapis.com/css?family=Material+Icons&display=swap");
 
+#site-header-content {
+    margin-bottom: 20px;
+}
+
 /*** BRANDING AREA ***/
 /* logo image */
 #library-logo img {
