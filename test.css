@@ -1,13 +1,36 @@
+/* FONTS */
+
 @import url("https://fonts.googleapis.com/css?family=Merriweather+Sans:300,400,700&display=swap");
 @import url("https://fonts.googleapis.com/css?family=Oswald&display=swap");
 @import url("https://fonts.googleapis.com/css?family=Sorts+Mill+Goudy&display=swap");
 @import url("https://fonts.googleapis.com/css?family=Material+Icons&display=swap");
 
+/* COLORS */
+
+:root {
+    --csp-blue: #003055;
+    --csp-blue-80: #1a496d;
+    --csp-blue-60: #4a6889;
+    --csp-blue-40: #7a8faa;
+    --csp-blue-20: #b3bdce;
+
+    --csp-gold: #e6b222;
+    --csp-gold-80: #eabe51;
+    --csp-gold-60: #efcc7d;
+    --csp-gold-40: #f4dba4;
+    --csp-gold-20: #f9ebce;
+
+    --csp-gray: #e1e8ec;
+}
+
+/* TEMPORART WEIRDNESS */
+
 #site-header-content {
     margin-bottom: 20px;
 }
 
-/*** BRANDING AREA ***/
+/* HEADER */
+
 /* logo image */
 #library-logo img {
     max-width: 100px;
@@ -34,4 +57,10 @@
 #library-text-small {
     font-size: 2.5em;
     color: #393939;
+}
+
+/* NAVIGATION */
+
+#nav-container {
+    background-color: var(--csp-blue);
 }
