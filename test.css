@@ -59,8 +59,53 @@
     color: #393939;
 }
 
-/* NAVIGATION */
+/* NAVIGATION MENU */
 
-.csp-lib-nav {
-    background-color: var(--csp-blue);
+/* Mega menu — anchors to the nav, spans full container width */
+.mega-menu {
+    width: 100%;
+    left: 0;
+    right: 0;
+    padding: 1.25rem 1.5rem;
+    transform: none;
+}
+
+/* Key fix: escape the li positioning context so the
+   dropdown anchors to the nav instead */
+.nav-item.dropdown-fullwidth {
+    position: static;
+}
+
+/* Mega menu column headers */
+.mega-menu .col-header {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: #6c757d;
+    margin-bottom: 0.5rem;
+    padding-bottom: 0.4rem;
+    border-bottom: 1px solid #dee2e6;
+}
+
+/* Mega menu items */
+.mega-menu .dropdown-item {
+    font-size: 13.5px;
+    padding: 0.3rem 0.5rem;
+    border-radius: 4px;
+    white-space: normal;
+}
+
+/* Mobile: stack mega menu columns */
+@media (max-width: 991.98px) {
+    .mega-menu {
+        width: 100%;
+        padding: 0.75rem 1rem;
+    }
+    .mega-menu .mega-col {
+        margin-bottom: 1rem;
+    }
+    .mega-menu .col-header {
+        margin-top: 0.5rem;
+    }
 }
