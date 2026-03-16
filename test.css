@@ -61,6 +61,6 @@
 
 /* NAVIGATION */
 
-#nav-container {
+.csp-lib-nav {
     background-color: var(--csp-blue);
 }
