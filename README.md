@@ -49,11 +49,7 @@ csp-library-website/
 │   ├── libguides-4-footer-html.html    → Admin → Look & Feel → Header & Footer → Footer
 │   └── libguides-5-homepage-content.html → Homepage guide → individual content boxes
 │
-├── reference/                          # Standalone mockup/exploration files (not deployed)
-│   ├── csp-homepage-global-style.html  # Full-page source of truth — open in browser to preview
-│   ├── csp-subsite-nav-pattern2.html   # Subsite navigation pattern mockup
-│   ├── csp-brand-comparison.html       # Brand treatment options A / B / C comparison
-│   └── csp-library-nav-bs5.html        # Standalone nav-only component mockup
+├── working/                          # Various working and reference files
 │
 └── images/                             # Web-optimized image assets
     ├── csp-library-hero.jpg            # Homepage hero (1800×1200px, ~496KB)
