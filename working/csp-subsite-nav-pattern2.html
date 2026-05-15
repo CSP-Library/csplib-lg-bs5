@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSP Library — Pattern 2 Subsite Nav Mock-up</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+        crossorigin="anonymous">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+        rel="stylesheet">
+
+  <style>
+    /* ─────────────────────────────────────────────────────────────────
+       SHARED BRAND TOKENS
+    ───────────────────────────────────────────────────────────────── */
+    :root {
+      --csp-navy:        #003055;
+      --csp-navy-80:     #1A496D;
+      --csp-navy-60:     #4A6889;
+      --csp-navy-40:     #7A8FAA;
+      --csp-navy-20:     #B3BDCE;
+      --csp-gold:        #E6B222;
+      --csp-gold-hover:  #c99c1a;
+      --csp-gold-light:  #F9EBCE;
+      --csp-gold-mid:    #EFCC7D;
+      --csp-teal:        #00A9A3;
+      --csp-teal-light:  #e0f6f5;
+      --csp-teal-hover:  #007f7b;
+      --csp-gray-light:  #E1E8EC;
+      --csp-nav-height:  60px;
+      --csp-sub-height:  56px;
+      --csp-ease:        cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    body { background: var(--csp-gray-light); font-family: system-ui, -apple-system, sans-serif; margin: 0; }
+
+    /* ─────────────────────────────────────────────────────────────────
+       DEMO SCAFFOLD
+    ───────────────────────────────────────────────────────────────── */
+    .demo-label {
+      font-size: .68rem; font-weight: 700; letter-spacing: .1em;
+      text-transform: uppercase; color: var(--csp-navy-60);
+      padding: 32px 0 10px;
+    }
+    .demo-label span { background: var(--csp-gray-light); padding-right: 12px; }
+    .demo-rule { border-top: 1px solid var(--csp-navy-20); }
+    .demo-stub {
+      background: #fff; border: 1px solid rgba(0,0,0,.08); border-top: none;
+      padding: 28px 32px 36px;
+    }
+    .demo-stub h2 { font-size: 1.4rem; font-weight: 700; color: var(--csp-navy); margin-bottom: .4rem; }
+    .demo-stub p  { color: #555; max-width: 54ch; line-height: 1.7; font-size: .9rem; margin: 0; }
+
+    /* ─────────────────────────────────────────────────────────────────
+       PARENT NAV REFERENCE (condensed)
+    ───────────────────────────────────────────────────────────────── */
+    .csp-parent-nav {
+      background: #fff; border-bottom: 1px solid rgba(0,0,0,.09);
+      height: var(--csp-nav-height); display: flex; align-items: center;
+      box-shadow: 0 2px 12px rgba(0,0,0,.07);
+    }
+    .csp-parent-brand { display: flex; align-items: center; gap: 10px; text-decoration: none; flex-shrink: 0; }
+    .csp-parent-brand img { height: 32px; }
+    .csp-parent-brand-text {
+      font-family: Georgia, serif; font-size: .68rem; font-weight: 700;
+      letter-spacing: .06em; text-transform: uppercase; line-height: 1.25; color: var(--csp-navy);
+    }
+    .csp-parent-links { display: flex; align-items: center; margin-left: auto; }
+    .csp-parent-link {
+      font-size: 1rem; font-weight: 600; color: #222; text-decoration: none;
+      padding: 0 13px; height: var(--csp-nav-height); display: flex; align-items: center;
+      border-bottom: 2px solid transparent; transition: color .15s, border-color .15s;
+    }
+    .csp-parent-link:hover { color: var(--csp-navy); border-bottom-color: var(--csp-gold); }
+    .csp-btn-ghost-sm {
+      font-size: .78rem; font-weight: 600; padding: 5px 11px; margin-left: 8px;
+      border: 1.5px solid var(--csp-navy-20); border-radius: 6px;
+      color: var(--csp-navy); text-decoration: none; white-space: nowrap;
+      display: inline-flex; align-items: center; gap: 5px;
+      transition: background .15s, border-color .15s;
+    }
+    .csp-btn-ghost-sm:hover { background: var(--csp-gray-light); border-color: var(--csp-navy-80); color: var(--csp-navy); }
+    .csp-btn-gold-sm {
+      font-size: .78rem; font-weight: 600; padding: 5px 11px; margin-left: 6px;
+      background: var(--csp-gold); border: 1.5px solid transparent; border-radius: 6px;
+      color: var(--csp-navy); text-decoration: none; white-space: nowrap;
+      display: inline-flex; align-items: center; gap: 5px; transition: background .15s;
+    }
+    .csp-btn-gold-sm:hover { background: var(--csp-gold-hover); }
+
+    /* ─────────────────────────────────────────────────────────────────
+       SUBSITE NAV SHELL
+    ───────────────────────────────────────────────────────────────── */
+    .csp-subsite-nav {
+      background: #fff;
+      border-bottom: 1px solid rgba(0,0,0,.09);
+      box-shadow: 0 2px 12px rgba(0,0,0,.06);
+    }
+
+    /* Top row — always visible */
+    .csp-sub-toprow {
+      display: flex; align-items: center;
+      height: var(--csp-sub-height); gap: 0;
+    }
+
+    /* ── Parent crumb ───────────────────────────────────────────── */
+    .csp-crumb {
+      display: flex; align-items: center; gap: 6px;
+      padding-right: 18px; margin-right: 18px;
+      border-right: 1px solid rgba(0,0,0,.1);
+      text-decoration: none; flex-shrink: 0;
+    }
+    .csp-crumb-chevron {
+      color: var(--csp-navy-40); font-size: .8rem;
+      transition: transform .2s var(--csp-ease), color .15s;
+    }
+    .csp-crumb:hover .csp-crumb-chevron { transform: translateX(-3px); color: var(--csp-navy); }
+    .csp-crumb-logo { height: 22px; opacity: .6; transition: opacity .15s; }
+    .csp-crumb:hover .csp-crumb-logo { opacity: 1; }
+    .csp-crumb-label {
+      font-size: .72rem; font-weight: 600; letter-spacing: .04em;
+      color: var(--csp-navy-60); white-space: nowrap; transition: color .15s;
+    }
+    .csp-crumb:hover .csp-crumb-label { color: var(--csp-navy); }
+
+    /* ── Subsite identity ───────────────────────────────────────── */
+    .csp-sub-identity { display: flex; align-items: center; gap: 9px; flex-shrink: 0; }
+    .csp-sub-icon {
+      width: 28px; height: 28px; border-radius: 7px; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center; font-size: .95rem;
+    }
+    .csp-sub-name {
+      font-size: .9375rem; font-weight: 700; color: var(--csp-navy);
+      letter-spacing: -.01em; white-space: nowrap;
+    }
+
+    /* ── Mobile toggle ──────────────────────────────────────────── */
+    .csp-sub-toggle {
+      display: none;
+      margin-left: auto;
+      background: none; border: 1px solid var(--csp-navy-20);
+      border-radius: 6px; padding: 5px 9px; cursor: pointer;
+      color: var(--csp-navy); font-size: 1.1rem; line-height: 1;
+      transition: background .15s;
+    }
+    .csp-sub-toggle:hover { background: var(--csp-gray-light); }
+    .csp-sub-toggle[aria-expanded="true"]  .icon-open  { display: none; }
+    .csp-sub-toggle[aria-expanded="false"] .icon-close { display: none; }
+
+    /* ── Desktop: right cluster (links + CTA) ───────────────────── */
+    .csp-sub-right {
+      display: flex; align-items: stretch; margin-left: auto;
+    }
+    .csp-sub-link {
+      display: flex; align-items: center;
+      padding: 0 12px; font-size: .875rem; font-weight: 500;
+      color: #444; text-decoration: none; white-space: nowrap;
+      border-bottom: 2px solid transparent;
+      transition: color .15s, border-color .15s;
+    }
+    .csp-sub-link:hover { color: var(--csp-navy); border-bottom-color: var(--csp-gold); }
+    .csp-sub-link.is-active { color: var(--csp-navy); font-weight: 600; border-bottom-color: var(--csp-gold); }
+
+    .csp-sub-cta-wrap {
+      display: flex; align-items: center;
+      padding-left: 16px; margin-left: 8px;
+      border-left: 1px solid rgba(0,0,0,.08);
+    }
+    .csp-sub-cta {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: .8rem; font-weight: 700; padding: 6px 13px;
+      border-radius: 6px; text-decoration: none; white-space: nowrap;
+      border: 1.5px solid transparent; transition: background .15s, color .15s;
+    }
+
+    /* ── Mobile collapse panel ──────────────────────────────────── */
+    .csp-sub-collapse {
+      max-height: 0; overflow: hidden;
+      transition: max-height .28s var(--csp-ease);
+      border-top: 0 solid rgba(0,0,0,.07);
+    }
+    .csp-sub-collapse.is-open {
+      max-height: 480px;
+      border-top-width: 1px;
+    }
+    .csp-sub-collapse-inner { padding: 8px 0 14px; }
+
+    .csp-sub-mobile-link {
+      display: flex; align-items: center; gap: 10px;
+      padding: 11px 16px; font-size: .9375rem; font-weight: 500;
+      color: #333; text-decoration: none; border-left: 3px solid transparent;
+      transition: background .12s, color .12s, border-color .12s;
+    }
+    .csp-sub-mobile-link:hover {
+      background: var(--csp-gold-light); color: var(--csp-navy); border-left-color: var(--csp-gold);
+    }
+    .csp-sub-mobile-link.is-active {
+      background: var(--csp-gold-light); color: var(--csp-navy);
+      font-weight: 600; border-left-color: var(--csp-gold);
+    }
+    .csp-sub-mobile-cta {
+      display: flex; align-items: center; gap: 8px;
+      margin: 12px 16px 2px; padding: 11px 16px;
+      font-size: .9rem; font-weight: 700; border-radius: 8px;
+      text-decoration: none; transition: background .15s;
+      border: 1.5px solid transparent;
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       ACCENT VARIANTS
+    ───────────────────────────────────────────────────────────────── */
+    /* Teal — CIC */
+    .accent-teal .csp-sub-icon             { background: var(--csp-teal-light); color: var(--csp-teal); }
+    .accent-teal .csp-sub-cta              { background: var(--csp-teal); color: #fff; }
+    .accent-teal .csp-sub-cta:hover        { background: var(--csp-teal-hover); }
+    .accent-teal .csp-sub-mobile-cta       { background: var(--csp-teal); color: #fff; }
+    .accent-teal .csp-sub-mobile-cta:hover { background: var(--csp-teal-hover); }
+
+    /* Gold — Writing Center */
+    .accent-gold .csp-sub-icon             { background: var(--csp-gold-light); color: #8a6a0d; }
+    .accent-gold .csp-sub-cta              { background: var(--csp-gold); color: var(--csp-navy); }
+    .accent-gold .csp-sub-cta:hover        { background: var(--csp-gold-hover); }
+    .accent-gold .csp-sub-mobile-cta       { background: var(--csp-gold); color: var(--csp-navy); }
+    .accent-gold .csp-sub-mobile-cta:hover { background: var(--csp-gold-hover); }
+
+    /* Navy — Archives */
+    .accent-navy .csp-sub-icon             { background: #dce4ec; color: var(--csp-navy); }
+    .accent-navy .csp-sub-cta              { background: var(--csp-navy); color: #fff; }
+    .accent-navy .csp-sub-cta:hover        { background: var(--csp-navy-80); }
+    .accent-navy .csp-sub-mobile-cta       { background: var(--csp-navy); color: #fff; }
+    .accent-navy .csp-sub-mobile-cta:hover { background: var(--csp-navy-80); }
+
+    /* ─────────────────────────────────────────────────────────────────
+       MOBILE  (≤ 767px)
+    ───────────────────────────────────────────────────────────────── */
+    @media (max-width: 767px) {
+      .csp-sub-toggle  { display: flex; align-items: center; }
+      .csp-sub-right   { display: none; }
+      .csp-sub-name    { font-size: .85rem; overflow: hidden; text-overflow: ellipsis; max-width: 38vw; }
+      .csp-crumb-label { display: none; }
+      .csp-crumb       { padding-right: 12px; margin-right: 12px; }
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       ANNOTATION
+    ───────────────────────────────────────────────────────────────── */
+    .annotation {
+      background: var(--csp-navy); border-radius: 10px; color: #fff;
+      padding: 28px 32px; margin: 48px 0 48px;
+    }
+    .annotation-eyebrow {
+      font-size: .65rem; font-weight: 700; letter-spacing: .1em;
+      text-transform: uppercase; color: var(--csp-gold); margin-bottom: 18px;
+    }
+    .annotation-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 20px 40px;
+      font-size: .875rem; line-height: 1.7; color: rgba(255,255,255,.8);
+    }
+    .annotation-grid h4 { color: #fff; font-size: .875rem; font-weight: 600; margin-bottom: 3px; }
+    code { color: var(--csp-gold-mid); font-size: .82rem; }
+    @media (max-width: 600px) { .annotation-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+
+<body>
+<div class="container py-2">
+
+  <!-- ══════════════════════════════════════════════════════════════
+       ① PARENT NAV — for reference / visual comparison
+  ══════════════════════════════════════════════════════════════════ -->
+  <p class="demo-label"><span>① Parent site — library.csp.edu</span></p>
+  <div class="demo-rule">
+    <nav class="csp-parent-nav" aria-label="Parent site navigation">
+      <div class="container d-flex align-items-center" style="height:100%">
+        <a class="csp-parent-brand" href="https://library.csp.edu/home">
+          <img src="https://libapps.s3.amazonaws.com/customers/955/images/csplib-logo.png" alt="CSP Library">
+          <span class="csp-parent-brand-text d-none d-sm-block">Library &amp; Academic<br>Support Services</span>
+        </a>
+        <nav class="csp-parent-links" aria-label="Primary">
+          <a class="csp-parent-link" href="#">Find Resources <svg style="width:12px;height:12px;margin-left:3px;opacity:.45" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2.5 5l4.5 4.5L11.5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <a class="csp-parent-link" href="#">Services <svg style="width:12px;height:12px;margin-left:3px;opacity:.45" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2.5 5l4.5 4.5L11.5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <a class="csp-parent-link" href="#">About <svg style="width:12px;height:12px;margin-left:3px;opacity:.45" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2.5 5l4.5 4.5L11.5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <a class="csp-btn-ghost-sm" href="#"><i class="bi bi-clock" aria-hidden="true"></i>Hours</a>
+          <a class="csp-btn-gold-sm"  href="#"><i class="bi bi-question-circle" aria-hidden="true"></i>Get Help</a>
+        </nav>
+      </div>
+    </nav>
+    <div class="demo-stub">
+      <h2>Library Home</h2>
+      <p>Parent site — full mega-menu nav with Hours + Get Help CTAs. Users arrive back here via the crumb on any subsite.</p>
+    </div>
+  </div>
+
+
+  <!-- ══════════════════════════════════════════════════════════════
+       ② CIC
+  ══════════════════════════════════════════════════════════════════ -->
+  <p class="demo-label" style="padding-top:36px"><span>② Subsite — Curriculum &amp; Instruction Center</span></p>
+  <div class="demo-rule">
+    <nav class="csp-subsite-nav accent-teal" aria-label="CIC navigation">
+      <div class="container">
+        <div class="csp-sub-toprow">
+
+          <a class="csp-crumb" href="https://library.csp.edu/home" aria-label="Back to CSP Library">
+            <i class="bi bi-chevron-left csp-crumb-chevron" aria-hidden="true"></i>
+            <img class="csp-crumb-logo" src="https://libapps.s3.amazonaws.com/customers/955/images/csplib-logo.png" alt="">
+            <span class="csp-crumb-label">CSP Library</span>
+          </a>
+
+          <div class="csp-sub-identity">
+            <div class="csp-sub-icon"><i class="bi bi-journals" aria-hidden="true"></i></div>
+            <span class="csp-sub-name">Curriculum &amp; Instruction Center</span>
+          </div>
+
+          <button class="csp-sub-toggle"
+                  aria-expanded="false"
+                  aria-controls="cicCollapse"
+                  aria-label="Toggle CIC navigation"
+                  onclick="toggleSubNav(this,'cicCollapse')">
+            <i class="bi bi-list icon-open"  aria-hidden="true"></i>
+            <i class="bi bi-x-lg icon-close" aria-hidden="true"></i>
+          </button>
+
+          <div class="csp-sub-right" role="navigation" aria-label="CIC links">
+            <a class="csp-sub-link is-active" href="#">Home</a>
+            <a class="csp-sub-link" href="#">Resources</a>
+            <a class="csp-sub-link" href="#">Curriculum Standards</a>
+            <a class="csp-sub-link" href="#">Teaching Kits</a>
+            <a class="csp-sub-link" href="#">About CIC</a>
+            <div class="csp-sub-cta-wrap">
+              <a class="csp-sub-cta" href="#">
+                <i class="bi bi-box-arrow-in-down" aria-hidden="true"></i>Request Materials
+              </a>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="csp-sub-collapse" id="cicCollapse" role="navigation" aria-label="CIC mobile menu">
+          <div class="csp-sub-collapse-inner">
+            <a class="csp-sub-mobile-link is-active" href="#">Home</a>
+            <a class="csp-sub-mobile-link" href="#">Resources</a>
+            <a class="csp-sub-mobile-link" href="#">Curriculum Standards</a>
+            <a class="csp-sub-mobile-link" href="#">Teaching Kits</a>
+            <a class="csp-sub-mobile-link" href="#">About CIC</a>
+            <a class="csp-sub-mobile-cta" href="#">
+              <i class="bi bi-box-arrow-in-down" aria-hidden="true"></i>Request Materials
+            </a>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <div class="demo-stub">
+      <h2>Curriculum &amp; Instruction Center</h2>
+      <p>Teal accent. Primary CTA is "Request Materials" — the action that brings most visitors here. On mobile, tap ☰ to see the full nav and CTA.</p>
+    </div>
+  </div>
+
+
+  <!-- ══════════════════════════════════════════════════════════════
+       ③ WRITING CENTER
+  ══════════════════════════════════════════════════════════════════ -->
+  <p class="demo-label" style="padding-top:36px"><span>③ Subsite — Writing Center</span></p>
+  <div class="demo-rule">
+    <nav class="csp-subsite-nav accent-gold" aria-label="Writing Center navigation">
+      <div class="container">
+        <div class="csp-sub-toprow">
+
+          <a class="csp-crumb" href="https://library.csp.edu/home" aria-label="Back to CSP Library">
+            <i class="bi bi-chevron-left csp-crumb-chevron" aria-hidden="true"></i>
+            <img class="csp-crumb-logo" src="https://libapps.s3.amazonaws.com/customers/955/images/csplib-logo.png" alt="">
+            <span class="csp-crumb-label">CSP Library</span>
+          </a>
+
+          <div class="csp-sub-identity">
+            <div class="csp-sub-icon"><i class="bi bi-pencil-square" aria-hidden="true"></i></div>
+            <span class="csp-sub-name">Writing Center</span>
+          </div>
+
+          <button class="csp-sub-toggle"
+                  aria-expanded="false"
+                  aria-controls="writingCollapse"
+                  aria-label="Toggle Writing Center navigation"
+                  onclick="toggleSubNav(this,'writingCollapse')">
+            <i class="bi bi-list icon-open"  aria-hidden="true"></i>
+            <i class="bi bi-x-lg icon-close" aria-hidden="true"></i>
+          </button>
+
+          <div class="csp-sub-right" role="navigation" aria-label="Writing Center links">
+            <a class="csp-sub-link is-active" href="#">Home</a>
+            <a class="csp-sub-link" href="#">Writing Resources</a>
+            <a class="csp-sub-link" href="#">Citation Guides</a>
+            <a class="csp-sub-link" href="#">FAQs</a>
+            <div class="csp-sub-cta-wrap">
+              <a class="csp-sub-cta" href="#">
+                <i class="bi bi-calendar-check" aria-hidden="true"></i>Make an Appointment
+              </a>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="csp-sub-collapse" id="writingCollapse" role="navigation" aria-label="Writing Center mobile menu">
+          <div class="csp-sub-collapse-inner">
+            <a class="csp-sub-mobile-link is-active" href="#">Home</a>
+            <a class="csp-sub-mobile-link" href="#">Writing Resources</a>
+            <a class="csp-sub-mobile-link" href="#">Citation Guides</a>
+            <a class="csp-sub-mobile-link" href="#">FAQs</a>
+            <a class="csp-sub-mobile-cta" href="#">
+              <i class="bi bi-calendar-check" aria-hidden="true"></i>Make an Appointment
+            </a>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <div class="demo-stub">
+      <h2>Writing Center</h2>
+      <p>Gold accent. "Make an Appointment" in gold is unmissable on desktop and anchors the bottom of the mobile panel — exactly where a user's eye lands after scanning the links.</p>
+    </div>
+  </div>
+
+
+  <!-- ══════════════════════════════════════════════════════════════
+       ④ ARCHIVES
+  ══════════════════════════════════════════════════════════════════ -->
+  <p class="demo-label" style="padding-top:36px"><span>④ Subsite — University Archives &amp; Special Collections</span></p>
+  <div class="demo-rule">
+    <nav class="csp-subsite-nav accent-navy" aria-label="Archives navigation">
+      <div class="container">
+        <div class="csp-sub-toprow">
+
+          <a class="csp-crumb" href="https://library.csp.edu/home" aria-label="Back to CSP Library">
+            <i class="bi bi-chevron-left csp-crumb-chevron" aria-hidden="true"></i>
+            <img class="csp-crumb-logo" src="https://libapps.s3.amazonaws.com/customers/955/images/csplib-logo.png" alt="">
+            <span class="csp-crumb-label">CSP Library</span>
+          </a>
+
+          <div class="csp-sub-identity">
+            <div class="csp-sub-icon"><i class="bi bi-archive" aria-hidden="true"></i></div>
+            <span class="csp-sub-name">Archives &amp; Special Collections</span>
+          </div>
+
+          <button class="csp-sub-toggle"
+                  aria-expanded="false"
+                  aria-controls="archivesCollapse"
+                  aria-label="Toggle Archives navigation"
+                  onclick="toggleSubNav(this,'archivesCollapse')">
+            <i class="bi bi-list icon-open"  aria-hidden="true"></i>
+            <i class="bi bi-x-lg icon-close" aria-hidden="true"></i>
+          </button>
+
+          <div class="csp-sub-right" role="navigation" aria-label="Archives links">
+            <a class="csp-sub-link is-active" href="#">Home</a>
+            <a class="csp-sub-link" href="#">Collections</a>
+            <a class="csp-sub-link" href="#">Digital Collections</a>
+            <a class="csp-sub-link" href="#">Research &amp; Reference</a>
+            <a class="csp-sub-link" href="#">Policies</a>
+            <div class="csp-sub-cta-wrap">
+              <a class="csp-sub-cta" href="#">
+                <i class="bi bi-envelope" aria-hidden="true"></i>Contact the Archivist
+              </a>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="csp-sub-collapse" id="archivesCollapse" role="navigation" aria-label="Archives mobile menu">
+          <div class="csp-sub-collapse-inner">
+            <a class="csp-sub-mobile-link is-active" href="#">Home</a>
+            <a class="csp-sub-mobile-link" href="#">Collections</a>
+            <a class="csp-sub-mobile-link" href="#">Digital Collections</a>
+            <a class="csp-sub-mobile-link" href="#">Research &amp; Reference</a>
+            <a class="csp-sub-mobile-link" href="#">Policies</a>
+            <a class="csp-sub-mobile-cta" href="#">
+              <i class="bi bi-envelope" aria-hidden="true"></i>Contact the Archivist
+            </a>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <div class="demo-stub">
+      <h2>University Archives &amp; Special Collections</h2>
+      <p>Navy accent for a formal, archival tone. "Contact the Archivist" sets the right expectation — this isn't a general help desk, it's a specialist.</p>
+    </div>
+  </div>
+
+
+  <!-- ══════════════════════════════════════════════════════════════
+       ANNOTATION
+  ══════════════════════════════════════════════════════════════════ -->
+  <div class="annotation">
+    <p class="annotation-eyebrow">Pattern 2 — implementation notes</p>
+    <div class="annotation-grid">
+      <div>
+        <h4>CTA slot</h4>
+        Each subsite defines its own primary action in one place — the <code>.csp-sub-cta</code> anchor and its matching <code>.csp-sub-mobile-cta</code>. Button color inherits from the accent class automatically — nothing extra to configure per subsite.
+      </div>
+      <div>
+        <h4>Mobile behavior</h4>
+        Below 768px the link cluster hides and a toggle appears. The collapse panel uses a <code>max-height</code> CSS transition (no JS animation needed) and exposes full-width tap targets ≥ 44px. The CTA sits at the bottom of the panel — prominent and thumb-friendly.
+      </div>
+      <div>
+        <h4>Adding a new subsite</h4>
+        Copy any nav block, swap the accent class (<code>accent-teal</code> / <code>accent-gold</code> / <code>accent-navy</code>), update subsite name, icon, links, and CTA text. A fourth accent (e.g. for a Tutoring subsite) is just 5 new CSS rules targeting <code>.accent-purple</code>.
+      </div>
+      <div>
+        <h4>LibGuides placement</h4>
+        The <code>&lt;nav&gt;</code> block goes in each guide group's <strong>Custom Header</strong>. The <code>&lt;style&gt;</code> and <code>&lt;script&gt;</code> live in the system-wide <strong>Custom CSS / JS</strong> fields — one shared copy, no duplication across guide groups.
+      </div>
+    </div>
+  </div>
+
+</div><!-- /container -->
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc4s9bIOgUxi8T/jzmruXF/6bSfM9lMGvX4OdvSGjO4"
+        crossorigin="anonymous"></script>
+
+<script>
+  function toggleSubNav(btn, panelId) {
+    var panel    = document.getElementById(panelId);
+    var expanded = btn.getAttribute('aria-expanded') === 'true';
+    btn.setAttribute('aria-expanded', String(!expanded));
+    panel.classList.toggle('is-open', !expanded);
+  }
+
+  /* Close mobile panels when viewport widens to desktop */
+  window.addEventListener('resize', function () {
+    if (window.innerWidth > 767) {
+      document.querySelectorAll('.csp-sub-collapse').forEach(function (p) {
+        p.classList.remove('is-open');
+      });
+      document.querySelectorAll('.csp-sub-toggle').forEach(function (b) {
+        b.setAttribute('aria-expanded', 'false');
+      });
+    }
+  }, { passive: true });
+</script>
+</body>
+</html>

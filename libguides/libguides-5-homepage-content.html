@@ -1,0 +1,433 @@
+<!-- ═══════════════════════════════════════════════════════════════════
+   CSP LIBRARY — HOMEPAGE GUIDE CONTENT
+   LibGuides: Homepage guide → individual content boxes
+   ═══════════════════════════════════════════════════════════════════
+
+   CHANGES IN THIS VERSION:
+   • Hero: full-width centered search, status tiles removed
+   • Stats bar replaced with AI Research Assistant feature bar
+   • Hero + feature bar wrapped in .s-lg-box-wrapper-hero div
+     (no Box CSS class field needed — wrapper is inside the HTML)
+
+   INSTRUCTIONS — HOW TO USE THIS FILE:
+   ─────────────────────────────────────────────────────────────────
+   PAGE LAYOUT: 1 column, no sidebar (Guide Edit → Layout → 1 column)
+
+   Each section below maps to one LibGuides Rich Text / HTML box.
+   Click the </> source button in the editor and paste the section HTML.
+
+   BOX SETTINGS for all boxes:
+   • Check "Floating Box" — removes default LibGuides border, padding,
+     and title. Do this for every box on this page.
+   • Leave "Draft Mode" unchecked when ready to go live.
+
+   SECTION MAP:
+   ┌──────────────────────────────┬──────────────────────────────────┐
+   │ Section                      │ Internal box name                │
+   ├──────────────────────────────┼──────────────────────────────────┤
+   │ 1. Hero + Feature Bar        │ Homepage Hero                    │
+   │ 2. Core Services             │ Core Services                    │
+   │ 3. Audience selector         │ Research For...                  │
+   │ 4. More at the Library       │ More at the Library              │
+   │ 5. Popular Resources         │ Popular Resources                │
+   │ 6. Library News              │ — use native Blog box —          │
+   │ 7. Upcoming Events           │ — use LibCal Events widget —     │
+   └──────────────────────────────┴──────────────────────────────────┘
+
+   BOX 1 NOTE — FULL-BLEED WRAPPER:
+   The hero and feature bar are wrapped in <div class="s-lg-box-wrapper-hero">
+   inside the HTML itself. This applies the full-bleed CSS escape without
+   needing a CSS class on the box. Make sure "Floating Box" is checked
+   so LibGuides doesn't add borders or padding around the outside.
+
+   RESTORING THE HERO STATUS TILES (hours, chat, tutoring):
+   In Box 1, find the comment "TO RESTORE STATUS TILES" and follow
+   the instructions there. No CSS changes needed.
+
+   SWAPPING THE FEATURE BAR PROMO:
+   In Box 1, replace only the contents of .feature-bar-inner.
+   The shell, layout, and CSS stay the same.
+
+   SECTIONS 6 & 7 — NATIVE LIBGUIDES BOXES:
+   • Library News: Add box → type "Blog" → select your library blog
+   • Upcoming Events: Add box → type "LibCal Events" → configure widget
+   • Place both in a 2-column row, or use a single HTML box with
+     the .news-events-grid wrapper for the side-by-side layout.
+
+   CUSTOM CSS NOTE:
+   All CSS lives in Admin → Look & Feel → Custom JS/CSS → Custom CSS
+   You do NOT need to paste CSS into individual boxes.
+════════════════════════════════════════════════════════════════════ -->
+
+
+<!-- ═══════════════════════════════════════════════════════════════
+     BOX 1: Hero + Feature Bar
+     Settings: Floating Box ✓
+     ═══════════════════════════════════════════════════════════════ -->
+<div class="s-lg-box-wrapper-hero">
+
+<!-- ── HERO ────────────────────────────────────────────────────── -->
+    <section class="hero" aria-labelledby="hero-heading">
+      <div class="hero-bg" aria-hidden="true"></div>
+      <div class="hero-overlay" aria-hidden="true"></div>
+      <div class="hero-inner">
+
+        <!-- Hero: welcome + search (full width — status tiles removed for now) -->
+        <!-- TO RESTORE STATUS TILES: add this inline style to the .hero-inner div above:
+             style="max-width:1200px; display:grid; grid-template-columns:1fr 300px; gap:48px 64px; align-items:start; padding:72px 24px 60px;"
+             then re-add the <aside class="hero-stats"> block after the closing </nav> below. -->
+        <p class="hero-eyebrow">Welcome to the CSP Library</p>
+        <h1 class="hero-heading" id="hero-heading">Start your research.<br>Get the <em>support</em> you need.</h1>
+        <p class="hero-sub">Books, articles, databases, tutoring, and writing support — all in one place for the Concordia community.</p>
+
+        <div class="hero-search-form" role="search" aria-label="OneSearch">
+          <input type="text" id="heroSearch" placeholder="Search books, articles, journals, and more…" aria-label="Search OneSearch">
+          <button type="button" onclick="doSearch()">Search</button>
+        </div>
+
+        <nav class="hero-search-alts" aria-label="Search alternatives">
+          <a class="hero-alt-link" href="https://library.csp.edu/?b=s&group_id=28452">
+            <i class="bi bi-map" aria-hidden="true"></i>Research Guides
+          </a>
+          <span class="hero-alt-sep" aria-hidden="true">·</span>
+          <a class="hero-alt-link" href="https://library.csp.edu/az.php">
+            <i class="bi bi-database" aria-hidden="true"></i>All Databases
+          </a>
+          <span class="hero-alt-sep" aria-hidden="true">·</span>
+          <a class="hero-alt-link" href="https://clic-concordia.primo.exlibrisgroup.com/nde/researchAssistant?vid=01CLIC_CONCORDIA:NDE&lang=en" target="_blank" rel="noopener">
+            <i class="bi bi-stars" aria-hidden="true"></i>AI Research Assistant
+          </a>
+          <span class="hero-alt-sep" aria-hidden="true">·</span>
+          <a class="hero-alt-link" href="https://clic-concordia.primo.exlibrisgroup.com/discovery/account?section=overview&vid=01CLIC_CONCORDIA:CSP">
+            <i class="bi bi-person-circle" aria-hidden="true"></i>My Library Account
+          </a>
+        </nav>
+
+      </div>
+    </section>
+
+
+    <!-- ── FEATURE BAR — AI Research Assistant ──────────────────────
+         TO SWAP THIS PROMO: replace .feature-bar-inner contents only.
+         The .feature-bar shell and CSS are designed to accept any
+         single featured tool, service, or announcement.
+    ─────────────────────────────────────────────────────────────────── -->
+    <div class="feature-bar" role="region" aria-label="Featured tool">
+      <div class="feature-bar-inner">
+
+        <div class="feature-bar-eyebrow">
+          <span class="feature-bar-badge">New</span>
+          AI-Powered Research
+        </div>
+
+        <div class="feature-bar-body">
+          <p class="feature-bar-heading">OneSearch Research Assistant</p>
+          <p class="feature-bar-desc">Ask your research question in plain language — get an AI-generated answer with cited sources drawn directly from the CSP Library collection.</p>
+        </div>
+
+        <a class="feature-bar-cta"
+           href="https://clic-concordia.primo.exlibrisgroup.com/nde/researchAssistant?vid=01CLIC_CONCORDIA:NDE&lang=en"
+           target="_blank" rel="noopener">
+          <i class="bi bi-stars" aria-hidden="true"></i>
+          Try it Now
+          <i class="bi bi-arrow-right" aria-hidden="true"></i>
+        </a>
+
+        <a class="feature-bar-learn"
+           href="https://library.csp.edu/onesearchguide/researchassistant">
+          Learn more
+        </a>
+
+      </div>
+    </div>
+
+</div><!-- /s-lg-box-wrapper-hero -->
+
+
+<!-- ═══════════════════════════════════════════════════════════════
+     BOX 2: Core Services
+     Settings: Floating Box ✓
+     ═══════════════════════════════════════════════════════════════ -->
+<!-- ── CORE SERVICES ───────────────────────────────────────────── -->
+    <section class="section" aria-labelledby="services-heading">
+      <div class="container">
+        <div class="section-header">
+          <p class="section-eyebrow" style="color:var(--csp-navy-60)">How can we help you?</p>
+          <h2 class="section-title" style="color:var(--csp-navy)" id="services-heading">Core Services</h2>
+        </div>
+        <div class="services-grid">
+
+          <!-- Research Assistance -->
+          <article class="service-card" aria-labelledby="service-research">
+            <div class="service-icon icon-teal" aria-hidden="true"><i class="bi bi-chat-dots"></i></div>
+            <h3 class="service-title" id="service-research">Research Assistance</h3>
+            <p class="service-desc">Help finding, evaluating, and citing sources from a professional librarian.</p>
+            <ul class="service-links" role="list">
+              <li>
+                <a href="https://library.csp.edu/chat">
+                  Chat with a librarian
+                  <span class="badge-live">Live now</span>
+                </a>
+              </li>
+              <li>
+                <a href="https://library.csp.edu/about/contact">
+                  Email or call us <i class="bi bi-chevron-right"></i>
+                </a>
+              </li>
+              <li>
+                <a href="https://library.csp.edu/services/appointment">
+                  Schedule an appointment <i class="bi bi-chevron-right"></i>
+                </a>
+              </li>
+            </ul>
+            <a class="service-cta cta-teal" href="https://library.csp.edu/chat">
+              <i class="bi bi-chat-dots" aria-hidden="true"></i>Chat Now — 24/7
+            </a>
+          </article>
+
+          <!-- Tutoring Support -->
+          <article class="service-card" aria-labelledby="service-tutoring">
+            <div class="service-icon icon-gold" aria-hidden="true"><i class="bi bi-mortarboard"></i></div>
+            <h3 class="service-title" id="service-tutoring">Tutoring Support</h3>
+            <p class="service-desc">Course-specific tutoring from peer tutors and Brainfuse's online platform.</p>
+            <ul class="service-links" role="list">
+              <li>
+                <a href="https://library.csp.edu/tutor/brainfuse">
+                  Brainfuse Online Tutoring <i class="bi bi-chevron-right"></i>
+                </a>
+              </li>
+              <li>
+                <a href="https://library.csp.edu/tutor/peer">
+                  Schedule peer tutoring <i class="bi bi-chevron-right"></i>
+                </a>
+              </li>
+              <li>
+                <a href="https://library.csp.edu/students/policies">
+                  Policies &amp; FAQs <i class="bi bi-chevron-right"></i>
+                </a>
+              </li>
+            </ul>
+            <a class="service-cta cta-gold" href="https://library.csp.edu/tutor/brainfuse">
+              <i class="bi bi-laptop" aria-hidden="true"></i>Get Tutoring Help
+            </a>
+          </article>
+
+          <!-- Writing Center -->
+          <article class="service-card" aria-labelledby="service-writing">
+            <div class="service-icon icon-navy" aria-hidden="true"><i class="bi bi-pencil-square"></i></div>
+            <h3 class="service-title" id="service-writing">Writing Center</h3>
+            <p class="service-desc">Support with any writing assignment — from brainstorm to final draft.</p>
+            <ul class="service-links" role="list">
+              <li>
+                <a href="https://library.csp.edu/undergrad-student/appt">
+                  Book an appointment <i class="bi bi-chevron-right"></i>
+                </a>
+              </li>
+              <li>
+                <a href="https://library.csp.edu/citation-guides">
+                  Citation guides <i class="bi bi-chevron-right"></i>
+                </a>
+              </li>
+            </ul>
+            <a class="service-cta cta-navy" href="https://library.csp.edu/undergrad-student/appt">
+              <i class="bi bi-calendar-check" aria-hidden="true"></i>Make an Appointment
+            </a>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    
+<!-- ═══════════════════════════════════════════════════════════════
+     BOX 3: Audience Selector ("I'm a…")
+     Settings: Floating Box ✓
+     Full-bleed: content wrapped in .s-lg-box-wrapper-hero
+     ═══════════════════════════════════════════════════════════════ -->
+<div class="s-lg-box-wrapper-hero">
+<!-- ── AUDIENCE SELECTOR ───────────────────────────────────────── -->
+    <section class="section section-dark" aria-labelledby="audience-heading">
+      <div class="container">
+        <div class="section-header" style="margin-bottom:24px">
+          <p class="section-eyebrow" style="color:var(--csp-gold-mid)">Find resources tailored to you</p>
+          <h2 class="section-title" style="color:#fff" id="audience-heading">I'm a…</h2>
+        </div>
+        <nav class="audience-grid" aria-label="Audience research guides">
+          <a class="audience-item" style="display:inline-flex;align-items:center;gap:9px;padding:12px 22px;font-family:var(--font-display);font-size:.85rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;background:rgba(255,255,255,.07);border:1.5px solid rgba(255,255,255,.12);color:#fff;border-radius:4px;text-decoration:none;" href="https://library.csp.edu/undergraduate">
+            <i class="bi bi-person" aria-hidden="true"></i>Undergraduate Student
+          </a>
+          <a class="audience-item" style="display:inline-flex;align-items:center;gap:9px;padding:12px 22px;font-family:var(--font-display);font-size:.85rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;background:rgba(255,255,255,.07);border:1.5px solid rgba(255,255,255,.12);color:#fff;border-radius:4px;text-decoration:none;" href="https://library.csp.edu/graduate">
+            <i class="bi bi-mortarboard" aria-hidden="true"></i>Graduate Student
+          </a>
+          <a class="audience-item" style="display:inline-flex;align-items:center;gap:9px;padding:12px 22px;font-family:var(--font-display);font-size:.85rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;background:rgba(255,255,255,.07);border:1.5px solid rgba(255,255,255,.12);color:#fff;border-radius:4px;text-decoration:none;" href="https://library.csp.edu/csp-global">
+            <i class="bi bi-globe-americas" aria-hidden="true"></i>CSP Global Student
+          </a>
+          <a class="audience-item" style="display:inline-flex;align-items:center;gap:9px;padding:12px 22px;font-family:var(--font-display);font-size:.85rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;background:rgba(255,255,255,.07);border:1.5px solid rgba(255,255,255,.12);color:#fff;border-radius:4px;text-decoration:none;" href="https://library.csp.edu/faculty">
+            <i class="bi bi-building" aria-hidden="true"></i>Faculty &amp; Instructor
+          </a>
+          <a class="audience-item" style="display:inline-flex;align-items:center;gap:9px;padding:12px 22px;font-family:var(--font-display);font-size:.85rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;background:rgba(255,255,255,.07);border:1.5px solid rgba(255,255,255,.12);color:#fff;border-radius:4px;text-decoration:none;" href="https://library.csp.edu/community-alumni">
+            <i class="bi bi-people" aria-hidden="true"></i>Community or Alumni
+          </a>
+        </nav>
+      </div>
+    </section>
+
+    
+<!-- ═══════════════════════════════════════════════════════════════
+     BOX 4: More at the Library
+     Settings: Floating Box ✓
+     Full-bleed: content wrapped in .s-lg-box-wrapper-hero
+     ═══════════════════════════════════════════════════════════════ -->
+<div class="s-lg-box-wrapper-hero">
+<!-- ── MORE AT THE LIBRARY ─────────────────────────────────────── -->
+    <section class="section" aria-labelledby="more-heading">
+      <div class="container">
+        <div class="section-header">
+          <p class="section-eyebrow" style="color:var(--csp-navy-60)">Also in the Library building</p>
+          <h2 class="section-title" style="color:var(--csp-navy)" id="more-heading">More at the Library</h2>
+        </div>
+        <div class="more-grid">
+
+          <a class="more-card" href="https://library.csp.edu/cic/home">
+            <div class="more-card-bg" style="background-image:url('https://main.dy1n2ifa5qdl6.amplifyapp.com/csp-library-card-cic.jpg')" aria-hidden="true"></div>
+            <div class="more-card-overlay" aria-hidden="true"></div>
+            <div class="more-card-body">
+              <p class="more-card-tag">For teachers &amp; educators</p>
+              <p class="more-card-title">Curriculum &amp; Instruction Center</p>
+              <span class="more-card-link">Explore <i class="bi bi-arrow-right" aria-hidden="true"></i></span>
+            </div>
+          </a>
+
+          <a class="more-card" href="https://library.csp.edu/archives-special-collections">
+            <div class="more-card-bg" style="background-image:url('https://main.dy1n2ifa5qdl6.amplifyapp.com/csp-library-card-archives.jpg')" aria-hidden="true"></div>
+            <div class="more-card-overlay" aria-hidden="true"></div>
+            <div class="more-card-body">
+              <p class="more-card-tag">History &amp; rare materials</p>
+              <p class="more-card-title">University Archives &amp; Special Collections</p>
+              <span class="more-card-link">Explore <i class="bi bi-arrow-right" aria-hidden="true"></i></span>
+            </div>
+          </a>
+
+          <a class="more-card" href="https://www.csp.edu/it-help-desk/" target="_blank" rel="noopener">
+            <div class="more-card-bg" style="background-image:url('https://main.dy1n2ifa5qdl6.amplifyapp.com/csp-library-card-itdesk.jpg')" aria-hidden="true"></div>
+            <div class="more-card-overlay" aria-hidden="true"></div>
+            <div class="more-card-body">
+              <p class="more-card-tag">Technology support</p>
+              <p class="more-card-title">IT Help Desk</p>
+              <span class="more-card-link">Get Support <i class="bi bi-box-arrow-up-right" aria-hidden="true"></i></span>
+            </div>
+          </a>
+
+        </div>
+      </div>
+    </section>
+</div><!-- /s-lg-box-wrapper-hero -->
+</div><!-- /s-lg-box-wrapper-hero -->
+
+<!-- ── POPULAR RESOURCES ──────────────────────────────────────── -->
+    <section class="section section-alt" aria-labelledby="popular-heading">
+      <div class="container">
+        <div class="section-header">
+          <p class="section-eyebrow" style="color:var(--csp-navy-60)">Frequently used</p>
+          <h2 class="section-title" style="color:var(--csp-navy)" id="popular-heading">Popular Resources</h2>
+        </div>
+        <div class="popular-grid">
+          <a class="popular-item" href="https://csp.libanswers.com/search/">
+            <i class="bi bi-question-circle icon-main" aria-hidden="true"></i>
+            <span class="popular-item-text">Frequently Asked Questions</span>
+            <i class="bi bi-chevron-right icon-arrow" aria-hidden="true"></i>
+          </a>
+          <a class="popular-item" href="https://csp.libcal.com/r/search/studyroom">
+            <i class="bi bi-door-open icon-main" aria-hidden="true"></i>
+            <span class="popular-item-text">Reserve a Study Room</span>
+            <i class="bi bi-chevron-right icon-arrow" aria-hidden="true"></i>
+          </a>
+          <a class="popular-item" href="https://library.csp.edu/az.php">
+            <i class="bi bi-database icon-main" aria-hidden="true"></i>
+            <span class="popular-item-text">A–Z Database List</span>
+            <i class="bi bi-chevron-right icon-arrow" aria-hidden="true"></i>
+          </a>
+          <a class="popular-item" href="https://library.csp.edu/citation-guides">
+            <i class="bi bi-quote icon-main" aria-hidden="true"></i>
+            <span class="popular-item-text">Citation Style Guides</span>
+            <i class="bi bi-chevron-right icon-arrow" aria-hidden="true"></i>
+          </a>
+          <a class="popular-item" href="https://library.csp.edu/?b=s&group_id=28452">
+            <i class="bi bi-map icon-main" aria-hidden="true"></i>
+            <span class="popular-item-text">Research Guides</span>
+            <i class="bi bi-chevron-right icon-arrow" aria-hidden="true"></i>
+          </a>
+          <a class="popular-item" href="https://library.csp.edu/brainfuse">
+            <i class="bi bi-laptop icon-main" aria-hidden="true"></i>
+            <span class="popular-item-text">Brainfuse Online Tutoring</span>
+            <i class="bi bi-chevron-right icon-arrow" aria-hidden="true"></i>
+          </a>
+          <a class="popular-item" href="https://csp.libcal.com/hours/" target="_blank" rel="noopener">
+            <i class="bi bi-clock icon-main" aria-hidden="true"></i>
+            <span class="popular-item-text">Hours &amp; Location</span>
+            <i class="bi bi-chevron-right icon-arrow" aria-hidden="true"></i>
+          </a>
+          <a class="popular-item" href="https://www.csp.edu/it-help-desk/" target="_blank" rel="noopener">
+            <i class="bi bi-printer icon-main" aria-hidden="true"></i>
+            <span class="popular-item-text">Printing &amp; Scanning</span>
+            <i class="bi bi-chevron-right icon-arrow" aria-hidden="true"></i>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    
+<!-- ═══════════════════════════════════════════════════════════════
+     BOX 6: News & Events
+     Settings: Floating Box ✓
+     Full-bleed: content wrapped in .s-lg-box-wrapper-hero
+     ═══════════════════════════════════════════════════════════════ -->
+<div class="s-lg-box-wrapper-hero">
+<!-- ── NEWS & EVENTS ──────────────────────────────────────────── -->
+    <section class="section" aria-labelledby="news-heading">
+      <div class="container">
+        <div class="section-header">
+          <p class="section-eyebrow" style="color:var(--csp-navy-60)">Stay connected</p>
+          <h2 class="section-title" style="color:var(--csp-navy)" id="news-heading">News &amp; Events</h2>
+        </div>
+        <div class="news-events-grid">
+
+          <div class="ne-card">
+            <div class="ne-card-header">
+              <h3 class="ne-card-title">Library News &amp; Updates</h3>
+              <a class="ne-card-link" href="https://library.csp.edu/blog">
+                All posts <i class="bi bi-arrow-right" aria-hidden="true"></i>
+              </a>
+            </div>
+            <div class="ne-card-body">
+              <!-- LibGuides blog box renders here in production -->
+              <div class="ne-placeholder">
+                <i class="bi bi-megaphone" aria-hidden="true"></i>
+                <p>Latest news from the library appears here.<br>
+                  <code>s-lib-box: Blog / Recent Posts</code></p>
+              </div>
+            </div>
+          </div>
+
+          <div class="ne-card">
+            <div class="ne-card-header">
+              <h3 class="ne-card-title">Upcoming Events</h3>
+              <a class="ne-card-link" href="https://csp.libcal.com/calendar/library" target="_blank" rel="noopener">
+                View all <i class="bi bi-arrow-right" aria-hidden="true"></i>
+              </a>
+            </div>
+            <div class="ne-card-body">
+              <!-- LibCal event widget renders here in production -->
+              <div class="ne-placeholder">
+                <i class="bi bi-calendar-event" aria-hidden="true"></i>
+                <p>Upcoming library events appear here.<br>
+                  <code>LibCal events widget</code></p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+</div><!-- /s-lg-box-wrapper-hero -->
+

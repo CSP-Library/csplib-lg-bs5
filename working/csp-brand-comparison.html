@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSP Library — Brand Treatment Comparison</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+        crossorigin="anonymous">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+        rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@500;700&display=swap"
+        rel="stylesheet">
+
+  <style>
+    /* ─────────────────────────────────────────────────────────────────
+       SHARED TOKENS
+    ───────────────────────────────────────────────────────────────── */
+    :root {
+      --csp-navy:       #003055;
+      --csp-navy-80:    #1A496D;
+      --csp-navy-60:    #4A6889;
+      --csp-navy-40:    #7A8FAA;
+      --csp-navy-20:    #B3BDCE;
+      --csp-gold:       #E6B222;
+      --csp-gold-hover: #c99c1a;
+      --csp-gold-light: #F9EBCE;
+      --csp-gold-mid:   #EFCC7D;
+      --csp-teal:       #00A9A3;
+      --csp-gray-light: #E1E8EC;
+      --csp-ease:       cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    body {
+      background: #d4dce2;
+      font-family: system-ui, -apple-system, sans-serif;
+      margin: 0;
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       DEMO SCAFFOLD
+    ───────────────────────────────────────────────────────────────── */
+    .demo-intro {
+      max-width: 640px;
+      margin: 0 auto;
+      padding: 40px 24px 32px;
+      text-align: center;
+    }
+    .demo-intro h1 {
+      font-size: 1rem; font-weight: 700; letter-spacing: .08em;
+      text-transform: uppercase; color: var(--csp-navy-60);
+      margin-bottom: 10px;
+    }
+    .demo-intro p {
+      font-size: .9rem; color: #555; line-height: 1.7; margin: 0;
+    }
+
+    .option-wrap {
+      max-width: 1060px;
+      margin: 0 auto 64px;
+      padding: 0 20px;
+    }
+    .option-label {
+      display: flex; align-items: center; gap: 12px;
+      padding: 20px 0 12px;
+    }
+    .option-pill {
+      font-size: .68rem; font-weight: 700; letter-spacing: .1em;
+      text-transform: uppercase; padding: 4px 10px; border-radius: 20px;
+      white-space: nowrap;
+    }
+    .pill-a { background: var(--csp-navy-20); color: var(--csp-navy); }
+    .pill-b { background: var(--csp-gold);    color: var(--csp-navy); }
+    .option-label-text {
+      font-size: .8rem; color: #555; line-height: 1.5;
+    }
+    .option-label-text strong { color: #222; }
+
+    /* Chrome frame around each option */
+    .option-frame {
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 4px 32px rgba(0,0,0,.14), 0 1px 4px rgba(0,0,0,.08);
+    }
+
+    /* Fake page body content beneath the nav */
+    .page-body {
+      background: #f7f5f1;
+      padding: 40px 0 48px;
+    }
+    .search-block {
+      text-align: center;
+      padding: 0 0 36px;
+    }
+    .search-block p {
+      font-size: .7rem; font-weight: 600; letter-spacing: .08em;
+      text-transform: uppercase; color: var(--csp-navy-60);
+      margin-bottom: 10px;
+    }
+    .search-bar {
+      display: flex; max-width: 540px; margin: 0 auto;
+      background: #fff; border: 1.5px solid var(--csp-navy-20);
+      border-radius: 8px; overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,.07);
+    }
+    .search-bar input {
+      flex: 1; border: none; outline: none; padding: 11px 16px;
+      font-size: .9rem; background: transparent; color: #222;
+    }
+    .search-bar button {
+      background: var(--csp-navy); color: #fff; border: none;
+      padding: 0 20px; font-size: .85rem; font-weight: 600; cursor: pointer;
+      transition: background .15s;
+    }
+    .search-bar button:hover { background: var(--csp-navy-80); }
+
+    .cards-row {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+    }
+    .stub-card {
+      background: #fff; border-radius: 8px; padding: 18px 20px;
+      border: 1px solid rgba(0,0,0,.07);
+    }
+    .stub-card-icon {
+      width: 32px; height: 32px; border-radius: 7px; margin-bottom: 12px;
+      display: flex; align-items: center; justify-content: center; font-size: 1rem;
+    }
+    .stub-card h3 { font-size: .875rem; font-weight: 700; color: var(--csp-navy); margin-bottom: 4px; }
+    .stub-card p  { font-size: .8rem; color: #666; line-height: 1.5; margin: 0; }
+
+    /* ─────────────────────────────────────────────────────────────────
+       SHARED NAV SHELL  (used by both options)
+    ───────────────────────────────────────────────────────────────── */
+    .csp-nav {
+      background: #fff;
+      border-bottom: 1px solid rgba(0,0,0,.09);
+      display: flex; align-items: center;
+      box-shadow: 0 2px 12px rgba(0,0,0,.07);
+    }
+    .csp-nav-inner {
+      display: flex; align-items: center; width: 100%;
+      max-width: 1200px; margin: 0 auto; padding: 0 24px;
+    }
+    .csp-nav-link {
+      font-size: 1rem; font-weight: 600; color: #222; text-decoration: none;
+      padding: 0 14px; display: flex; align-items: center; gap: 4px;
+      border-bottom: 2px solid transparent;
+      transition: color .15s, border-color .15s;
+    }
+    .csp-nav-link:hover { color: var(--csp-navy); border-bottom-color: var(--csp-gold); }
+    .csp-btn-ghost {
+      font-size: .78rem; font-weight: 600; padding: 5px 11px; margin-left: 8px;
+      border: 1.5px solid var(--csp-navy-20); border-radius: 6px;
+      color: var(--csp-navy); text-decoration: none; white-space: nowrap;
+      display: inline-flex; align-items: center; gap: 5px;
+    }
+    .csp-btn-gold {
+      font-size: .78rem; font-weight: 600; padding: 5px 11px; margin-left: 6px;
+      background: var(--csp-gold); border: 1.5px solid transparent; border-radius: 6px;
+      color: var(--csp-navy); text-decoration: none; white-space: nowrap;
+      display: inline-flex; align-items: center; gap: 5px;
+    }
+    .caret {
+      width: 12px; height: 12px; opacity: .45; flex-shrink: 0;
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       OPTION A — large brand text inside the nav
+    ───────────────────────────────────────────────────────────────── */
+    .opt-a-nav { height: 72px; }  /* taller to accommodate bigger text */
+
+    .opt-a-brand {
+      display: flex; align-items: center; gap: 14px;
+      text-decoration: none; flex-shrink: 0;
+    }
+    .opt-a-brand img { height: 38px; }
+
+    /* Vertical rule between logo and text */
+    .opt-a-divider {
+      width: 1px; height: 32px; background: var(--csp-navy-20); flex-shrink: 0;
+    }
+
+    .opt-a-brand-text {
+      font-family: 'EB Garamond', Georgia, serif;
+      font-size: 1.2rem;        /* This is the "bigger" the user asked for */
+      font-weight: 700;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+      line-height: 1;
+      color: var(--csp-navy);
+      white-space: nowrap;
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       OPTION B — nav has logo only; identity header below
+    ───────────────────────────────────────────────────────────────── */
+    .opt-b-nav { height: 60px; }
+
+    .opt-b-brand {
+      display: flex; align-items: center; gap: 10px;
+      text-decoration: none; flex-shrink: 0;
+    }
+    .opt-b-brand img { height: 34px; }
+    /* Small "home" label next to logo — just enough to orient, not compete */
+    .opt-b-brand-tag {
+      font-size: .65rem; font-weight: 700; letter-spacing: .09em;
+      text-transform: uppercase; color: var(--csp-navy-40);
+      border-left: 1px solid var(--csp-navy-20);
+      padding-left: 10px; white-space: nowrap;
+    }
+
+    /* Identity header */
+    .identity-header {
+      background: var(--csp-navy);
+      padding: 36px 0 32px;
+      position: relative;
+      overflow: hidden;
+    }
+    /* Subtle geometric texture */
+    .identity-header::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image:
+        repeating-linear-gradient(
+          -45deg,
+          transparent,
+          transparent 40px,
+          rgba(255,255,255,.018) 40px,
+          rgba(255,255,255,.018) 41px
+        );
+      pointer-events: none;
+    }
+    .identity-header-inner {
+      max-width: 1200px; margin: 0 auto; padding: 0 24px;
+      display: flex; align-items: center; gap: 28px;
+      position: relative;
+    }
+    .identity-logo-wrap {
+      flex-shrink: 0;
+    }
+    .identity-logo-wrap img {
+      height: 56px; filter: brightness(0) invert(1); opacity: .95;
+    }
+    .identity-rule {
+      width: 1px; height: 52px; flex-shrink: 0;
+      background: rgba(255,255,255,.2);
+    }
+    .identity-text { flex: 1; }
+    .identity-title {
+      font-family: 'EB Garamond', Georgia, serif;
+      font-size: 1.75rem;
+      font-weight: 700;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      color: #fff;
+      line-height: 1.1;
+      margin: 0 0 5px;
+    }
+    .identity-sub {
+      font-size: .78rem;
+      font-weight: 500;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      color: var(--csp-gold-mid);
+      margin: 0;
+    }
+    /* Gold underline accent beneath title */
+    .identity-title-wrap {
+      display: inline-block;
+      padding-bottom: 8px;
+      border-bottom: 2px solid var(--csp-gold);
+      margin-bottom: 8px;
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       OPTION C — title in nav (moderate size) + welcome hero
+    ───────────────────────────────────────────────────────────────── */
+    .opt-c-nav { height: 68px; }
+    .opt-c-brand {
+      display: flex; align-items: center; gap: 12px;
+      text-decoration: none; flex-shrink: 0;
+    }
+    .opt-c-brand img { height: 36px; }
+    .opt-c-divider { width: 1px; height: 28px; background: var(--csp-navy-20); flex-shrink: 0; }
+    .opt-c-brand-text {
+      font-family: 'EB Garamond', Georgia, serif;
+      font-size: 1rem; font-weight: 700; letter-spacing: .06em;
+      text-transform: uppercase; line-height: 1;
+      color: var(--csp-navy); white-space: nowrap;
+    }
+
+    /* Welcome hero */
+    .welcome-hero { background: var(--csp-navy); position: relative; overflow: hidden; }
+    .welcome-hero::before {
+      content: ''; position: absolute; inset: 0; pointer-events: none;
+      background-image: repeating-linear-gradient(
+        -52deg, transparent, transparent 48px,
+        rgba(255,255,255,.022) 48px, rgba(255,255,255,.022) 49px);
+    }
+    .welcome-hero::after {
+      content: ''; position: absolute; top: 0; left: 0; right: 0;
+      height: 3px; background: var(--csp-gold);
+    }
+    .welcome-inner {
+      max-width: 1200px; margin: 0 auto; padding: 36px 24px 38px;
+      position: relative; display: grid;
+      grid-template-columns: 1fr auto; gap: 24px 48px; align-items: center;
+    }
+    .welcome-eyebrow {
+      font-size: .68rem; font-weight: 700; letter-spacing: .12em;
+      text-transform: uppercase; color: var(--csp-gold-mid); margin: 0 0 8px;
+    }
+    .welcome-title {
+      font-family: 'EB Garamond', Georgia, serif;
+      font-size: 2rem; font-weight: 700; line-height: 1.1;
+      color: #fff; margin: 0 0 20px; letter-spacing: .01em;
+    }
+    .welcome-search {
+      display: flex; max-width: 520px; background: #fff;
+      border-radius: 8px; overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0,0,0,.25);
+    }
+    .welcome-search input {
+      flex: 1; border: none; outline: none; padding: 11px 16px;
+      font-size: .9rem; background: transparent; color: #222;
+    }
+    .welcome-search button {
+      background: var(--csp-gold); color: var(--csp-navy); border: none;
+      padding: 0 22px; font-size: .85rem; font-weight: 700; cursor: pointer;
+      white-space: nowrap; transition: background .15s;
+    }
+    .welcome-search button:hover { background: var(--csp-gold-hover); }
+    .welcome-stats { display: flex; flex-direction: column; gap: 10px; flex-shrink: 0; }
+    .welcome-stat {
+      background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.12);
+      border-radius: 8px; padding: 11px 18px; min-width: 185px;
+    }
+    .welcome-stat-label {
+      font-size: .63rem; font-weight: 700; letter-spacing: .1em;
+      text-transform: uppercase; color: var(--csp-gold-mid); margin: 0 0 2px;
+    }
+    .welcome-stat-value { font-size: .9375rem; font-weight: 600; color: #fff; margin: 0; }
+    .live-dot {
+      display: inline-block; width: 7px; height: 7px; background: #4ade80;
+      border-radius: 50%; margin-right: 6px; vertical-align: middle; position: relative; top: -1px;
+    }
+    @media (max-width: 767px) {
+      .welcome-inner { grid-template-columns: 1fr; }
+      .welcome-stats { flex-direction: row; flex-wrap: wrap; }
+      .welcome-stat  { min-width: 0; flex: 1; }
+      .opt-c-brand-text { display: none; }
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       VERDICT BOX
+    ───────────────────────────────────────────────────────────────── */
+    .verdict {
+      max-width: 1060px; margin: 0 auto 64px; padding: 0 20px;
+    }
+    .verdict-inner {
+      background: var(--csp-navy); border-radius: 10px;
+      padding: 28px 32px; color: #fff;
+    }
+    .verdict-label {
+      font-size: .65rem; font-weight: 700; letter-spacing: .1em;
+      text-transform: uppercase; color: var(--csp-gold); margin-bottom: 16px;
+    }
+    .verdict-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 20px 40px;
+      font-size: .875rem; line-height: 1.7; color: rgba(255,255,255,.8);
+    }
+    .verdict-grid h4 { color: #fff; font-size: .875rem; font-weight: 600; margin-bottom: 3px; }
+    @media (max-width: 600px) { .verdict-grid { grid-template-columns: 1fr; } }
+
+    @media (max-width: 640px) {
+      .cards-row { grid-template-columns: 1fr; }
+      .opt-a-brand-text { font-size: .95rem; }
+      .identity-title { font-size: 1.3rem; }
+      .identity-rule { display: none; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="demo-intro">
+    <h1>Brand Treatment — Two Options</h1>
+    <p>Both use the same nav links, colors, and button pair. The difference is entirely in how the site identity is carried.</p>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════════
+       OPTION A — Brand text inside the nav, scaled up
+  ══════════════════════════════════════════════════════════════════ -->
+  <div class="option-wrap">
+    <div class="option-label">
+      <span class="option-pill pill-a">Option A</span>
+      <span class="option-label-text">
+        <strong>Title stays in the nav bar, scaled up.</strong>
+        Taller nav (72px), serif title beside the logo, vertical rule as separator.
+      </span>
+    </div>
+
+    <div class="option-frame">
+
+      <!-- Nav -->
+      <nav class="csp-nav opt-a-nav" aria-label="Option A navigation">
+        <div class="csp-nav-inner">
+          <a class="opt-a-brand" href="#">
+            <img src="https://libapps.s3.amazonaws.com/customers/955/images/csplib-logo.png" alt="CSP Library">
+            <div class="opt-a-divider" aria-hidden="true"></div>
+            <span class="opt-a-brand-text">Library and Academic Support Services</span>
+          </a>
+          <nav style="display:flex;align-items:center;margin-left:auto;" aria-label="Primary">
+            <a class="csp-nav-link" href="#" style="height:72px">Find Resources <svg class="caret" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2.5 5l4.5 4.5L11.5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+            <a class="csp-nav-link" href="#" style="height:72px">Services <svg class="caret" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2.5 5l4.5 4.5L11.5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+            <a class="csp-nav-link" href="#" style="height:72px">About <svg class="caret" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2.5 5l4.5 4.5L11.5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+            <a class="csp-btn-ghost" href="#"><i class="bi bi-clock" aria-hidden="true"></i>Hours</a>
+            <a class="csp-btn-gold"  href="#"><i class="bi bi-question-circle" aria-hidden="true"></i>Get Help</a>
+          </nav>
+        </div>
+      </nav>
+
+      <!-- Page body stub -->
+      <div class="page-body">
+        <div style="max-width:1200px;margin:0 auto;padding:0 24px;">
+          <div class="search-block">
+            <p>Search the library catalog &amp; databases</p>
+            <div class="search-bar">
+              <input type="text" placeholder="Search books, articles, journals…" aria-label="Search">
+              <button type="button">Search</button>
+            </div>
+          </div>
+          <div class="cards-row">
+            <div class="stub-card">
+              <div class="stub-card-icon" style="background:#e0f6f5;color:#00A9A3;"><i class="bi bi-chat-dots" aria-hidden="true"></i></div>
+              <h3>Research Assistance</h3>
+              <p>Chat, email, or meet with a librarian for help with your research.</p>
+            </div>
+            <div class="stub-card">
+              <div class="stub-card-icon" style="background:#F9EBCE;color:#8a6a0d;"><i class="bi bi-mortarboard" aria-hidden="true"></i></div>
+              <h3>Tutoring Support</h3>
+              <p>Course-specific tutoring, peer appointments, and online support via Brainfuse.</p>
+            </div>
+            <div class="stub-card">
+              <div class="stub-card-icon" style="background:#dce4ec;color:#003055;"><i class="bi bi-pencil-square" aria-hidden="true"></i></div>
+              <h3>Writing Center</h3>
+              <p>Help with any writing assignment, from outline to final draft.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /option-frame -->
+  </div><!-- /option-wrap -->
+
+
+  <!-- ══════════════════════════════════════════════════════════════
+       OPTION B — Logo-only nav + identity header
+  ══════════════════════════════════════════════════════════════════ -->
+  <div class="option-wrap">
+    <div class="option-label">
+      <span class="option-pill pill-b">Option B</span>
+      <span class="option-label-text">
+        <strong>Nav carries logo mark only.</strong>
+        Full site identity lives in a dedicated header below the nav, with room to breathe.
+      </span>
+    </div>
+
+    <div class="option-frame">
+
+      <!-- Nav — compact, logo only -->
+      <nav class="csp-nav opt-b-nav" aria-label="Option B navigation">
+        <div class="csp-nav-inner">
+          <a class="opt-b-brand" href="#">
+            <img src="https://libapps.s3.amazonaws.com/customers/955/images/csplib-logo.png" alt="CSP Library">
+            <span class="opt-b-brand-tag">CSP Library</span>
+          </a>
+          <nav style="display:flex;align-items:center;margin-left:auto;" aria-label="Primary">
+            <a class="csp-nav-link" href="#" style="height:60px">Find Resources <svg class="caret" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2.5 5l4.5 4.5L11.5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+            <a class="csp-nav-link" href="#" style="height:60px">Services <svg class="caret" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2.5 5l4.5 4.5L11.5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+            <a class="csp-nav-link" href="#" style="height:60px">About <svg class="caret" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2.5 5l4.5 4.5L11.5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+            <a class="csp-btn-ghost" href="#"><i class="bi bi-clock" aria-hidden="true"></i>Hours</a>
+            <a class="csp-btn-gold"  href="#"><i class="bi bi-question-circle" aria-hidden="true"></i>Get Help</a>
+          </nav>
+        </div>
+      </nav>
+
+      <!-- Identity header -->
+      <header class="identity-header" role="banner">
+        <div class="identity-header-inner">
+          <div class="identity-logo-wrap">
+            <img src="https://libapps.s3.amazonaws.com/customers/955/images/csplib-logo.png"
+                 alt="CSP Library logo">
+          </div>
+          <div class="identity-rule" aria-hidden="true"></div>
+          <div class="identity-text">
+            <div class="identity-title-wrap">
+              <p class="identity-title">Library and Academic<br>Support Services</p>
+            </div>
+            <p class="identity-sub">Concordia University, St. Paul</p>
+          </div>
+        </div>
+      </header>
+
+      <!-- Page body stub -->
+      <div class="page-body">
+        <div style="max-width:1200px;margin:0 auto;padding:0 24px;">
+          <div class="search-block">
+            <p>Search the library catalog &amp; databases</p>
+            <div class="search-bar">
+              <input type="text" placeholder="Search books, articles, journals…" aria-label="Search">
+              <button type="button">Search</button>
+            </div>
+          </div>
+          <div class="cards-row">
+            <div class="stub-card">
+              <div class="stub-card-icon" style="background:#e0f6f5;color:#00A9A3;"><i class="bi bi-chat-dots" aria-hidden="true"></i></div>
+              <h3>Research Assistance</h3>
+              <p>Chat, email, or meet with a librarian for help with your research.</p>
+            </div>
+            <div class="stub-card">
+              <div class="stub-card-icon" style="background:#F9EBCE;color:#8a6a0d;"><i class="bi bi-mortarboard" aria-hidden="true"></i></div>
+              <h3>Tutoring Support</h3>
+              <p>Course-specific tutoring, peer appointments, and online support via Brainfuse.</p>
+            </div>
+            <div class="stub-card">
+              <div class="stub-card-icon" style="background:#dce4ec;color:#003055;"><i class="bi bi-pencil-square" aria-hidden="true"></i></div>
+              <h3>Writing Center</h3>
+              <p>Help with any writing assignment, from outline to final draft.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /option-frame -->
+  </div><!-- /option-wrap -->
+
+
+  <!-- ══════════════════════════════════════════════════════════════
+       OPTION C — Title in nav + Welcome hero (homepage only)
+  ══════════════════════════════════════════════════════════════════ -->
+  <div class="option-wrap">
+    <div class="option-label">
+      <span class="option-pill" style="background:var(--csp-teal);color:#fff;">Option C</span>
+      <span class="option-label-text">
+        <strong>Title in nav at a readable size + homepage welcome hero.</strong>
+        The nav doesn't need to shout — the hero announces the site. Harvard Library–style.
+      </span>
+    </div>
+
+    <div class="option-frame">
+
+      <!-- Nav — title present but restrained -->
+      <nav class="csp-nav opt-c-nav" aria-label="Option C navigation">
+        <div class="csp-nav-inner">
+          <a class="opt-c-brand" href="#">
+            <img src="https://libapps.s3.amazonaws.com/customers/955/images/csplib-logo.png" alt="CSP Library">
+            <div class="opt-c-divider" aria-hidden="true"></div>
+            <span class="opt-c-brand-text">Library and Academic Support Services</span>
+          </a>
+          <nav style="display:flex;align-items:center;margin-left:auto;" aria-label="Primary">
+            <a class="csp-nav-link" href="#" style="height:68px">Find Resources <svg class="caret" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2.5 5l4.5 4.5L11.5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+            <a class="csp-nav-link" href="#" style="height:68px">Services <svg class="caret" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2.5 5l4.5 4.5L11.5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+            <a class="csp-nav-link" href="#" style="height:68px">About <svg class="caret" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2.5 5l4.5 4.5L11.5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+            <a class="csp-btn-ghost" href="#"><i class="bi bi-clock" aria-hidden="true"></i>Hours</a>
+            <a class="csp-btn-gold"  href="#"><i class="bi bi-question-circle" aria-hidden="true"></i>Get Help</a>
+          </nav>
+        </div>
+      </nav>
+
+      <!-- Welcome hero — homepage only, scrolls away -->
+      <section class="welcome-hero" aria-label="Welcome">
+        <div class="welcome-inner">
+
+          <!-- Left: welcome message + search -->
+          <div>
+            <p class="welcome-eyebrow">Welcome to the CSP Library</p>
+            <h1 class="welcome-title">Start your research.<br>Get the support you need.</h1>
+            <div class="welcome-search" role="search">
+              <input type="text" placeholder="Search books, articles, journals, and more…" aria-label="Search OneSearch">
+              <button type="button">Search</button>
+            </div>
+          </div>
+
+          <!-- Right: at-a-glance quick facts -->
+          <div class="welcome-stats" aria-label="Quick information">
+            <div class="welcome-stat">
+              <p class="welcome-stat-label">Library hours today</p>
+              <p class="welcome-stat-value">
+                <span class="live-dot" aria-hidden="true"></span>Open · 8am – 10pm
+              </p>
+            </div>
+            <div class="welcome-stat">
+              <p class="welcome-stat-label">Research assistance</p>
+              <p class="welcome-stat-value">
+                <span class="live-dot" aria-hidden="true"></span>Chat available now
+              </p>
+            </div>
+            <div class="welcome-stat">
+              <p class="welcome-stat-label">Tutoring support</p>
+              <p class="welcome-stat-value">By appointment · <a href="#" style="color:var(--csp-gold-mid);text-decoration:none;">Schedule →</a></p>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- Page body stub -->
+      <div class="page-body">
+        <div style="max-width:1200px;margin:0 auto;padding:0 24px;">
+          <div class="cards-row" style="margin-top:0">
+            <div class="stub-card">
+              <div class="stub-card-icon" style="background:#e0f6f5;color:#00A9A3;"><i class="bi bi-chat-dots" aria-hidden="true"></i></div>
+              <h3>Research Assistance</h3>
+              <p>Chat, email, or meet with a librarian for help with your research.</p>
+            </div>
+            <div class="stub-card">
+              <div class="stub-card-icon" style="background:#F9EBCE;color:#8a6a0d;"><i class="bi bi-mortarboard" aria-hidden="true"></i></div>
+              <h3>Tutoring Support</h3>
+              <p>Course-specific tutoring, peer appointments, and online support via Brainfuse.</p>
+            </div>
+            <div class="stub-card">
+              <div class="stub-card-icon" style="background:#dce4ec;color:#003055;"><i class="bi bi-pencil-square" aria-hidden="true"></i></div>
+              <h3>Writing Center</h3>
+              <p>Help with any writing assignment, from outline to final draft.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /option-frame -->
+  </div><!-- /option-wrap -->
+
+
+  <!-- ══════════════════════════════════════════════════════════════
+       VERDICT / NOTES  (updated for all three options)
+  ══════════════════════════════════════════════════════════════════ -->
+  <div class="verdict">
+    <div class="verdict-inner">
+      <p class="verdict-label">Tradeoffs at a glance</p>
+      <div class="verdict-grid">
+        <div>
+          <h4>Option A — the problem</h4>
+          Title competes with nav links for horizontal space. At 1280px and below something has to give — truncation, wrapping, or dropped CTAs. The oversized nav is sticky on every page, not just the homepage.
+        </div>
+        <div>
+          <h4>Option B — clean but cold</h4>
+          The nav is the leanest, but without any hero the homepage feels like it jumps straight to utility. Fine for returning power users; less welcoming for a first visit or a student who's never used the library before.
+        </div>
+        <div>
+          <h4>Option C — the best of both</h4>
+          Title stays in the nav at a readable 1rem (not oversized, not invisible). The hero delivers the welcome moment, the search, and at-a-glance status — all homepage-only content that scrolls away. Nav stays compact once you're past the fold.
+        </div>
+        <div>
+          <h4>The hero does real work</h4>
+          That right-side stats column isn't decorative — hours, chat availability, and tutoring status are the three most common reasons students visit the homepage. Surfacing them in the hero means fewer clicks to answer "is the library open right now?"
+        </div>
+        <div>
+          <h4>Subsite consistency</h4>
+          Subsites use the same compact nav as Option C (just swap the title for the crumb + subsite name). The welcome hero is homepage-only. The system stays coherent across all three tiers.
+        </div>
+        <div>
+          <h4>LibGuides implementation</h4>
+          The welcome hero goes in the homepage guide group's <strong>Custom Header</strong> only. The nav is system-wide. Hours and chat status can be live-fetched from LibCal and LibChat APIs to keep the stats current without manual updates.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-YvpcrYf0tY3lHB60NNkmXc4s9bIOgUxi8T/jzmruXF/6bSfM9lMGvX4OdvSGjO4"
+          crossorigin="anonymous"></script>
+</body>
+</html>

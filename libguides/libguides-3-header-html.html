@@ -1,0 +1,168 @@
+<!-- ═══════════════════════════════════════════════════════════════════
+   CSP LIBRARY — SITE-WIDE HEADER
+   LibGuides Admin → System Settings → Look & Feel → Header & Footer → Header
+   ═══════════════════════════════════════════════════════════════════
+
+   INSTRUCTIONS:
+   Paste the entire contents of this file into the Header field (expanding
+   the accordion). Do NOT include this comment block if the field doesn't
+   accept HTML comments — start from the <link> tags below.
+
+   The <link> tags load Bootstrap 5.3, Bootstrap Icons, and Google Fonts.
+   If your Custom CSS @import approach works for icons/fonts, you can
+   remove those <link> tags and keep only the nav HTML.
+
+   This header appears on EVERY page sitewide. The custom CSS rule
+   "#s-lib-public-nav { display:none !important }" in your Custom CSS
+   suppresses the default LibGuides nav on all pages.
+════════════════════════════════════════════════════════════════════ -->
+
+<!-- Bootstrap 5.3 CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous">
+
+<!-- Bootstrap Icons -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+      rel="stylesheet">
+
+<!-- Google Fonts: Barlow Condensed + Barlow -->
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Barlow:wght@400;500;600&display=swap"
+      rel="stylesheet">
+
+<!-- Bootstrap 5.3 JS bundle (includes Popper) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc4s9bIOgUxi8T/jzmruXF/6bSfM9lMGvX4OdvSGjO4"
+        crossorigin="anonymous"></script>
+
+<!-- Accessibility: skip link target -->
+<a class="skip-link" href="#s-lg-guide-main">Skip to main content</a>
+
+<!-- Announcement bar -->
+  <div class="announcement-bar" role="banner" style="display:block">
+    Library summer hours now in effect.
+    <a href="https://csp.libcal.com/hours/">See current hours →</a>
+  </div>
+
+  <!-- Skip link -->
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <!-- Backdrop -->
+  <div class="csp-backdrop" id="cspBackdrop" aria-hidden="true"></div>
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       NAVIGATION
+  ═══════════════════════════════════════════════════════════════════ -->
+  <nav class="csp-navbar navbar navbar-expand-lg" id="cspNavbar" aria-label="Primary navigation">
+    <div class="container">
+
+      <a class="csp-brand" href="https://library.csp.edu/home">
+        <img src="https://libapps.s3.amazonaws.com/customers/955/images/csplib-logo.png" alt="CSP Library" loading="eager">
+        <span class="csp-brand-divider" aria-hidden="true"></span>
+        <span class="csp-brand-text">Library and Academic Support Services</span>
+      </a>
+
+      <button class="navbar-toggler border-0 shadow-none ms-auto me-2"
+              type="button" data-bs-toggle="collapse" data-bs-target="#cspNavCollapse"
+              aria-controls="cspNavCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="cspNavCollapse">
+        <ul class="navbar-nav ms-auto align-items-lg-center" role="list">
+
+          <!-- Find Resources -->
+          <li class="nav-item csp-nav-item" id="cspItemFind" role="listitem">
+            <button class="nav-link csp-nav-link" id="cspTriggerFind"
+                    aria-haspopup="true" aria-expanded="false" aria-controls="cspDropFind" type="button">
+              Find Resources
+              <svg class="csp-caret" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                <path d="M2.5 5l4.5 4.5L11.5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+            <div class="csp-dropdown csp-dropdown-simple" id="cspDropFind" role="region" aria-labelledby="cspTriggerFind">
+              <a class="csp-dropdown-item" href="https://library.csp.edu/find/guides"><i class="bi bi-map"></i>Research Guides</a>
+              <a class="csp-dropdown-item" href="https://library.csp.edu/find/onesearch"><i class="bi bi-search"></i>OneSearch</a>
+              <a class="csp-dropdown-item" href="https://library.csp.edu/find/databases"><i class="bi bi-database"></i>Databases</a>
+              <a class="csp-dropdown-item" href="https://library.csp.edu/find/journals"><i class="bi bi-journal-text"></i>Journals</a>
+              <a class="csp-dropdown-item" href="https://library.csp.edu/find/newspapers"><i class="bi bi-newspaper"></i>Newspapers</a>
+              <a class="csp-dropdown-item" href="https://library.csp.edu/find/ebooks"><i class="bi bi-book"></i>Ebooks</a>
+              <a class="csp-dropdown-item" href="https://library.csp.edu/archives-special-collections"><i class="bi bi-archive"></i>Archives &amp; Special Collections</a>
+            </div>
+          </li>
+
+          <!-- Services -->
+          <li class="nav-item csp-nav-item has-mega" id="cspItemServices" role="listitem">
+            <button class="nav-link csp-nav-link" id="cspTriggerServices"
+                    aria-haspopup="true" aria-expanded="false" aria-controls="cspDropServices" type="button">
+              Services
+              <svg class="csp-caret" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                <path d="M2.5 5l4.5 4.5L11.5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+            <div class="csp-dropdown csp-dropdown-mega" id="cspDropServices" role="region" aria-labelledby="cspTriggerServices">
+              <div class="csp-mega-grid">
+                <div>
+                  <p class="csp-col-heading">Library Support</p>
+                  <a class="csp-mega-link" href="https://library.csp.edu/services/help"><i class="bi bi-chat-dots"></i><span>Ask a Librarian</span></a>
+                  <a class="csp-mega-link" href="https://library.csp.edu/services/accounts"><i class="bi bi-person-badge"></i><span>Your Library Account &amp; Card</span></a>
+                  <a class="csp-mega-link" href="https://library.csp.edu/services/library-materials"><i class="bi bi-collection"></i><span>Using Library Materials</span></a>
+                  <a class="csp-mega-link" href="https://library.csp.edu/services/ill"><i class="bi bi-arrow-left-right"></i><span>Interlibrary Loan</span></a>
+                  <a class="csp-mega-link" href="https://library.csp.edu/services/study-rooms"><i class="bi bi-door-open"></i><span>Study Rooms</span></a>
+                  <a class="csp-mega-link" href="https://library.csp.edu/services/appointment"><i class="bi bi-calendar-check"></i><span>Make an Appointment</span></a>
+                </div>
+                <div>
+                  <p class="csp-col-heading">Tutoring &amp; Writing</p>
+                  <a class="csp-mega-link" href="https://library.csp.edu/tutoring-support"><i class="bi bi-mortarboard"></i><span>Tutoring Support</span></a>
+                  <a class="csp-mega-link" href="https://library.csp.edu/writing-center"><i class="bi bi-pencil-square"></i><span>Writing Center</span></a>
+                  <a class="csp-mega-link" href="https://library.csp.edu/citation-guides"><i class="bi bi-quote"></i><span>Citation Styles</span></a>
+                </div>
+                <div>
+                  <p class="csp-col-heading">Faculty Support</p>
+                  <a class="csp-mega-link" href="https://library.csp.edu/faculty"><i class="bi bi-building"></i><span>Faculty Guide to the Library</span></a>
+                  <a class="csp-mega-link" href="https://library.csp.edu/faculty/instruction"><i class="bi bi-presentation"></i><span>Request Library Instruction</span></a>
+                  <a class="csp-mega-link" href="https://library.csp.edu/cic/home"><i class="bi bi-journals"></i><span>Curriculum &amp; Instruction Center</span></a>
+                </div>
+                <div>
+                  <p class="csp-col-heading">Other Services</p>
+                  <a class="csp-mega-link" href="https://www.csp.edu/it-help-desk" target="_blank" rel="noopener"><i class="bi bi-laptop"></i><span>Technology Help Desk</span></a>
+                  <a class="csp-mega-link" href="https://www.csp.edu/center-for-hmong-studies/" target="_blank" rel="noopener"><i class="bi bi-globe-americas"></i><span>Center for Hmong Studies</span></a>
+                </div>
+              </div>
+            </div>
+          </li>
+
+          <!-- About -->
+          <li class="nav-item csp-nav-item" id="cspItemAbout" role="listitem">
+            <button class="nav-link csp-nav-link" id="cspTriggerAbout"
+                    aria-haspopup="true" aria-expanded="false" aria-controls="cspDropAbout" type="button">
+              About
+              <svg class="csp-caret" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                <path d="M2.5 5l4.5 4.5L11.5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+            <div class="csp-dropdown csp-dropdown-simple" id="cspDropAbout" role="region" aria-labelledby="cspTriggerAbout">
+              <a class="csp-dropdown-item" href="https://library.csp.edu/about/contact"><i class="bi bi-envelope"></i>Contact the Library</a>
+              <a class="csp-dropdown-item" href="https://library.csp.edu/about/staff"><i class="bi bi-people"></i>Staff</a>
+              <a class="csp-dropdown-item" href="https://library.csp.edu/blog"><i class="bi bi-megaphone"></i>Library News &amp; Updates</a>
+              <a class="csp-dropdown-item" href="https://library.csp.edu/about/policies"><i class="bi bi-file-text"></i>Policies</a>
+            </div>
+          </li>
+
+          <!-- CTAs -->
+          <li class="nav-item ms-lg-2 my-2 my-lg-0" role="listitem">
+            <a class="csp-btn-ghost" href="https://csp.libcal.com/hours/" target="_blank" rel="noopener">
+              <i class="bi bi-clock" aria-hidden="true"></i>Hours
+            </a>
+          </li>
+          <li class="nav-item ms-lg-2 my-2 my-lg-0" role="listitem">
+            <a class="csp-btn-primary" href="https://library.csp.edu/about/contact">
+              <i class="bi bi-question-circle" aria-hidden="true"></i>Get Help
+            </a>
+          </li>
+
+        </ul>
+      </div>
+    </div>
+  </nav>

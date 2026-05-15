@@ -1,0 +1,987 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home — CSP Library &amp; Academic Support Services</title>
+  <!-- global.csp.edu visual re-skin -->
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+        crossorigin="anonymous">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+        rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Barlow:wght@400;500;600&display=swap"
+        rel="stylesheet">
+
+  <style>
+    /* ═══════════════════════════════════════════════════════════════
+       BRAND TOKENS — global.csp.edu visual re-skin
+    ═══════════════════════════════════════════════════════════════ */
+    :root {
+      --csp-navy:        #003055;
+      --csp-navy-80:     #1A496D;
+      --csp-navy-60:     #4A6889;
+      --csp-navy-40:     #7A8FAA;
+      --csp-navy-20:     #B3BDCE;
+      --csp-navy-10:     #dce4ec;
+      --csp-gold:        #E6B222;
+      --csp-gold-hover:  #c99c1a;
+      --csp-gold-light:  #F9EBCE;
+      --csp-gold-mid:    #EFCC7D;
+      --csp-teal:        #00A9A3;
+      --csp-teal-light:  #e0f6f5;
+      --csp-teal-hover:  #007f7b;
+      --csp-gray:        #E1E8EC;
+      --csp-page-bg:     #f5f4f2;
+      --font-display:    'Barlow Condensed', 'Arial Narrow', sans-serif;
+      --font-body:       'Barlow', system-ui, sans-serif;
+      --csp-nav-height:  68px;
+      --csp-drop-radius: 8px;
+      --csp-drop-shadow: 0 8px 40px rgba(0,0,0,.13), 0 2px 8px rgba(0,0,0,.07);
+      --ease:            cubic-bezier(0.22, 1, 0.36, 1);
+      --csp-duration:    200ms;
+      --csp-serif:       'Barlow Condensed', 'Arial Narrow', sans-serif;
+      --csp-sans:        'Barlow', system-ui, sans-serif;
+    }
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font-body); background: var(--csp-page-bg); color: #1a1a1a; margin: 0; }
+
+    /* ── Skip link ─────────────────────────────────────────────── */
+    .skip-link { position: absolute; top: -100px; left: 16px; z-index: 9999; background: var(--csp-gold); color: var(--csp-navy); font-weight: 700; padding: 8px 16px; border-radius: 0 0 6px 6px; text-decoration: none; font-size: .875rem; transition: top .15s; }
+    .skip-link:focus { top: 0; }
+
+    /* ── Announcement bar ──────────────────────────────────────── */
+    .announcement-bar { background: var(--csp-gold); color: var(--csp-navy); text-align: center; padding: 9px 16px; font-family: var(--font-body); font-size: .8rem; font-weight: 600; letter-spacing: .02em; display: none; }
+    .announcement-bar a { color: var(--csp-navy); font-weight: 700; margin-left: 6px; }
+
+    /* ── Nav shell ─────────────────────────────────────────────── */
+    .csp-navbar { background: #fff; border-bottom: 1px solid rgba(0,0,0,.09); position: sticky; top: 0; z-index: 1030; transition: box-shadow .25s ease; }
+    .csp-navbar.is-scrolled { box-shadow: 0 2px 20px rgba(0,0,0,.1); }
+    .csp-navbar .container { position: relative; }
+    .csp-brand { display: flex; align-items: center; gap: 12px; text-decoration: none; flex-shrink: 0; }
+    .csp-brand img { height: 34px; width: auto;
+      /* Converts the white logo to CSP Navy (#003055).
+         TO USE THE BLUE LOGO FILE INSTEAD: upload CSP_Library-02.png to
+         LibGuides Admin → Files, copy the URL, replace the <img> src in the
+         Header HTML, and remove this filter rule. */
+      filter: brightness(0) saturate(100%) invert(11%) sepia(85%) saturate(1088%) hue-rotate(190deg) brightness(97%) contrast(101%);
+    }
+    .csp-brand-divider { width: 1px; height: 26px; background: var(--csp-navy-20); flex-shrink: 0; }
+    .csp-brand-text { font-family: var(--font-display); font-size: 1.05rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; line-height: 1; color: var(--csp-navy); white-space: nowrap; }
+    .csp-nav-link { display: flex !important; align-items: center; gap: 5px; padding: 0 13px !important; height: var(--csp-nav-height); font-family: var(--font-body); font-size: .9375rem; font-weight: 600; color: #222 !important; letter-spacing: .01em; white-space: nowrap; text-decoration: none; border-bottom: 2px solid transparent; transition: color .15s, border-color .15s; background: none; border-top: none; border-left: none; border-right: none; cursor: pointer; }
+    .csp-nav-link:hover, .csp-nav-item.is-open > .csp-nav-link { color: var(--csp-navy) !important; border-bottom-color: var(--csp-gold); }
+    .csp-caret { width: 13px; height: 13px; flex-shrink: 0; transition: transform var(--csp-duration) var(--ease); }
+    .csp-nav-item.is-open > .csp-nav-link .csp-caret { transform: rotate(180deg); }
+    .csp-dropdown { display: none; position: absolute; top: calc(100% + 1px); background: #fff; border-top: 3px solid var(--csp-gold); border-radius: 0 0 var(--csp-drop-radius) var(--csp-drop-radius); box-shadow: var(--csp-drop-shadow); opacity: 0; transform: translateY(-8px); transition: opacity var(--csp-duration) var(--ease), transform var(--csp-duration) var(--ease); z-index: 1040; }
+    .csp-dropdown.is-visible { opacity: 1; transform: translateY(0); }
+    .csp-nav-item { position: relative; }
+    .csp-nav-item.has-mega { position: static; }
+    .csp-dropdown-simple { left: 0; min-width: 230px; padding: 8px 4px; }
+    .csp-dropdown-item { display: flex; align-items: center; gap: 9px; padding: 8px 16px; font-size: .9rem; color: #333; text-decoration: none; border-radius: 6px; font-family: var(--font-body); transition: background .1s, color .1s, padding-left .15s; }
+    .csp-dropdown-item i { font-size: .95rem; color: var(--csp-navy); opacity: .4; flex-shrink: 0; }
+    .csp-dropdown-item:hover { background: var(--csp-gold-light); color: var(--csp-navy); padding-left: 20px; }
+    .csp-dropdown-item:hover i { opacity: 1; color: var(--csp-gold-hover); }
+    .csp-dropdown-mega { left: 0; right: 0; padding: 28px 32px 24px; }
+    .csp-mega-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0 36px; }
+    .csp-col-heading { font-family: var(--font-display); font-size: .75rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--csp-navy); padding-bottom: 8px; margin-bottom: 6px; border-bottom: 2px solid var(--csp-gold-mid); }
+    .csp-mega-link { display: flex; align-items: flex-start; gap: 10px; padding: 7px 8px; margin: 0 -8px; border-radius: 6px; text-decoration: none; color: #2a2a2a; font-size: .9rem; font-family: var(--font-body); transition: background .12s, color .12s; }
+    .csp-mega-link i { font-size: 1rem; color: var(--csp-navy); opacity: .35; flex-shrink: 0; margin-top: 1px; }
+    .csp-mega-link span { font-weight: 500; line-height: 1.35; }
+    .csp-mega-link:hover { background: var(--csp-gold-light); color: var(--csp-navy); }
+    .csp-mega-link:hover i { opacity: .9; color: var(--csp-gold-hover); }
+    .csp-backdrop { display: none; position: fixed; inset: 0; background: rgba(0,16,36,.3); backdrop-filter: blur(1px); z-index: 1029; opacity: 0; transition: opacity var(--csp-duration) ease; }
+    .csp-backdrop.is-shown { display: block; }
+    .csp-backdrop.is-visible { opacity: 1; }
+    .csp-btn-ghost, .csp-btn-primary { display: inline-flex; align-items: center; gap: 6px; font-family: var(--font-body); font-size: .8rem; font-weight: 600; padding: 6px 13px; border-radius: 4px; text-decoration: none; white-space: nowrap; transition: background .15s, color .15s, border-color .15s; }
+    .csp-btn-ghost { background: transparent; color: var(--csp-navy) !important; border: 1.5px solid var(--csp-navy-20); }
+    .csp-btn-ghost:hover { background: var(--csp-gray); border-color: var(--csp-navy-80); }
+    .csp-btn-primary { background: var(--csp-navy); color: #fff !important; border: 1.5px solid transparent; }
+    .csp-btn-primary:hover { background: var(--csp-navy-80); }
+    @media (max-width: 991.98px) {
+      .csp-nav-link { height: auto; padding: 12px 16px !important; border-bottom: none; border-left: 3px solid transparent; }
+      .csp-nav-item.is-open > .csp-nav-link { border-left-color: var(--csp-gold); background: var(--csp-gold-light); border-bottom: none; }
+      .csp-dropdown, .csp-dropdown-mega { position: static; box-shadow: none; border-top: none; border-left: 3px solid var(--csp-gold); border-radius: 0; padding: 4px 8px 4px 16px; opacity: 1 !important; transform: none !important; transition: none !important; margin: 0 0 8px 20px; }
+      .csp-mega-grid { grid-template-columns: 1fr; gap: 0; }
+      .csp-col-heading { margin-top: 10px; }
+      .csp-backdrop { display: none !important; }
+      .csp-nav-item.has-mega { position: relative; }
+      .csp-brand-divider, .csp-brand-text { display: none; }
+    }
+
+    /* ── Hero ──────────────────────────────────────────────────── */
+    .hero { position: relative; min-height: 560px; display: flex; flex-direction: column; overflow: hidden; }
+    .hero-bg { position: absolute; inset: 0; background-image: url('https://main.dy1n2ifa5qdl6.amplifyapp.com/csp-library-hero.jpg'); background-size: cover; background-position: center 45%; transform: scale(1.02); transition: transform 6s ease; }
+    .hero:hover .hero-bg { transform: scale(1.0); }
+    .hero-overlay { position: absolute; inset: 0; background: linear-gradient(105deg, rgba(0,24,52,.90) 0%, rgba(0,24,52,.80) 42%, rgba(0,24,52,.50) 100%); }
+    .hero::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: var(--csp-gold); z-index: 2; }
+    .hero-inner { position: relative; z-index: 3; max-width: 760px; margin: 0 auto; width: 100%; padding: 80px 24px 72px; }
+    /* TO RESTORE STATUS TILES: add this inline style to the .hero-inner div in Box 1:
+       style="max-width:1200px; display:grid; grid-template-columns:1fr 300px; gap:48px 64px; align-items:start; padding:72px 24px 60px;"
+       then re-add the <aside class="hero-stats"> block after the search nav. */
+    .hero-eyebrow { display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-display); font-size: .8rem; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: var(--csp-gold-mid); margin: 0 0 16px; }
+    .hero-eyebrow::before { content: ''; display: block; width: 28px; height: 2px; background: var(--csp-gold); }
+    .hero-heading { font-family: var(--font-display); font-size: clamp(2.8rem, 5vw, 4rem); font-weight: 800; line-height: .96; letter-spacing: .01em; text-transform: uppercase; color: #fff; margin: 0 0 20px; }
+    .hero-heading em { font-style: normal; color: var(--csp-gold); }
+    .hero-sub { font-size: 1rem; color: rgba(255,255,255,.65); margin: 0 0 32px; line-height: 1.6; max-width: 48ch; font-family: var(--font-body); }
+    .hero-search-form { display: flex; max-width: 540px; background: #fff; border-radius: 4px; overflow: hidden; box-shadow: 0 8px 32px rgba(0,0,0,.35); margin-bottom: 16px; }
+    .hero-search-form input { flex: 1; border: none; outline: none; padding: 13px 18px; font-size: .9375rem; font-family: var(--font-body); background: transparent; color: #111; }
+    .hero-search-form input::placeholder { color: #aaa; }
+    .hero-search-form button { background: var(--csp-gold); color: var(--csp-navy); border: none; padding: 0 24px; font-family: var(--font-display); font-size: .9rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; cursor: pointer; white-space: nowrap; transition: background .15s; }
+    .hero-search-form button:hover { background: var(--csp-gold-hover); }
+    .hero-search-alts { display: flex; flex-wrap: wrap; gap: 6px 16px; }
+    .hero-alt-link { font-size: .8rem; color: rgba(255,255,255,.5); text-decoration: none; display: inline-flex; align-items: center; gap: 5px; transition: color .15s; }
+    .hero-alt-link:hover { color: var(--csp-gold-mid); }
+    .hero-stats { display: flex; flex-direction: column; gap: 2px; }
+    .hero-stat { padding: 18px 20px; background: rgba(255,255,255,.07); border-left: 3px solid rgba(255,255,255,.1); text-decoration: none; display: block; transition: background .15s, border-color .15s; }
+    .hero-stat:first-child { border-radius: 4px 4px 0 0; }
+    .hero-stat:last-child  { border-radius: 0 0 4px 4px; }
+    .hero-stat:hover { background: rgba(255,255,255,.13); border-left-color: var(--csp-gold); }
+    .hero-stat-label { font-family: var(--font-display); font-size: .63rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--csp-gold-mid); margin: 0 0 4px; }
+    .hero-stat-value { font-family: var(--font-display); font-size: 1.4rem; font-weight: 800; color: #fff; margin: 0; line-height: 1; display: flex; align-items: center; gap: 8px; }
+    .hero-stat-sub { font-size: .75rem; color: rgba(255,255,255,.42); margin: 4px 0 0; }
+    .live-dot { width: 8px; height: 8px; border-radius: 50%; background: #4ade80; flex-shrink: 0; animation: blink 2.4s infinite; }
+    .live-dot-amber { background: var(--csp-gold); animation: none; }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.3} }
+    @media (max-width: 767px) {
+      .hero-inner { grid-template-columns: 1fr; padding: 48px 20px 40px; gap: 32px; }
+      .hero-heading { font-size: 2.6rem; }
+      .hero-stats { flex-direction: row; flex-wrap: wrap; }
+      .hero-stat { flex: 1; min-width: 140px; border-left: none; border-top: 3px solid rgba(255,255,255,.1); border-radius: 4px; }
+    }
+
+    /* ── Feature bar ───────────────────────────────────────────── */
+    .feature-bar {
+      background: var(--csp-navy);
+      border-top: 1px solid rgba(255,255,255,.06);
+      border-bottom: 3px solid var(--csp-gold);
+    }
+    .feature-bar-inner {
+      max-width: 1200px; margin: 0 auto; padding: 20px 24px;
+      display: flex; align-items: center; gap: 20px; flex-wrap: wrap;
+    }
+    .feature-bar-eyebrow {
+      display: flex; align-items: center; gap: 8px; flex-shrink: 0;
+      font-family: var(--font-display); font-size: .72rem; font-weight: 700;
+      letter-spacing: .14em; text-transform: uppercase; color: var(--csp-gold-mid);
+      white-space: nowrap;
+    }
+    .feature-bar-badge {
+      background: var(--csp-gold); color: var(--csp-navy);
+      font-family: var(--font-display); font-size: .6rem; font-weight: 800;
+      letter-spacing: .1em; text-transform: uppercase;
+      padding: 2px 8px; border-radius: 3px;
+    }
+    /* Vertical rule separator */
+    .feature-bar-eyebrow::after {
+      content: ''; display: block; width: 1px; height: 20px;
+      background: rgba(255,255,255,.15); margin-left: 4px;
+    }
+    .feature-bar-body { flex: 1; min-width: 200px; }
+    .feature-bar-heading {
+      font-family: var(--font-display); font-size: 1.05rem; font-weight: 800;
+      letter-spacing: .04em; text-transform: uppercase; color: #fff;
+      margin: 0 0 2px; line-height: 1;
+    }
+    .feature-bar-desc {
+      font-size: .82rem; color: rgba(255,255,255,.55); margin: 0; line-height: 1.4;
+      max-width: 56ch;
+    }
+    .feature-bar-cta {
+      display: inline-flex; align-items: center; gap: 7px; flex-shrink: 0;
+      font-family: var(--font-display); font-size: .85rem; font-weight: 800;
+      letter-spacing: .08em; text-transform: uppercase;
+      background: var(--csp-gold); color: var(--csp-navy);
+      padding: 10px 20px; border-radius: 4px; text-decoration: none;
+      white-space: nowrap; transition: background .15s;
+    }
+    .feature-bar-cta:hover { background: var(--csp-gold-hover); color: var(--csp-navy); }
+    .feature-bar-cta .bi-arrow-right { transition: transform .2s var(--ease); }
+    .feature-bar-cta:hover .bi-arrow-right { transform: translateX(3px); }
+    .feature-bar-learn {
+      font-size: .8rem; color: rgba(255,255,255,.45); text-decoration: none;
+      flex-shrink: 0; white-space: nowrap; transition: color .15s;
+      border-bottom: 1px solid rgba(255,255,255,.2);
+      padding-bottom: 1px;
+    }
+    .feature-bar-learn:hover { color: #fff; border-bottom-color: rgba(255,255,255,.6); }
+    @media (max-width: 767px) {
+      .feature-bar-inner { gap: 14px; }
+      .feature-bar-eyebrow::after { display: none; }
+      .feature-bar-cta { width: 100%; justify-content: center; }
+      .feature-bar-learn { display: none; }
+    }
+
+    /* ── Shared section ────────────────────────────────────────── */
+    .section { padding: 72px 0; }
+    .section-alt { background: #fff; }
+    .section-dark { background: var(--csp-navy); }
+    .section-header { margin-bottom: 40px; }
+    .section-eyebrow { font-family: var(--font-display); font-size: .75rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; margin: 0 0 8px; }
+    .section-title { font-family: var(--font-display); font-size: clamp(1.8rem, 3vw, 2.5rem); font-weight: 800; text-transform: uppercase; letter-spacing: .03em; line-height: 1; margin: 0; }
+    @media (max-width: 767px) { .section { padding: 48px 0; } }
+
+    /* ── Services ──────────────────────────────────────────────── */
+    .services-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 2px; border-radius: 6px; overflow: hidden; box-shadow: 0 4px 24px rgba(0,0,0,.1); }
+    .service-card { background: #fff; padding: 36px 30px 30px; display: flex; flex-direction: column; position: relative; transition: background .2s; }
+    .service-card::after { content: ''; position: absolute; bottom: 0; left: 30px; right: 30px; height: 3px; background: var(--csp-gold); transform: scaleX(0); transform-origin: left; transition: transform .25s var(--ease); }
+    .service-card:hover { background: #fafaf8; }
+    .service-card:hover::after { transform: scaleX(1); }
+    .service-icon { width: 52px; height: 52px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; margin-bottom: 20px; }
+    .icon-teal { background: var(--csp-teal); color: #fff; }
+    .icon-gold { background: var(--csp-gold); color: var(--csp-navy); }
+    .icon-navy { background: var(--csp-navy); color: #fff; }
+    .service-title { font-family: var(--font-display); font-size: 1.4rem; font-weight: 800; text-transform: uppercase; letter-spacing: .04em; color: var(--csp-navy); margin: 0 0 6px; }
+    .service-desc { font-size: .875rem; color: #666; margin: 0 0 24px; line-height: 1.6; }
+    .service-links { list-style: none; padding: 0; margin: 0 0 auto; }
+    .service-links li { border-bottom: 1px solid rgba(0,0,0,.06); }
+    .service-links li:last-child { border-bottom: none; }
+    .service-links a { display: flex; align-items: center; justify-content: space-between; padding: 9px 0; font-size: .875rem; color: #333; text-decoration: none; font-weight: 500; gap: 8px; transition: color .12s, padding-left .15s; }
+    .service-links a:hover { color: var(--csp-navy); padding-left: 4px; }
+    .service-links a i { font-size: .8rem; opacity: .3; }
+    .badge-live { font-family: var(--font-display); font-size: .58rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; background: #dcfce7; color: #166534; padding: 2px 7px; border-radius: 20px; }
+    .service-cta { display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 24px; padding: 11px; font-family: var(--font-display); font-size: .85rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; border-radius: 4px; text-decoration: none; transition: background .15s, color .15s; }
+    .cta-teal { background: var(--csp-teal); color: #fff; }
+    .cta-teal:hover { background: var(--csp-teal-hover); color: #fff; }
+    .cta-gold { background: var(--csp-gold); color: var(--csp-navy); }
+    .cta-gold:hover { background: var(--csp-gold-hover); color: var(--csp-navy); }
+    .cta-navy { background: var(--csp-navy); color: #fff; }
+    .cta-navy:hover { background: var(--csp-navy-80); color: #fff; }
+    @media (max-width: 767px) { .services-grid { grid-template-columns: 1fr; } }
+    @media (min-width:768px) and (max-width:991px) { .services-grid { grid-template-columns: 1fr 1fr; } }
+
+    /* ── Audience band ─────────────────────────────────────────── */
+    .section-dark .section-eyebrow { color: var(--csp-gold-mid); }
+    .section-dark .section-title { color: #fff; }
+    .audience-grid { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 28px; }
+    .audience-item { display: inline-flex; align-items: center; gap: 9px; padding: 12px 22px; font-family: var(--font-display); font-size: .85rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; background: rgba(255,255,255,.07); border: 1.5px solid rgba(255,255,255,.12); color: #fff; border-radius: 4px; text-decoration: none; transition: background .15s, border-color .15s, color .15s; }
+    .audience-item i { font-size: 1rem; opacity: .6; }
+    .audience-item:hover { background: var(--csp-gold); border-color: var(--csp-gold); color: var(--csp-navy); }
+    .audience-item:hover i { opacity: 1; }
+
+    /* ── More at the Library (image cards) ─────────────────────── */
+    .more-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; }
+    .more-card { position: relative; border-radius: 6px; overflow: hidden; min-height: 260px; display: flex; flex-direction: column; text-decoration: none; }
+    .more-card-bg { position: absolute; inset: 0; background-size: cover; background-position: center; transition: transform .5s var(--ease); }
+    .more-card:hover .more-card-bg { transform: scale(1.04); }
+    .more-card-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,30,60,.9) 0%, rgba(0,30,60,.4) 60%, rgba(0,30,60,.1) 100%); }
+    .more-card-body { position: relative; z-index: 2; margin-top: auto; padding: 24px 22px; }
+    .more-card-tag { font-family: var(--font-display); font-size: .62rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--csp-gold-mid); margin: 0 0 6px; }
+    .more-card-title { font-family: var(--font-display); font-size: 1.25rem; font-weight: 800; text-transform: uppercase; letter-spacing: .04em; color: #fff; margin: 0 0 10px; line-height: 1.1; }
+    .more-card-link { font-family: var(--font-display); font-size: .75rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--csp-gold-mid); display: inline-flex; align-items: center; gap: 6px; transition: gap .2s, color .15s; }
+    .more-card:hover .more-card-link { gap: 10px; color: var(--csp-gold); }
+    @media (max-width: 767px) { .more-grid { grid-template-columns: 1fr; } }
+    @media (min-width:768px) and (max-width:991px) { .more-grid { grid-template-columns: 1fr 1fr; } }
+
+    /* ── Popular resources ─────────────────────────────────────── */
+    .popular-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 2px; background: var(--csp-navy-10); border-radius: 6px; overflow: hidden; }
+    .popular-item { display: flex; align-items: center; gap: 14px; padding: 16px 22px; background: #fff; text-decoration: none; color: #222; transition: background .12s; }
+    .popular-item:hover { background: var(--csp-gold-light); }
+    .popular-item i.icon-main { width: 36px; height: 36px; flex-shrink: 0; border-radius: 6px; background: var(--csp-navy-10); color: var(--csp-navy-60); display: flex; align-items: center; justify-content: center; font-size: 1rem; transition: background .12s, color .12s; }
+    .popular-item:hover i.icon-main { background: var(--csp-gold); color: var(--csp-navy); }
+    .popular-item-text { flex: 1; font-size: .9rem; font-weight: 500; }
+    .popular-item i.icon-arrow { font-size: .85rem; opacity: .3; transition: opacity .12s, transform .15s; }
+    .popular-item:hover i.icon-arrow { opacity: .7; transform: translateX(3px); }
+    @media (max-width: 600px) { .popular-grid { grid-template-columns: 1fr; } }
+
+    /* ── News & Events ─────────────────────────────────────────── */
+    .news-events-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    .ne-card { background: #fff; border-radius: 6px; border: 1px solid rgba(0,0,0,.07); overflow: hidden; }
+    .ne-card-header { padding: 16px 22px; border-bottom: 1px solid rgba(0,0,0,.06); display: flex; align-items: center; justify-content: space-between; }
+    .ne-card-title { font-family: var(--font-display); font-size: 1.05rem; font-weight: 800; text-transform: uppercase; letter-spacing: .06em; color: var(--csp-navy); margin: 0; }
+    .ne-card-link { font-family: var(--font-display); font-size: .7rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--csp-navy-60); text-decoration: none; display: inline-flex; align-items: center; gap: 4px; transition: color .15s; }
+    .ne-card-link:hover { color: var(--csp-navy); }
+    .ne-card-body { padding: 24px 22px; min-height: 160px; }
+    .ne-placeholder { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 120px; text-align: center; color: var(--csp-navy-40); }
+    .ne-placeholder i { font-size: 2rem; margin-bottom: 8px; opacity: .35; }
+    .ne-placeholder p { font-size: .8rem; margin: 0; line-height: 1.5; }
+    .ne-placeholder code { font-size: .72rem; background: var(--csp-navy-10); color: var(--csp-navy-60); padding: 2px 6px; border-radius: 3px; }
+    @media (max-width: 767px) { .news-events-grid { grid-template-columns: 1fr; } }
+
+    /* ── Footer ────────────────────────────────────────────────── */
+    .site-footer { background: var(--csp-navy); color: rgba(255,255,255,.7); padding: 64px 0 0; font-family: var(--font-body); }
+    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; padding-bottom: 56px; border-bottom: 1px solid rgba(255,255,255,.08); }
+    .footer-brand img { height: 36px; filter: brightness(0) invert(1); opacity: .85; display: block; margin-bottom: 16px; }
+    .footer-brand p { font-size: .825rem; line-height: 1.7; color: rgba(255,255,255,.5); max-width: 26ch; margin: 0 0 20px; }
+    .footer-address { font-style: normal; font-size: .8rem; line-height: 1.7; color: rgba(255,255,255,.38); }
+    .footer-col-title { font-family: var(--font-display); font-size: .68rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--csp-gold-mid); margin: 0 0 16px; }
+    .footer-links { list-style: none; padding: 0; margin: 0; }
+    .footer-links li { margin-bottom: 9px; }
+    .footer-links a { color: rgba(255,255,255,.55); text-decoration: none; font-size: .875rem; transition: color .15s; display: inline-flex; align-items: center; gap: 5px; }
+    .footer-links a:hover { color: #fff; }
+    .footer-contact { display: flex; flex-direction: column; gap: 9px; }
+    .footer-contact-item { display: flex; align-items: center; gap: 8px; color: rgba(255,255,255,.55); font-size: .825rem; }
+    .footer-contact-item i { opacity: .5; font-size: .9rem; flex-shrink: 0; }
+    .footer-contact-item a { color: rgba(255,255,255,.55); text-decoration: none; transition: color .15s; }
+    .footer-contact-item a:hover { color: #fff; }
+    .footer-social { display: flex; gap: 10px; margin-top: 22px; }
+    .footer-social a { width: 36px; height: 36px; border-radius: 4px; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.1); display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,.55); font-size: 1rem; text-decoration: none; transition: background .15s, color .15s; }
+    .footer-social a:hover { background: var(--csp-gold); color: var(--csp-navy); border-color: transparent; }
+    .footer-bottom { padding: 20px 0; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+    .footer-bottom p { margin: 0; font-size: .78rem; color: rgba(255,255,255,.3); }
+    .footer-bottom a { font-size: .78rem; color: rgba(255,255,255,.3); text-decoration: none; display: inline-flex; align-items: center; gap: 5px; transition: color .15s; }
+    .footer-bottom a:hover { color: rgba(255,255,255,.7); }
+    @media (max-width: 991px) { .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; } }
+    @media (max-width: 600px) { .footer-grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+
+<body>
+
+  <!-- Announcement bar -->
+  <div class="announcement-bar" role="banner" style="display:block">
+    Library summer hours now in effect.
+    <a href="https://csp.libcal.com/hours/">See current hours →</a>
+  </div>
+
+  <!-- Skip link -->
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <!-- Backdrop -->
+  <div class="csp-backdrop" id="cspBackdrop" aria-hidden="true"></div>
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       NAVIGATION
+  ═══════════════════════════════════════════════════════════════════ -->
+  <nav class="csp-navbar navbar navbar-expand-lg" id="cspNavbar" aria-label="Primary navigation">
+    <div class="container">
+
+      <a class="csp-brand" href="https://library.csp.edu/home">
+        <img src="https://libapps.s3.amazonaws.com/customers/955/images/csplib-logo.png" alt="CSP Library" loading="eager">
+        <span class="csp-brand-divider" aria-hidden="true"></span>
+        <span class="csp-brand-text">Library and Academic Support Services</span>
+      </a>
+
+      <button class="navbar-toggler border-0 shadow-none ms-auto me-2"
+              type="button" data-bs-toggle="collapse" data-bs-target="#cspNavCollapse"
+              aria-controls="cspNavCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="cspNavCollapse">
+        <ul class="navbar-nav ms-auto align-items-lg-center" role="list">
+
+          <!-- Find Resources -->
+          <li class="nav-item csp-nav-item" id="cspItemFind" role="listitem">
+            <button class="nav-link csp-nav-link" id="cspTriggerFind"
+                    aria-haspopup="true" aria-expanded="false" aria-controls="cspDropFind" type="button">
+              Find Resources
+              <svg class="csp-caret" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                <path d="M2.5 5l4.5 4.5L11.5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+            <div class="csp-dropdown csp-dropdown-simple" id="cspDropFind" role="region" aria-labelledby="cspTriggerFind">
+              <a class="csp-dropdown-item" href="https://library.csp.edu/find/guides"><i class="bi bi-map"></i>Research Guides</a>
+              <a class="csp-dropdown-item" href="https://library.csp.edu/find/onesearch"><i class="bi bi-search"></i>OneSearch</a>
+              <a class="csp-dropdown-item" href="https://library.csp.edu/find/databases"><i class="bi bi-database"></i>Databases</a>
+              <a class="csp-dropdown-item" href="https://library.csp.edu/find/journals"><i class="bi bi-journal-text"></i>Journals</a>
+              <a class="csp-dropdown-item" href="https://library.csp.edu/find/newspapers"><i class="bi bi-newspaper"></i>Newspapers</a>
+              <a class="csp-dropdown-item" href="https://library.csp.edu/find/ebooks"><i class="bi bi-book"></i>Ebooks</a>
+              <a class="csp-dropdown-item" href="https://library.csp.edu/archives-special-collections"><i class="bi bi-archive"></i>Archives &amp; Special Collections</a>
+            </div>
+          </li>
+
+          <!-- Services -->
+          <li class="nav-item csp-nav-item has-mega" id="cspItemServices" role="listitem">
+            <button class="nav-link csp-nav-link" id="cspTriggerServices"
+                    aria-haspopup="true" aria-expanded="false" aria-controls="cspDropServices" type="button">
+              Services
+              <svg class="csp-caret" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                <path d="M2.5 5l4.5 4.5L11.5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+            <div class="csp-dropdown csp-dropdown-mega" id="cspDropServices" role="region" aria-labelledby="cspTriggerServices">
+              <div class="csp-mega-grid">
+                <div>
+                  <p class="csp-col-heading">Library Support</p>
+                  <a class="csp-mega-link" href="https://library.csp.edu/services/help"><i class="bi bi-chat-dots"></i><span>Ask a Librarian</span></a>
+                  <a class="csp-mega-link" href="https://library.csp.edu/services/accounts"><i class="bi bi-person-badge"></i><span>Your Library Account &amp; Card</span></a>
+                  <a class="csp-mega-link" href="https://library.csp.edu/services/library-materials"><i class="bi bi-collection"></i><span>Using Library Materials</span></a>
+                  <a class="csp-mega-link" href="https://library.csp.edu/services/ill"><i class="bi bi-arrow-left-right"></i><span>Interlibrary Loan</span></a>
+                  <a class="csp-mega-link" href="https://library.csp.edu/services/study-rooms"><i class="bi bi-door-open"></i><span>Study Rooms</span></a>
+                  <a class="csp-mega-link" href="https://library.csp.edu/services/appointment"><i class="bi bi-calendar-check"></i><span>Make an Appointment</span></a>
+                </div>
+                <div>
+                  <p class="csp-col-heading">Tutoring &amp; Writing</p>
+                  <a class="csp-mega-link" href="https://library.csp.edu/tutoring-support"><i class="bi bi-mortarboard"></i><span>Tutoring Support</span></a>
+                  <a class="csp-mega-link" href="https://library.csp.edu/writing-center"><i class="bi bi-pencil-square"></i><span>Writing Center</span></a>
+                  <a class="csp-mega-link" href="https://library.csp.edu/citation-guides"><i class="bi bi-quote"></i><span>Citation Styles</span></a>
+                </div>
+                <div>
+                  <p class="csp-col-heading">Faculty Support</p>
+                  <a class="csp-mega-link" href="https://library.csp.edu/faculty"><i class="bi bi-building"></i><span>Faculty Guide to the Library</span></a>
+                  <a class="csp-mega-link" href="https://library.csp.edu/faculty/instruction"><i class="bi bi-presentation"></i><span>Request Library Instruction</span></a>
+                  <a class="csp-mega-link" href="https://library.csp.edu/cic/home"><i class="bi bi-journals"></i><span>Curriculum &amp; Instruction Center</span></a>
+                </div>
+                <div>
+                  <p class="csp-col-heading">Other Services</p>
+                  <a class="csp-mega-link" href="https://www.csp.edu/it-help-desk" target="_blank" rel="noopener"><i class="bi bi-laptop"></i><span>Technology Help Desk</span></a>
+                  <a class="csp-mega-link" href="https://www.csp.edu/center-for-hmong-studies/" target="_blank" rel="noopener"><i class="bi bi-globe-americas"></i><span>Center for Hmong Studies</span></a>
+                </div>
+              </div>
+            </div>
+          </li>
+
+          <!-- About -->
+          <li class="nav-item csp-nav-item" id="cspItemAbout" role="listitem">
+            <button class="nav-link csp-nav-link" id="cspTriggerAbout"
+                    aria-haspopup="true" aria-expanded="false" aria-controls="cspDropAbout" type="button">
+              About
+              <svg class="csp-caret" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                <path d="M2.5 5l4.5 4.5L11.5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+            <div class="csp-dropdown csp-dropdown-simple" id="cspDropAbout" role="region" aria-labelledby="cspTriggerAbout">
+              <a class="csp-dropdown-item" href="https://library.csp.edu/about/contact"><i class="bi bi-envelope"></i>Contact the Library</a>
+              <a class="csp-dropdown-item" href="https://library.csp.edu/about/staff"><i class="bi bi-people"></i>Staff</a>
+              <a class="csp-dropdown-item" href="https://library.csp.edu/blog"><i class="bi bi-megaphone"></i>Library News &amp; Updates</a>
+              <a class="csp-dropdown-item" href="https://library.csp.edu/about/policies"><i class="bi bi-file-text"></i>Policies</a>
+            </div>
+          </li>
+
+          <!-- CTAs -->
+          <li class="nav-item ms-lg-2 my-2 my-lg-0" role="listitem">
+            <a class="csp-btn-ghost" href="https://csp.libcal.com/hours/" target="_blank" rel="noopener">
+              <i class="bi bi-clock" aria-hidden="true"></i>Hours
+            </a>
+          </li>
+          <li class="nav-item ms-lg-2 my-2 my-lg-0" role="listitem">
+            <a class="csp-btn-primary" href="https://library.csp.edu/about/contact">
+              <i class="bi bi-question-circle" aria-hidden="true"></i>Get Help
+            </a>
+          </li>
+
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       MAIN CONTENT
+  ═══════════════════════════════════════════════════════════════════ -->
+  <main id="main-content">
+
+    <!-- ── HERO ────────────────────────────────────────────────────── -->
+    <section class="hero" aria-labelledby="hero-heading">
+      <div class="hero-bg" aria-hidden="true"></div>
+      <div class="hero-overlay" aria-hidden="true"></div>
+      <div class="hero-inner">
+
+        <!-- TO RESTORE STATUS TILES: add this inline style to the .hero-inner div above:
+             style="max-width:1200px; display:grid; grid-template-columns:1fr 300px; gap:48px 64px; align-items:start; padding:72px 24px 60px;"
+             then re-add the <aside class="hero-stats"> block after the closing </nav> below. -->
+        <p class="hero-eyebrow">Welcome to the CSP Library</p>
+        <h1 class="hero-heading" id="hero-heading">Start your research.<br>Get the <em>support</em> you need.</h1>
+        <p class="hero-sub">Books, articles, databases, tutoring, and writing support — all in one place for the Concordia community.</p>
+
+        <div class="hero-search-form" role="search" aria-label="OneSearch">
+          <input type="text" id="heroSearch" placeholder="Search books, articles, journals, and more…" aria-label="Search OneSearch">
+          <button type="button" onclick="doSearch()">Search</button>
+        </div>
+
+        <nav class="hero-search-alts" aria-label="Search alternatives">
+          <a class="hero-alt-link" href="https://library.csp.edu/?b=s&group_id=28452">
+            <i class="bi bi-map" aria-hidden="true"></i>Research Guides
+          </a>
+          <span class="hero-alt-sep" aria-hidden="true">·</span>
+          <a class="hero-alt-link" href="https://library.csp.edu/az.php">
+            <i class="bi bi-database" aria-hidden="true"></i>All Databases
+          </a>
+          <span class="hero-alt-sep" aria-hidden="true">·</span>
+          <a class="hero-alt-link" href="https://clic-concordia.primo.exlibrisgroup.com/nde/researchAssistant?vid=01CLIC_CONCORDIA:NDE&lang=en" target="_blank" rel="noopener">
+            <i class="bi bi-stars" aria-hidden="true"></i>AI Research Assistant
+          </a>
+          <span class="hero-alt-sep" aria-hidden="true">·</span>
+          <a class="hero-alt-link" href="https://clic-concordia.primo.exlibrisgroup.com/discovery/account?section=overview&vid=01CLIC_CONCORDIA:CSP">
+            <i class="bi bi-person-circle" aria-hidden="true"></i>My Library Account
+          </a>
+        </nav>
+
+      </div>
+    </section>
+
+
+    <!-- ── FEATURE BAR — AI Research Assistant ──────────────────────
+         TO SWAP THIS PROMO: replace .feature-bar-inner contents only.
+         The .feature-bar shell and CSS are designed to accept any
+         single featured tool, service, or announcement.
+    ─────────────────────────────────────────────────────────────────── -->
+    <div class="feature-bar" role="region" aria-label="Featured tool">
+      <div class="feature-bar-inner">
+
+        <div class="feature-bar-eyebrow">
+          <span class="feature-bar-badge">New</span>
+          AI-Powered Research
+        </div>
+
+        <div class="feature-bar-body">
+          <p class="feature-bar-heading">OneSearch Research Assistant</p>
+          <p class="feature-bar-desc">Ask your research question in plain language — get an AI-generated answer with cited sources drawn directly from the CSP Library collection.</p>
+        </div>
+
+        <a class="feature-bar-cta"
+           href="https://clic-concordia.primo.exlibrisgroup.com/nde/researchAssistant?vid=01CLIC_CONCORDIA:NDE&lang=en"
+           target="_blank" rel="noopener">
+          <i class="bi bi-stars" aria-hidden="true"></i>
+          Try it Now
+          <i class="bi bi-arrow-right" aria-hidden="true"></i>
+        </a>
+
+        <a class="feature-bar-learn"
+           href="https://library.csp.edu/onesearchguide/researchassistant">
+          Learn more
+        </a>
+
+      </div>
+    </div>
+    <!-- ── CORE SERVICES ───────────────────────────────────────────── -->
+    <section class="section" aria-labelledby="services-heading">
+      <div class="container">
+        <div class="section-header">
+          <p class="section-eyebrow" style="color:var(--csp-navy-60)">How can we help you?</p>
+          <h2 class="section-title" style="color:var(--csp-navy)" id="services-heading">Core Services</h2>
+        </div>
+        <div class="services-grid">
+
+          <!-- Research Assistance -->
+          <article class="service-card" aria-labelledby="service-research">
+            <div class="service-icon icon-teal" aria-hidden="true"><i class="bi bi-chat-dots"></i></div>
+            <h3 class="service-title" id="service-research">Research Assistance</h3>
+            <p class="service-desc">Help finding, evaluating, and citing sources from a professional librarian.</p>
+            <ul class="service-links" role="list">
+              <li>
+                <a href="https://library.csp.edu/chat">
+                  Chat with a librarian
+                  <span class="badge-live">Live now</span>
+                </a>
+              </li>
+              <li>
+                <a href="https://library.csp.edu/about/contact">
+                  Email or call us <i class="bi bi-chevron-right"></i>
+                </a>
+              </li>
+              <li>
+                <a href="https://library.csp.edu/services/appointment">
+                  Schedule an appointment <i class="bi bi-chevron-right"></i>
+                </a>
+              </li>
+            </ul>
+            <a class="service-cta cta-teal" href="https://library.csp.edu/chat">
+              <i class="bi bi-chat-dots" aria-hidden="true"></i>Chat Now — 24/7
+            </a>
+          </article>
+
+          <!-- Tutoring Support -->
+          <article class="service-card" aria-labelledby="service-tutoring">
+            <div class="service-icon icon-gold" aria-hidden="true"><i class="bi bi-mortarboard"></i></div>
+            <h3 class="service-title" id="service-tutoring">Tutoring Support</h3>
+            <p class="service-desc">Course-specific tutoring from peer tutors and Brainfuse's online platform.</p>
+            <ul class="service-links" role="list">
+              <li>
+                <a href="https://library.csp.edu/tutor/brainfuse">
+                  Brainfuse Online Tutoring <i class="bi bi-chevron-right"></i>
+                </a>
+              </li>
+              <li>
+                <a href="https://library.csp.edu/tutor/peer">
+                  Schedule peer tutoring <i class="bi bi-chevron-right"></i>
+                </a>
+              </li>
+              <li>
+                <a href="https://library.csp.edu/students/policies">
+                  Policies &amp; FAQs <i class="bi bi-chevron-right"></i>
+                </a>
+              </li>
+            </ul>
+            <a class="service-cta cta-gold" href="https://library.csp.edu/tutor/brainfuse">
+              <i class="bi bi-laptop" aria-hidden="true"></i>Get Tutoring Help
+            </a>
+          </article>
+
+          <!-- Writing Center -->
+          <article class="service-card" aria-labelledby="service-writing">
+            <div class="service-icon icon-navy" aria-hidden="true"><i class="bi bi-pencil-square"></i></div>
+            <h3 class="service-title" id="service-writing">Writing Center</h3>
+            <p class="service-desc">Support with any writing assignment — from brainstorm to final draft.</p>
+            <ul class="service-links" role="list">
+              <li>
+                <a href="https://library.csp.edu/undergrad-student/appt">
+                  Book an appointment <i class="bi bi-chevron-right"></i>
+                </a>
+              </li>
+              <li>
+                <a href="https://library.csp.edu/citation-guides">
+                  Citation guides <i class="bi bi-chevron-right"></i>
+                </a>
+              </li>
+            </ul>
+            <a class="service-cta cta-navy" href="https://library.csp.edu/undergrad-student/appt">
+              <i class="bi bi-calendar-check" aria-hidden="true"></i>Make an Appointment
+            </a>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ── AUDIENCE SELECTOR ───────────────────────────────────────── -->
+    <section class="section section-dark" aria-labelledby="audience-heading">
+      <div class="container">
+        <div class="section-header" style="margin-bottom:24px">
+          <p class="section-eyebrow" style="color:var(--csp-gold-mid)">Find resources tailored to you</p>
+          <h2 class="section-title" style="color:#fff" id="audience-heading">I'm a…</h2>
+        </div>
+        <nav class="audience-grid" aria-label="Audience research guides">
+          <a class="audience-item" style="display:inline-flex;align-items:center;gap:9px;padding:12px 22px;font-family:var(--font-display);font-size:.85rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;background:rgba(255,255,255,.07);border:1.5px solid rgba(255,255,255,.12);color:#fff;border-radius:4px;text-decoration:none;" href="https://library.csp.edu/undergraduate">
+            <i class="bi bi-person" aria-hidden="true"></i>Undergraduate Student
+          </a>
+          <a class="audience-item" style="display:inline-flex;align-items:center;gap:9px;padding:12px 22px;font-family:var(--font-display);font-size:.85rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;background:rgba(255,255,255,.07);border:1.5px solid rgba(255,255,255,.12);color:#fff;border-radius:4px;text-decoration:none;" href="https://library.csp.edu/graduate">
+            <i class="bi bi-mortarboard" aria-hidden="true"></i>Graduate Student
+          </a>
+          <a class="audience-item" style="display:inline-flex;align-items:center;gap:9px;padding:12px 22px;font-family:var(--font-display);font-size:.85rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;background:rgba(255,255,255,.07);border:1.5px solid rgba(255,255,255,.12);color:#fff;border-radius:4px;text-decoration:none;" href="https://library.csp.edu/csp-global">
+            <i class="bi bi-globe-americas" aria-hidden="true"></i>CSP Global Student
+          </a>
+          <a class="audience-item" style="display:inline-flex;align-items:center;gap:9px;padding:12px 22px;font-family:var(--font-display);font-size:.85rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;background:rgba(255,255,255,.07);border:1.5px solid rgba(255,255,255,.12);color:#fff;border-radius:4px;text-decoration:none;" href="https://library.csp.edu/faculty">
+            <i class="bi bi-building" aria-hidden="true"></i>Faculty &amp; Instructor
+          </a>
+          <a class="audience-item" style="display:inline-flex;align-items:center;gap:9px;padding:12px 22px;font-family:var(--font-display);font-size:.85rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;background:rgba(255,255,255,.07);border:1.5px solid rgba(255,255,255,.12);color:#fff;border-radius:4px;text-decoration:none;" href="https://library.csp.edu/community-alumni">
+            <i class="bi bi-people" aria-hidden="true"></i>Community or Alumni
+          </a>
+        </nav>
+      </div>
+    </section>
+
+    <!-- ── MORE AT THE LIBRARY ─────────────────────────────────────── -->
+    <section class="section" aria-labelledby="more-heading">
+      <div class="container">
+        <div class="section-header">
+          <p class="section-eyebrow" style="color:var(--csp-navy-60)">Also in the Library building</p>
+          <h2 class="section-title" style="color:var(--csp-navy)" id="more-heading">More at the Library</h2>
+        </div>
+        <div class="more-grid">
+
+          <a class="more-card" href="https://library.csp.edu/cic/home">
+            <div class="more-card-bg" style="background-image:url('https://main.dy1n2ifa5qdl6.amplifyapp.com/csp-library-card-cic.jpg')" aria-hidden="true"></div>
+            <div class="more-card-overlay" aria-hidden="true"></div>
+            <div class="more-card-body">
+              <p class="more-card-tag">For teachers &amp; educators</p>
+              <p class="more-card-title">Curriculum &amp; Instruction Center</p>
+              <span class="more-card-link">Explore <i class="bi bi-arrow-right" aria-hidden="true"></i></span>
+            </div>
+          </a>
+
+          <a class="more-card" href="https://library.csp.edu/archives-special-collections">
+            <div class="more-card-bg" style="background-image:url('https://main.dy1n2ifa5qdl6.amplifyapp.com/csp-library-card-archives.jpg')" aria-hidden="true"></div>
+            <div class="more-card-overlay" aria-hidden="true"></div>
+            <div class="more-card-body">
+              <p class="more-card-tag">History &amp; rare materials</p>
+              <p class="more-card-title">University Archives &amp; Special Collections</p>
+              <span class="more-card-link">Explore <i class="bi bi-arrow-right" aria-hidden="true"></i></span>
+            </div>
+          </a>
+
+          <a class="more-card" href="https://www.csp.edu/it-help-desk/" target="_blank" rel="noopener">
+            <div class="more-card-bg" style="background-image:url('https://main.dy1n2ifa5qdl6.amplifyapp.com/csp-library-card-itdesk.jpg')" aria-hidden="true"></div>
+            <div class="more-card-overlay" aria-hidden="true"></div>
+            <div class="more-card-body">
+              <p class="more-card-tag">Technology support</p>
+              <p class="more-card-title">IT Help Desk</p>
+              <span class="more-card-link">Get Support <i class="bi bi-box-arrow-up-right" aria-hidden="true"></i></span>
+            </div>
+          </a>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ── POPULAR RESOURCES ──────────────────────────────────────── -->
+    <section class="section section-alt" aria-labelledby="popular-heading">
+      <div class="container">
+        <div class="section-header">
+          <p class="section-eyebrow" style="color:var(--csp-navy-60)">Frequently used</p>
+          <h2 class="section-title" style="color:var(--csp-navy)" id="popular-heading">Popular Resources</h2>
+        </div>
+        <div class="popular-grid">
+          <a class="popular-item" href="https://csp.libanswers.com/search/">
+            <i class="bi bi-question-circle icon-main" aria-hidden="true"></i>
+            <span class="popular-item-text">Frequently Asked Questions</span>
+            <i class="bi bi-chevron-right icon-arrow" aria-hidden="true"></i>
+          </a>
+          <a class="popular-item" href="https://csp.libcal.com/r/search/studyroom">
+            <i class="bi bi-door-open icon-main" aria-hidden="true"></i>
+            <span class="popular-item-text">Reserve a Study Room</span>
+            <i class="bi bi-chevron-right icon-arrow" aria-hidden="true"></i>
+          </a>
+          <a class="popular-item" href="https://library.csp.edu/az.php">
+            <i class="bi bi-database icon-main" aria-hidden="true"></i>
+            <span class="popular-item-text">A–Z Database List</span>
+            <i class="bi bi-chevron-right icon-arrow" aria-hidden="true"></i>
+          </a>
+          <a class="popular-item" href="https://library.csp.edu/citation-guides">
+            <i class="bi bi-quote icon-main" aria-hidden="true"></i>
+            <span class="popular-item-text">Citation Style Guides</span>
+            <i class="bi bi-chevron-right icon-arrow" aria-hidden="true"></i>
+          </a>
+          <a class="popular-item" href="https://library.csp.edu/?b=s&group_id=28452">
+            <i class="bi bi-map icon-main" aria-hidden="true"></i>
+            <span class="popular-item-text">Research Guides</span>
+            <i class="bi bi-chevron-right icon-arrow" aria-hidden="true"></i>
+          </a>
+          <a class="popular-item" href="https://library.csp.edu/brainfuse">
+            <i class="bi bi-laptop icon-main" aria-hidden="true"></i>
+            <span class="popular-item-text">Brainfuse Online Tutoring</span>
+            <i class="bi bi-chevron-right icon-arrow" aria-hidden="true"></i>
+          </a>
+          <a class="popular-item" href="https://csp.libcal.com/hours/" target="_blank" rel="noopener">
+            <i class="bi bi-clock icon-main" aria-hidden="true"></i>
+            <span class="popular-item-text">Hours &amp; Location</span>
+            <i class="bi bi-chevron-right icon-arrow" aria-hidden="true"></i>
+          </a>
+          <a class="popular-item" href="https://www.csp.edu/it-help-desk/" target="_blank" rel="noopener">
+            <i class="bi bi-printer icon-main" aria-hidden="true"></i>
+            <span class="popular-item-text">Printing &amp; Scanning</span>
+            <i class="bi bi-chevron-right icon-arrow" aria-hidden="true"></i>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── NEWS & EVENTS ──────────────────────────────────────────── -->
+    <section class="section" aria-labelledby="news-heading">
+      <div class="container">
+        <div class="section-header">
+          <p class="section-eyebrow" style="color:var(--csp-navy-60)">Stay connected</p>
+          <h2 class="section-title" style="color:var(--csp-navy)" id="news-heading">News &amp; Events</h2>
+        </div>
+        <div class="news-events-grid">
+
+          <div class="ne-card">
+            <div class="ne-card-header">
+              <h3 class="ne-card-title">Library News &amp; Updates</h3>
+              <a class="ne-card-link" href="https://library.csp.edu/blog">
+                All posts <i class="bi bi-arrow-right" aria-hidden="true"></i>
+              </a>
+            </div>
+            <div class="ne-card-body">
+              <!-- LibGuides blog box renders here in production -->
+              <div class="ne-placeholder">
+                <i class="bi bi-megaphone" aria-hidden="true"></i>
+                <p>Latest news from the library appears here.<br>
+                  <code>s-lib-box: Blog / Recent Posts</code></p>
+              </div>
+            </div>
+          </div>
+
+          <div class="ne-card">
+            <div class="ne-card-header">
+              <h3 class="ne-card-title">Upcoming Events</h3>
+              <a class="ne-card-link" href="https://csp.libcal.com/calendar/library" target="_blank" rel="noopener">
+                View all <i class="bi bi-arrow-right" aria-hidden="true"></i>
+              </a>
+            </div>
+            <div class="ne-card-body">
+              <!-- LibCal event widget renders here in production -->
+              <div class="ne-placeholder">
+                <i class="bi bi-calendar-event" aria-hidden="true"></i>
+                <p>Upcoming library events appear here.<br>
+                  <code>LibCal events widget</code></p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       FOOTER
+  ═══════════════════════════════════════════════════════════════════ -->
+  <footer class="site-footer" aria-label="Site footer">
+    <div class="container">
+      <div class="footer-grid">
+
+        <!-- Col 1: Brand + address -->
+        <div class="footer-brand">
+          <img src="https://libapps.s3.amazonaws.com/customers/955/images/csplib-logo.png" alt="CSP Library">
+          <p>Supporting research, learning, and academic success for the Concordia University community.</p>
+          <address class="footer-address" style="font-style:normal">
+            1282 Concordia Avenue<br>Saint Paul, MN 55104
+          </address>
+          <div class="footer-social" aria-label="Social media">
+            <a href="https://www.facebook.com/csplibrary/" target="_blank" rel="noopener" aria-label="Facebook">
+              <i class="bi bi-facebook" aria-hidden="true"></i>
+            </a>
+            <a href="https://www.instagram.com/csplibrary/" target="_blank" rel="noopener" aria-label="Instagram">
+              <i class="bi bi-instagram" aria-hidden="true"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- Col 2: Find Resources -->
+        <div>
+          <p class="footer-col-title">Find Resources</p>
+          <ul class="footer-links">
+            <li><a href="https://library.csp.edu/find/guides">Research Guides</a></li>
+            <li><a href="https://library.csp.edu/find/onesearch">OneSearch</a></li>
+            <li><a href="https://library.csp.edu/az.php">A–Z Databases</a></li>
+            <li><a href="https://library.csp.edu/find/journals">Journals</a></li>
+            <li><a href="https://library.csp.edu/find/ebooks">Ebooks</a></li>
+            <li><a href="https://library.csp.edu/archives-special-collections">Archives</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 3: Services -->
+        <div>
+          <p class="footer-col-title">Services</p>
+          <ul class="footer-links">
+            <li><a href="https://library.csp.edu/services/help">Ask a Librarian</a></li>
+            <li><a href="https://library.csp.edu/tutoring-support">Tutoring Support</a></li>
+            <li><a href="https://library.csp.edu/writing-center">Writing Center</a></li>
+            <li><a href="https://library.csp.edu/services/ill">Interlibrary Loan</a></li>
+            <li><a href="https://library.csp.edu/services/study-rooms">Study Rooms</a></li>
+            <li><a href="https://library.csp.edu/faculty">Faculty Support</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 4: Contact -->
+        <div>
+          <p class="footer-col-title">Contact Us</p>
+          <div class="footer-contact">
+            <div class="footer-contact-item">
+              <i class="bi bi-telephone" aria-hidden="true"></i>
+              <a href="tel:+16516418237">651-641-8237</a>
+            </div>
+            <div class="footer-contact-item">
+              <i class="bi bi-envelope" aria-hidden="true"></i>
+              <a href="mailto:library@csp.edu">library@csp.edu</a>
+            </div>
+            <div class="footer-contact-item">
+              <i class="bi bi-clock" aria-hidden="true"></i>
+              <a href="https://csp.libcal.com/hours/" target="_blank" rel="noopener">View hours</a>
+            </div>
+            <div class="footer-contact-item">
+              <i class="bi bi-flag" aria-hidden="true"></i>
+              <a href="https://csp.libanswers.com/form?queue_id=3005">Report a problem</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="footer-bottom">
+        <p>© Concordia University, St. Paul · <a href="https://library.csp.edu/about/policies">Library Policies</a></p>
+        <div style="display:flex;align-items:center;gap:20px;">
+          <a href="#main-content">
+            <i class="bi bi-arrow-up" aria-hidden="true"></i>Back to top
+          </a>
+          <a href="/libapps/login.php" style="font-size:.72rem;color:rgba(255,255,255,.2);text-decoration:none;transition:color .15s;" onmouseover="this.style.color='rgba(255,255,255,.5)'" onmouseout="this.style.color='rgba(255,255,255,.2)'">
+            Admin
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-YvpcrYf0tY3lHB60NNkmXc4s9bIOgUxi8T/jzmruXF/6bSfM9lMGvX4OdvSGjO4"
+          crossorigin="anonymous"></script>
+
+  <script>
+    /* ─── OneSearch ───────────────────────────────────────────────── */
+    function doSearch() {
+      var q = document.getElementById('heroSearch').value.trim();
+      if (!q) return;
+      window.location.href =
+        'https://clic-concordia.primo.exlibrisgroup.com/discovery/search' +
+        '?query=any,contains,' + encodeURIComponent(q) +
+        '&vid=01CLIC_CONCORDIA:CSP&lang=en&search_scope=MyInst_and_CI';
+    }
+    document.getElementById('heroSearch').addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') doSearch();
+    });
+
+    /* ─── Nav dropdown controller ─────────────────────────────────── */
+    (function () {
+      'use strict';
+      var DESKTOP = 992, DELAY = 120;
+      var navbar   = document.getElementById('cspNavbar');
+      var backdrop = document.getElementById('cspBackdrop');
+      var items    = document.querySelectorAll('.csp-nav-item[id]');
+      var openItem = null, closeTimer = null;
+
+      function isDesktop() { return window.innerWidth >= DESKTOP; }
+      function getDrop(item) { return item.querySelector('.csp-dropdown'); }
+      function getTrig(item) { return item.querySelector('.csp-nav-link'); }
+
+      function open(item) {
+        if (!isDesktop()) return;
+        clearTimeout(closeTimer);
+        if (openItem && openItem !== item) closeNow(openItem);
+        var drop = getDrop(item), trig = getTrig(item);
+        if (!drop) return;
+        openItem = item; item.classList.add('is-open');
+        trig.setAttribute('aria-expanded', 'true');
+        drop.style.display = 'block';
+        backdrop.classList.add('is-shown');
+        requestAnimationFrame(function() { requestAnimationFrame(function() {
+          drop.classList.add('is-visible'); backdrop.classList.add('is-visible');
+        }); });
+      }
+
+      function schedule(item) {
+        clearTimeout(closeTimer);
+        closeTimer = setTimeout(function() { closeNow(item); }, DELAY);
+      }
+
+      function closeNow(item) {
+        if (!item) return;
+        var drop = getDrop(item), trig = getTrig(item);
+        if (!drop) return;
+        item.classList.remove('is-open'); trig.setAttribute('aria-expanded', 'false');
+        drop.classList.remove('is-visible'); backdrop.classList.remove('is-visible');
+        setTimeout(function() { if (!item.classList.contains('is-open')) drop.style.display = ''; }, 220);
+        setTimeout(function() {
+          if (!document.querySelector('.csp-nav-item.is-open')) { backdrop.classList.remove('is-shown'); openItem = null; }
+        }, 220);
+      }
+
+      items.forEach(function(item) {
+        var drop = getDrop(item), trig = getTrig(item);
+        if (!drop || !trig) return;
+        item.addEventListener('mouseenter', function() { if (isDesktop()) open(item); });
+        item.addEventListener('mouseleave', function() { if (isDesktop()) schedule(item); });
+        drop.addEventListener('mouseenter', function() { clearTimeout(closeTimer); });
+        drop.addEventListener('mouseleave', function() { if (isDesktop()) schedule(item); });
+        trig.addEventListener('click', function(e) {
+          if (isDesktop()) return;
+          e.preventDefault();
+          if (item.classList.contains('is-open')) { closeNow(item); } else {
+            if (openItem) closeNow(openItem);
+            openItem = item; item.classList.add('is-open'); trig.setAttribute('aria-expanded', 'true');
+            drop.style.display = 'block';
+            requestAnimationFrame(function() { requestAnimationFrame(function() { drop.classList.add('is-visible'); }); });
+          }
+        });
+      });
+
+      backdrop.addEventListener('click', function() { if (openItem) closeNow(openItem); });
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && openItem) { closeNow(openItem); getTrig(openItem) && getTrig(openItem).focus(); }
+      });
+      document.getElementById('cspNavCollapse') &&
+        document.getElementById('cspNavCollapse').addEventListener('hide.bs.collapse', function() {
+          if (openItem) closeNow(openItem);
+        });
+      window.addEventListener('scroll', function() {
+        navbar.classList.toggle('is-scrolled', window.scrollY > 8);
+      }, { passive: true });
+    })();
+  </script>
+
+</body>
+</html>
