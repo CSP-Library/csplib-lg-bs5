@@ -1,0 +1,605 @@
+/* ═══════════════════════════════════════════════════════════════════
+   CSP LIBRARY — RETRO TERMINAL MODE
+   Inspired by 1980s OPAC terminals (NOTIS, Dynix, VT100 green-screen)
+   ═══════════════════════════════════════════════════════════════════
+
+   INSTRUCTIONS:
+   Append the entire contents of this file to libguides-1-custom-css.css
+   when preparing the LibGuides Custom CSS paste. Do NOT include <style>
+   tags. All rules here are scoped under body.retro-mode and are inert
+   until the user clicks the "Go retro" link in the footer.
+
+   The toggle is wired in libguides-2-custom-js.js and persists across
+   page loads via localStorage (key: csp-retro).
+   ═══════════════════════════════════════════════════════════════════ */
+
+
+/* ── Global shell ────────────────────────────────────────────────── */
+body.retro-mode {
+  background-color: #050f05 !important;
+  color: #33ff33 !important;
+  font-family: 'Courier New', Courier, 'Lucida Console', monospace !important;
+}
+
+body.retro-mode,
+body.retro-mode #s-lg-guide-main,
+body.retro-mode #s-lg-guide-main > .container,
+body.retro-mode #s-lg-guide-main > .container > .row,
+body.retro-mode .s-lg-col-md-12,
+body.retro-mode .s-lg-guide-main,
+body.retro-mode .s-lg-box-wrapper-hero {
+  background-color: #050f05 !important;
+}
+
+/* Phosphor scanlines */
+body.retro-mode::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.10) 2px,
+    rgba(0, 0, 0, 0.10) 4px
+  );
+  pointer-events: none;
+  z-index: 99999;
+}
+
+/* Default text glow */
+body.retro-mode h1,
+body.retro-mode h2,
+body.retro-mode h3,
+body.retro-mode h4,
+body.retro-mode p,
+body.retro-mode li,
+body.retro-mode span,
+body.retro-mode label,
+body.retro-mode address {
+  font-family: 'Courier New', Courier, 'Lucida Console', monospace !important;
+  color: #33ff33 !important;
+}
+
+body.retro-mode a {
+  font-family: 'Courier New', Courier, 'Lucida Console', monospace !important;
+  color: #66ff66 !important;
+  text-decoration: underline;
+}
+
+body.retro-mode a:hover {
+  background: #33ff33 !important;
+  color: #050f05 !important;
+  text-decoration: none;
+}
+
+body.retro-mode * {
+  border-radius: 0 !important;
+}
+
+
+/* ── Navigation ──────────────────────────────────────────────────── */
+body.retro-mode .csp-navbar {
+  background: #050f05 !important;
+  border-bottom: 1px solid #33ff33 !important;
+  box-shadow: 0 0 16px rgba(51, 255, 51, 0.2) !important;
+}
+
+body.retro-mode .csp-brand img {
+  filter: brightness(0) invert(1) sepia(1) saturate(4) hue-rotate(85deg) !important;
+  opacity: 0.85;
+}
+
+body.retro-mode .csp-brand-divider {
+  background: #1a4a1a !important;
+}
+
+body.retro-mode .csp-brand-text {
+  color: #33ff33 !important;
+  font-family: 'Courier New', Courier, monospace !important;
+  text-shadow: 0 0 8px rgba(51, 255, 51, 0.7);
+}
+
+body.retro-mode .csp-nav-link {
+  color: #33ff33 !important;
+  font-family: 'Courier New', Courier, monospace !important;
+  border-bottom: 2px solid transparent !important;
+}
+
+body.retro-mode .csp-nav-link:hover,
+body.retro-mode .csp-nav-item.is-open > .csp-nav-link {
+  color: #050f05 !important;
+  background: #33ff33 !important;
+  border-bottom-color: transparent !important;
+}
+
+body.retro-mode .csp-dropdown {
+  background: #050f05 !important;
+  border: 1px solid #33ff33 !important;
+  border-top: 2px solid #33ff33 !important;
+  box-shadow: 0 0 20px rgba(51, 255, 51, 0.25) !important;
+}
+
+body.retro-mode .csp-dropdown-item {
+  color: #33ff33 !important;
+  font-family: 'Courier New', Courier, monospace !important;
+}
+
+body.retro-mode .csp-dropdown-item i {
+  color: #33ff33 !important;
+}
+
+body.retro-mode .csp-dropdown-item:hover {
+  background: #33ff33 !important;
+  color: #050f05 !important;
+  padding-left: 16px !important;
+}
+
+body.retro-mode .csp-dropdown-item:hover i {
+  color: #050f05 !important;
+}
+
+body.retro-mode .csp-col-heading {
+  color: #33ff33 !important;
+  font-family: 'Courier New', Courier, monospace !important;
+  border-bottom-color: #1a4a1a !important;
+}
+
+body.retro-mode .csp-mega-link {
+  color: #33ff33 !important;
+  font-family: 'Courier New', Courier, monospace !important;
+}
+
+body.retro-mode .csp-mega-link i { color: #1a8a1a !important; }
+
+body.retro-mode .csp-mega-link:hover {
+  background: #33ff33 !important;
+  color: #050f05 !important;
+}
+
+body.retro-mode .csp-btn-ghost,
+body.retro-mode .csp-btn-primary {
+  background: #050f05 !important;
+  color: #33ff33 !important;
+  border: 1px solid #33ff33 !important;
+  font-family: 'Courier New', Courier, monospace !important;
+}
+
+body.retro-mode .csp-btn-ghost:hover,
+body.retro-mode .csp-btn-primary:hover {
+  background: #33ff33 !important;
+  color: #050f05 !important;
+}
+
+body.retro-mode .csp-backdrop {
+  background: rgba(0, 10, 0, 0.85) !important;
+}
+
+
+/* ── Hero ────────────────────────────────────────────────────────── */
+body.retro-mode .hero {
+  background: #050f05 !important;
+  min-height: auto !important;
+  border-bottom: 1px solid #33ff33 !important;
+}
+
+body.retro-mode .hero-bg { display: none !important; }
+body.retro-mode .hero-overlay { display: none !important; }
+body.retro-mode .hero::before { display: none !important; }
+
+body.retro-mode .hero-eyebrow {
+  color: #1ab81a !important;
+  font-family: 'Courier New', Courier, monospace !important;
+  letter-spacing: .15em;
+}
+
+body.retro-mode .hero-eyebrow::before {
+  display: none !important;
+}
+
+body.retro-mode .hero-heading {
+  color: #33ff33 !important;
+  font-family: 'Courier New', Courier, monospace !important;
+  font-size: clamp(1.6rem, 4vw, 2.6rem) !important;
+  text-shadow: 0 0 14px rgba(51, 255, 51, 0.8) !important;
+}
+
+/* Blinking cursor after the heading */
+body.retro-mode .hero-heading::after {
+  content: '_';
+  animation: retro-blink 1s step-end infinite;
+}
+
+@keyframes retro-blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
+body.retro-mode .hero-heading em {
+  color: #ffdd00 !important;
+  font-style: normal !important;
+  text-shadow: 0 0 12px rgba(255, 221, 0, 0.7) !important;
+}
+
+body.retro-mode .hero-sub {
+  color: #1ab81a !important;
+  font-family: 'Courier New', Courier, monospace !important;
+}
+
+body.retro-mode .hero-search-form {
+  background: #050f05 !important;
+  border: 1px solid #33ff33 !important;
+  box-shadow: 0 0 14px rgba(51, 255, 51, 0.35) !important;
+}
+
+body.retro-mode .hero-search-form input {
+  background: #050f05 !important;
+  color: #33ff33 !important;
+  font-family: 'Courier New', Courier, monospace !important;
+  border-right: 1px solid #1a4a1a !important;
+  caret-color: #33ff33;
+}
+
+body.retro-mode .hero-search-form input::placeholder {
+  color: #1a5a1a !important;
+}
+
+body.retro-mode .hero-search-form button {
+  background: #050f05 !important;
+  color: #33ff33 !important;
+  font-family: 'Courier New', Courier, monospace !important;
+}
+
+body.retro-mode .hero-search-form button:hover {
+  background: #33ff33 !important;
+  color: #050f05 !important;
+}
+
+body.retro-mode .hero-alt-link {
+  color: #1ab81a !important;
+}
+
+body.retro-mode .hero-alt-link:hover {
+  color: #33ff33 !important;
+  background: none !important;
+  text-decoration: underline;
+}
+
+body.retro-mode .hero-alt-sep { color: #1a4a1a !important; }
+
+
+/* ── Feature bar ─────────────────────────────────────────────────── */
+body.retro-mode .feature-bar {
+  background: #050f05 !important;
+  border-top: 1px solid #1a4a1a !important;
+  border-bottom: 2px solid #33ff33 !important;
+}
+
+body.retro-mode .feature-bar-eyebrow {
+  color: #33ff33 !important;
+  font-family: 'Courier New', Courier, monospace !important;
+}
+
+body.retro-mode .feature-bar-eyebrow::after {
+  background: #1a4a1a !important;
+}
+
+body.retro-mode .feature-bar-badge {
+  background: #050f05 !important;
+  color: #ffdd00 !important;
+  border: 1px solid #ffdd00 !important;
+  font-family: 'Courier New', Courier, monospace !important;
+  text-shadow: 0 0 6px rgba(255, 221, 0, 0.6) !important;
+}
+
+body.retro-mode .feature-bar-heading {
+  color: #33ff33 !important;
+  font-family: 'Courier New', Courier, monospace !important;
+  text-shadow: 0 0 10px rgba(51, 255, 51, 0.7) !important;
+}
+
+body.retro-mode .feature-bar-desc {
+  color: #1ab81a !important;
+  font-family: 'Courier New', Courier, monospace !important;
+}
+
+body.retro-mode .feature-bar-cta {
+  background: #050f05 !important;
+  color: #33ff33 !important;
+  border: 1px solid #33ff33 !important;
+  font-family: 'Courier New', Courier, monospace !important;
+  box-shadow: 0 0 8px rgba(51, 255, 51, 0.2) !important;
+}
+
+body.retro-mode .feature-bar-cta:hover {
+  background: #33ff33 !important;
+  color: #050f05 !important;
+}
+
+body.retro-mode .feature-bar-learn {
+  color: #1a8a1a !important;
+  border-bottom-color: #1a4a1a !important;
+  font-family: 'Courier New', Courier, monospace !important;
+}
+
+body.retro-mode .feature-bar-learn:hover {
+  color: #33ff33 !important;
+  background: none !important;
+  border-bottom-color: #33ff33 !important;
+}
+
+
+/* ── Shared sections ─────────────────────────────────────────────── */
+body.retro-mode .section,
+body.retro-mode .section-alt,
+body.retro-mode .section-dark {
+  background: #050f05 !important;
+}
+
+body.retro-mode .section-alt {
+  border-top: 1px solid #1a4a1a !important;
+  border-bottom: 1px solid #1a4a1a !important;
+}
+
+body.retro-mode .section-dark {
+  border-top: 1px solid #33ff33 !important;
+  border-bottom: 1px solid #33ff33 !important;
+}
+
+body.retro-mode .section-eyebrow {
+  color: #1ab81a !important;
+  font-family: 'Courier New', Courier, monospace !important;
+}
+
+body.retro-mode .section-title {
+  color: #33ff33 !important;
+  font-family: 'Courier New', Courier, monospace !important;
+  text-shadow: 0 0 10px rgba(51, 255, 51, 0.55) !important;
+}
+
+
+/* ── Core Services ───────────────────────────────────────────────── */
+body.retro-mode .services-grid {
+  gap: 0 !important;
+  border: 1px solid #33ff33 !important;
+  box-shadow: 0 0 18px rgba(51, 255, 51, 0.18) !important;
+}
+
+body.retro-mode .service-card {
+  background: #050f05 !important;
+  border-right: 1px solid #1a4a1a !important;
+}
+
+body.retro-mode .service-card:hover { background: #070f07 !important; }
+body.retro-mode .service-card::after { display: none !important; }
+
+body.retro-mode .icon-teal,
+body.retro-mode .icon-gold,
+body.retro-mode .icon-navy {
+  background: #050f05 !important;
+  color: #33ff33 !important;
+  border: 1px solid #33ff33 !important;
+  box-shadow: 0 0 8px rgba(51, 255, 51, 0.3) !important;
+}
+
+body.retro-mode .service-title {
+  color: #33ff33 !important;
+  font-family: 'Courier New', Courier, monospace !important;
+  text-shadow: 0 0 6px rgba(51, 255, 51, 0.5) !important;
+}
+
+body.retro-mode .service-desc { color: #1ab81a !important; }
+
+body.retro-mode .service-links li { border-bottom-color: #1a3a1a !important; }
+
+body.retro-mode .service-links a {
+  color: #66ff66 !important;
+  font-family: 'Courier New', Courier, monospace !important;
+}
+
+body.retro-mode .service-links a:hover {
+  color: #050f05 !important;
+  background: #33ff33 !important;
+  padding-left: 8px !important;
+}
+
+body.retro-mode .service-links a i { color: #1a4a1a !important; }
+
+body.retro-mode .badge-live {
+  background: #050f05 !important;
+  color: #33ff33 !important;
+  border: 1px solid #33ff33 !important;
+  animation: retro-blink 1s step-end infinite !important;
+}
+
+body.retro-mode .cta-teal,
+body.retro-mode .cta-gold,
+body.retro-mode .cta-navy {
+  background: #050f05 !important;
+  color: #33ff33 !important;
+  border: 1px solid #33ff33 !important;
+  box-shadow: 0 0 6px rgba(51, 255, 51, 0.2) !important;
+}
+
+body.retro-mode .cta-teal:hover,
+body.retro-mode .cta-gold:hover,
+body.retro-mode .cta-navy:hover {
+  background: #33ff33 !important;
+  color: #050f05 !important;
+}
+
+
+/* ── Audience selector ───────────────────────────────────────────── */
+body.retro-mode .audience-item {
+  background: #050f05 !important;
+  border: 1px solid #1a4a1a !important;
+  color: #33ff33 !important;
+  font-family: 'Courier New', Courier, monospace !important;
+}
+
+body.retro-mode .audience-item i { color: #1a8a1a !important; }
+
+body.retro-mode .audience-item:hover {
+  background: #33ff33 !important;
+  border-color: #33ff33 !important;
+  color: #050f05 !important;
+}
+
+body.retro-mode .audience-item:hover i { color: #050f05 !important; }
+
+
+/* ── More at the Library ─────────────────────────────────────────── */
+body.retro-mode .more-card {
+  background: #050f05 !important;
+  border: 1px solid #33ff33 !important;
+  min-height: auto !important;
+  box-shadow: 0 0 10px rgba(51, 255, 51, 0.15) !important;
+}
+
+body.retro-mode .more-card-bg { display: none !important; }
+body.retro-mode .more-card-overlay { display: none !important; }
+body.retro-mode .more-card-body { position: static !important; }
+
+body.retro-mode .more-card-tag { color: #1ab81a !important; }
+
+body.retro-mode .more-card-title {
+  color: #33ff33 !important;
+  font-family: 'Courier New', Courier, monospace !important;
+  text-shadow: 0 0 8px rgba(51, 255, 51, 0.5) !important;
+}
+
+body.retro-mode .more-card-link {
+  color: #1ab81a !important;
+  font-family: 'Courier New', Courier, monospace !important;
+}
+
+body.retro-mode .more-card:hover { background: #070f07 !important; }
+body.retro-mode .more-card:hover .more-card-link { color: #ffdd00 !important; }
+body.retro-mode .more-card:hover .more-card-bg { transform: none !important; }
+
+
+/* ── Popular Resources ───────────────────────────────────────────── */
+body.retro-mode .popular-grid {
+  background: #1a4a1a !important;
+  border: 1px solid #33ff33 !important;
+  box-shadow: 0 0 14px rgba(51, 255, 51, 0.15) !important;
+}
+
+body.retro-mode .popular-item {
+  background: #050f05 !important;
+  color: #33ff33 !important;
+}
+
+body.retro-mode .popular-item:hover { background: #070f07 !important; }
+
+body.retro-mode .popular-item i.icon-main {
+  background: #050f05 !important;
+  color: #33ff33 !important;
+  border: 1px solid #1a4a1a !important;
+}
+
+body.retro-mode .popular-item:hover i.icon-main {
+  background: #33ff33 !important;
+  color: #050f05 !important;
+}
+
+body.retro-mode .popular-item-text {
+  color: #33ff33 !important;
+  font-family: 'Courier New', Courier, monospace !important;
+}
+
+body.retro-mode .popular-item i.icon-arrow { color: #1a4a1a !important; }
+body.retro-mode .popular-item:hover i.icon-arrow { color: #33ff33 !important; }
+
+
+/* ── News & Events ───────────────────────────────────────────────── */
+body.retro-mode .ne-card {
+  background: #050f05 !important;
+  border: 1px solid #33ff33 !important;
+  box-shadow: 0 0 10px rgba(51, 255, 51, 0.12) !important;
+}
+
+body.retro-mode .ne-card-header { border-bottom-color: #1a4a1a !important; }
+
+body.retro-mode .ne-card-title {
+  color: #33ff33 !important;
+  font-family: 'Courier New', Courier, monospace !important;
+}
+
+body.retro-mode .ne-card-link {
+  color: #1ab81a !important;
+  font-family: 'Courier New', Courier, monospace !important;
+}
+
+body.retro-mode .ne-card-link:hover {
+  color: #33ff33 !important;
+  background: none !important;
+}
+
+body.retro-mode .ne-placeholder { color: #1a4a1a !important; }
+body.retro-mode .ne-placeholder i { color: #1a4a1a !important; }
+
+body.retro-mode .ne-placeholder code {
+  background: #050f05 !important;
+  color: #1a8a1a !important;
+  border: 1px solid #1a4a1a !important;
+}
+
+
+/* ── Footer ──────────────────────────────────────────────────────── */
+body.retro-mode .site-footer {
+  background: #050f05 !important;
+  border-top: 2px solid #33ff33 !important;
+  box-shadow: 0 -4px 24px rgba(51, 255, 51, 0.12) !important;
+}
+
+body.retro-mode .footer-brand img {
+  filter: brightness(0) invert(1) sepia(1) saturate(4) hue-rotate(85deg) !important;
+}
+
+body.retro-mode .footer-brand p { color: #1ab81a !important; }
+body.retro-mode .footer-address { color: #1a5a1a !important; }
+
+body.retro-mode .footer-col-title {
+  color: #33ff33 !important;
+  text-shadow: 0 0 6px rgba(51, 255, 51, 0.5) !important;
+}
+
+body.retro-mode .footer-links a { color: #1ab81a !important; }
+body.retro-mode .footer-links a:hover {
+  color: #33ff33 !important;
+  background: none !important;
+}
+
+body.retro-mode .footer-contact-item { color: #1ab81a !important; }
+body.retro-mode .footer-contact-item i { color: #1a5a1a !important; }
+body.retro-mode .footer-contact-item a { color: #1ab81a !important; }
+body.retro-mode .footer-contact-item a:hover {
+  color: #33ff33 !important;
+  background: none !important;
+}
+
+body.retro-mode .footer-social a {
+  background: #050f05 !important;
+  border: 1px solid #1a4a1a !important;
+  color: #1a8a1a !important;
+}
+
+body.retro-mode .footer-social a:hover {
+  background: #33ff33 !important;
+  color: #050f05 !important;
+  border-color: transparent !important;
+}
+
+body.retro-mode .footer-bottom { border-top: 1px solid #1a4a1a; }
+body.retro-mode .footer-bottom p { color: #1a4a1a !important; }
+
+body.retro-mode .footer-bottom a { color: #1a5a1a !important; }
+body.retro-mode .footer-bottom a:hover {
+  color: #33ff33 !important;
+  background: none !important;
+}
+
+/* "Go modern" link gets full green treatment in retro mode */
+body.retro-mode #retro-toggle {
+  color: #33ff33 !important;
+  font-family: 'Courier New', Courier, monospace !important;
+  text-shadow: 0 0 6px rgba(51, 255, 51, 0.6) !important;
+}

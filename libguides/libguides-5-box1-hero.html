@@ -1,0 +1,82 @@
+<!-- ═══════════════════════════════════════════════════════════════
+     BOX 1: Hero + Feature Bar
+     Settings: Floating Box ✓
+     ═══════════════════════════════════════════════════════════════ -->
+<div class="s-lg-box-wrapper-hero">
+
+<!-- ── HERO ────────────────────────────────────────────────────── -->
+    <section class="hero" aria-labelledby="hero-heading">
+      <div class="hero-bg" aria-hidden="true"></div>
+      <div class="hero-overlay" aria-hidden="true"></div>
+      <div class="hero-inner">
+
+        <!-- Hero: welcome + search (full width — status tiles removed for now) -->
+        <!-- TO RESTORE STATUS TILES: add this inline style to the .hero-inner div above:
+             style="max-width:1200px; display:grid; grid-template-columns:1fr 300px; gap:48px 64px; align-items:start; padding:72px 24px 60px;"
+             then re-add the <aside class="hero-stats"> block after the closing </nav> below. -->
+        <p class="hero-eyebrow">Welcome to the CSP Library</p>
+        <h1 class="hero-heading" id="hero-heading">Start your research.<br>Get the <em>support</em> you need.</h1>
+        <p class="hero-sub">Books, articles, databases, tutoring, and writing support — all in one place for the Concordia community.</p>
+
+        <div class="hero-search-form" role="search" aria-label="OneSearch">
+          <input type="text" id="heroSearch" placeholder="Search books, articles, journals, and more…" aria-label="Search OneSearch">
+          <button type="button" onclick="doSearch()">Search</button>
+        </div>
+
+        <nav class="hero-search-alts" aria-label="Search alternatives">
+          <a class="hero-alt-link" href="https://library.csp.edu/?b=s&group_id=28452">
+            <i class="bi bi-map" aria-hidden="true"></i>Research Guides
+          </a>
+          <span class="hero-alt-sep" aria-hidden="true">·</span>
+          <a class="hero-alt-link" href="https://library.csp.edu/az.php">
+            <i class="bi bi-database" aria-hidden="true"></i>All Databases
+          </a>
+          <span class="hero-alt-sep" aria-hidden="true">·</span>
+          <a class="hero-alt-link" href="https://clic-concordia.primo.exlibrisgroup.com/nde/researchAssistant?vid=01CLIC_CONCORDIA:NDE&lang=en" target="_blank" rel="noopener">
+            <i class="bi bi-stars" aria-hidden="true"></i>AI Research Assistant
+          </a>
+          <span class="hero-alt-sep" aria-hidden="true">·</span>
+          <a class="hero-alt-link" href="https://clic-concordia.primo.exlibrisgroup.com/discovery/account?section=overview&vid=01CLIC_CONCORDIA:CSP">
+            <i class="bi bi-person-circle" aria-hidden="true"></i>My Library Account
+          </a>
+        </nav>
+
+      </div>
+    </section>
+
+
+    <!-- ── FEATURE BAR — AI Research Assistant ──────────────────────
+         TO SWAP THIS PROMO: replace .feature-bar-inner contents only.
+         The .feature-bar shell and CSS are designed to accept any
+         single featured tool, service, or announcement.
+    ─────────────────────────────────────────────────────────────────── -->
+    <div class="feature-bar" role="region" aria-label="Featured tool">
+      <div class="feature-bar-inner">
+
+        <div class="feature-bar-eyebrow">
+          <span class="feature-bar-badge">New</span>
+          AI-Powered Research
+        </div>
+
+        <div class="feature-bar-body">
+          <p class="feature-bar-heading">OneSearch Research Assistant</p>
+          <p class="feature-bar-desc">Ask your research question in plain language — get an AI-generated answer with cited sources drawn directly from the CSP Library collection.</p>
+        </div>
+
+        <a class="feature-bar-cta"
+           href="https://clic-concordia.primo.exlibrisgroup.com/nde/researchAssistant?vid=01CLIC_CONCORDIA:NDE&lang=en"
+           target="_blank" rel="noopener">
+          <i class="bi bi-stars" aria-hidden="true"></i>
+          Try it Now
+          <i class="bi bi-arrow-right" aria-hidden="true"></i>
+        </a>
+
+        <a class="feature-bar-learn"
+           href="https://library.csp.edu/onesearchguide/researchassistant">
+          Learn more
+        </a>
+
+      </div>
+    </div>
+
+</div><!-- /s-lg-box-wrapper-hero -->

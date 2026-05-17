@@ -9,7 +9,33 @@
    LibGuides wraps this in its own <script> block automatically.
 ════════════════════════════════════════════════════════════════════ */
 
+/* ─── Retro mode toggle ───────────────────────────────────────────
+   Toggled by the "Go retro" link in the footer. State persists via
+   localStorage (key: csp-retro). The retro CSS in libguides-6-retro-css.css
+   must be appended to the Custom CSS paste for this to have any effect. */
+function toggleRetro(e) {
+  e.preventDefault();
+  var isRetro = document.body.classList.toggle('retro-mode');
+  localStorage.setItem('csp-retro', isRetro ? '1' : '0');
+  var btn = document.getElementById('retro-toggle');
+  if (btn) {
+    btn.textContent = isRetro ? '[Go modern]' : '[Go retro]';
+    btn.style.color = isRetro ? '' : 'rgba(255,255,255,.25)';
+  }
+}
+
+/* Apply saved retro preference before first paint */
+if (localStorage.getItem('csp-retro') === '1') {
+  document.body.classList.add('retro-mode');
+}
+
 document.addEventListener('DOMContentLoaded', function () {
+
+  /* Sync retro toggle label on load */
+  var retroBtn = document.getElementById('retro-toggle');
+  if (retroBtn && localStorage.getItem('csp-retro') === '1') {
+    retroBtn.textContent = '[Go modern]';
+  }
 
 /* ─── OneSearch ───────────────────────────────────────────────── */
     function doSearch() {
