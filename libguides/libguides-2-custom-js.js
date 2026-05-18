@@ -128,3 +128,25 @@ document.addEventListener('DOMContentLoaded', function () {
     })();
 
 }); /* end DOMContentLoaded */
+
+/* ─── Subsite nav ─────────────────────────────────────────────────
+   toggleSubNav is called via inline onclick on each group's mobile
+   toggle button. Must stay in global scope. */
+function toggleSubNav(btn, panelId) {
+  var panel    = document.getElementById(panelId);
+  var expanded = btn.getAttribute('aria-expanded') === 'true';
+  btn.setAttribute('aria-expanded', String(!expanded));
+  panel.classList.toggle('is-open', !expanded);
+}
+
+/* Close all subsite mobile panels when the viewport widens past mobile */
+window.addEventListener('resize', function () {
+  if (window.innerWidth > 767) {
+    document.querySelectorAll('.csp-sub-collapse').forEach(function (p) {
+      p.classList.remove('is-open');
+    });
+    document.querySelectorAll('.csp-sub-toggle').forEach(function (b) {
+      b.setAttribute('aria-expanded', 'false');
+    });
+  }
+}, { passive: true });
