@@ -1,0 +1,178 @@
+/* ==========================================================================
+   CSP Library — Shared Subsite Nav CSS
+   Paste into: LibGuides Admin → Look & Feel → Custom CSS/JS → Custom CSS tab
+
+   CDN dependencies — add these to your system-wide header template if
+   Bootstrap 5 and Bootstrap Icons are not already loaded by LibGuides:
+
+     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+           rel="stylesheet"
+           integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+           crossorigin="anonymous">
+     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+           rel="stylesheet">
+   ========================================================================== */
+
+/* ── Brand tokens ─────────────────────────────────────────────────────── */
+:root {
+  --csp-navy:        #003055;
+  --csp-navy-80:     #1A496D;
+  --csp-navy-60:     #4A6889;
+  --csp-navy-40:     #7A8FAA;
+  --csp-navy-20:     #B3BDCE;
+  --csp-gold:        #E6B222;
+  --csp-gold-hover:  #c99c1a;
+  --csp-gold-light:  #F9EBCE;
+  --csp-gold-mid:    #EFCC7D;
+  --csp-teal:        #00A9A3;
+  --csp-teal-light:  #e0f6f5;
+  --csp-teal-hover:  #007f7b;
+  --csp-gray-light:  #E1E8EC;
+  --csp-sub-height:  56px;
+  --csp-ease:        cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ── Nav shell ────────────────────────────────────────────────────────── */
+.csp-subsite-nav {
+  background: #fff;
+  border-bottom: 1px solid rgba(0,0,0,.09);
+  box-shadow: 0 2px 12px rgba(0,0,0,.06);
+}
+
+/* ── Top row — always visible ─────────────────────────────────────────── */
+.csp-sub-toprow {
+  display: flex;
+  align-items: center;
+  height: var(--csp-sub-height);
+}
+
+/* ── Parent crumb ─────────────────────────────────────────────────────── */
+.csp-crumb {
+  display: flex; align-items: center; gap: 6px;
+  padding-right: 18px; margin-right: 18px;
+  border-right: 1px solid rgba(0,0,0,.1);
+  text-decoration: none; flex-shrink: 0;
+}
+.csp-crumb-chevron {
+  color: var(--csp-navy-40); font-size: .8rem;
+  transition: transform .2s var(--csp-ease), color .15s;
+}
+.csp-crumb:hover .csp-crumb-chevron { transform: translateX(-3px); color: var(--csp-navy); }
+.csp-crumb-logo { height: 22px; opacity: .6; transition: opacity .15s; }
+.csp-crumb:hover .csp-crumb-logo { opacity: 1; }
+.csp-crumb-label {
+  font-size: .72rem; font-weight: 600; letter-spacing: .04em;
+  color: var(--csp-navy-60); white-space: nowrap; transition: color .15s;
+}
+.csp-crumb:hover .csp-crumb-label { color: var(--csp-navy); }
+
+/* ── Subsite identity ─────────────────────────────────────────────────── */
+.csp-sub-identity { display: flex; align-items: center; gap: 9px; flex-shrink: 0; }
+.csp-sub-icon {
+  width: 28px; height: 28px; border-radius: 7px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center; font-size: .95rem;
+}
+.csp-sub-name {
+  font-size: .9375rem; font-weight: 700; color: var(--csp-navy);
+  letter-spacing: -.01em; white-space: nowrap;
+}
+
+/* ── Mobile toggle ────────────────────────────────────────────────────── */
+.csp-sub-toggle {
+  display: none;
+  margin-left: auto;
+  background: none; border: 1px solid var(--csp-navy-20);
+  border-radius: 6px; padding: 5px 9px; cursor: pointer;
+  color: var(--csp-navy); font-size: 1.1rem; line-height: 1;
+  transition: background .15s;
+}
+.csp-sub-toggle:hover { background: var(--csp-gray-light); }
+.csp-sub-toggle[aria-expanded="true"]  .icon-open  { display: none; }
+.csp-sub-toggle[aria-expanded="false"] .icon-close { display: none; }
+
+/* ── Desktop link cluster ─────────────────────────────────────────────── */
+.csp-sub-right { display: flex; align-items: stretch; margin-left: auto; }
+.csp-sub-link {
+  display: flex; align-items: center;
+  padding: 0 12px; font-size: .875rem; font-weight: 500;
+  color: #444; text-decoration: none; white-space: nowrap;
+  border-bottom: 2px solid transparent;
+  transition: color .15s, border-color .15s;
+}
+.csp-sub-link:hover     { color: var(--csp-navy); border-bottom-color: var(--csp-gold); }
+.csp-sub-link.is-active { color: var(--csp-navy); font-weight: 600; border-bottom-color: var(--csp-gold); }
+
+/* ── CTA button ───────────────────────────────────────────────────────── */
+.csp-sub-cta-wrap {
+  display: flex; align-items: center;
+  padding-left: 16px; margin-left: 8px;
+  border-left: 1px solid rgba(0,0,0,.08);
+}
+.csp-sub-cta {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: .8rem; font-weight: 700; padding: 6px 13px;
+  border-radius: 6px; text-decoration: none; white-space: nowrap;
+  border: 1.5px solid transparent; transition: background .15s, color .15s;
+}
+
+/* ── Mobile collapse panel ────────────────────────────────────────────── */
+.csp-sub-collapse {
+  max-height: 0; overflow: hidden;
+  transition: max-height .28s var(--csp-ease);
+  border-top: 0 solid rgba(0,0,0,.07);
+}
+.csp-sub-collapse.is-open { max-height: 480px; border-top-width: 1px; }
+.csp-sub-collapse-inner { padding: 8px 0 14px; }
+.csp-sub-mobile-link {
+  display: flex; align-items: center; gap: 10px;
+  padding: 11px 16px; font-size: .9375rem; font-weight: 500;
+  color: #333; text-decoration: none; border-left: 3px solid transparent;
+  transition: background .12s, color .12s, border-color .12s;
+}
+.csp-sub-mobile-link:hover {
+  background: var(--csp-gold-light); color: var(--csp-navy); border-left-color: var(--csp-gold);
+}
+.csp-sub-mobile-link.is-active {
+  background: var(--csp-gold-light); color: var(--csp-navy);
+  font-weight: 600; border-left-color: var(--csp-gold);
+}
+.csp-sub-mobile-cta {
+  display: flex; align-items: center; gap: 8px;
+  margin: 12px 16px 2px; padding: 11px 16px;
+  font-size: .9rem; font-weight: 700; border-radius: 8px;
+  text-decoration: none; transition: background .15s;
+  border: 1.5px solid transparent;
+}
+
+/* ── Accent variants ──────────────────────────────────────────────────── */
+/* Add the matching class to the <nav> element in each group's header.    */
+
+/* Teal — Curriculum & Instruction Center */
+.accent-teal .csp-sub-icon             { background: var(--csp-teal-light); color: var(--csp-teal); }
+.accent-teal .csp-sub-cta              { background: var(--csp-teal); color: #fff; }
+.accent-teal .csp-sub-cta:hover        { background: var(--csp-teal-hover); }
+.accent-teal .csp-sub-mobile-cta       { background: var(--csp-teal); color: #fff; }
+.accent-teal .csp-sub-mobile-cta:hover { background: var(--csp-teal-hover); }
+
+/* Gold — Writing Center */
+.accent-gold .csp-sub-icon             { background: var(--csp-gold-light); color: #8a6a0d; }
+.accent-gold .csp-sub-cta              { background: var(--csp-gold); color: var(--csp-navy); }
+.accent-gold .csp-sub-cta:hover        { background: var(--csp-gold-hover); }
+.accent-gold .csp-sub-mobile-cta       { background: var(--csp-gold); color: var(--csp-navy); }
+.accent-gold .csp-sub-mobile-cta:hover { background: var(--csp-gold-hover); }
+
+/* Navy — Archives & Special Collections */
+.accent-navy .csp-sub-icon             { background: #dce4ec; color: var(--csp-navy); }
+.accent-navy .csp-sub-cta              { background: var(--csp-navy); color: #fff; }
+.accent-navy .csp-sub-cta:hover        { background: var(--csp-navy-80); }
+.accent-navy .csp-sub-mobile-cta       { background: var(--csp-navy); color: #fff; }
+.accent-navy .csp-sub-mobile-cta:hover { background: var(--csp-navy-80); }
+
+/* ── Mobile (≤ 767px) ─────────────────────────────────────────────────── */
+@media (max-width: 767px) {
+  .csp-sub-toggle  { display: flex; align-items: center; }
+  .csp-sub-right   { display: none; }
+  .csp-sub-name    { font-size: .85rem; overflow: hidden; text-overflow: ellipsis; max-width: 38vw; }
+  .csp-crumb-label { display: none; }
+  .csp-crumb       { padding-right: 12px; margin-right: 12px; }
+}
