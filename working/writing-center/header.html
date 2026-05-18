@@ -1,0 +1,64 @@
+<!-- ==========================================================================
+   Writing Center Subsite Nav — Group Custom Header
+   Paste into: LibGuides → [Writing Center group] → Look & Feel → Header/Footer → Custom Header
+
+   Prerequisites (load once via system-wide LibGuides admin settings):
+     - Bootstrap 5 CSS & JS  (cdn.jsdelivr.net/npm/bootstrap@5.3.3)
+     - Bootstrap Icons CSS   (cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3)
+     - libguides-1-custom-css.css  (system-wide Custom CSS)
+     - libguides-2-custom-js.js   (system-wide Custom JS)
+   ========================================================================== -->
+
+<nav class="csp-subsite-nav accent-gold" aria-label="Writing Center navigation">
+  <div class="container">
+    <div class="csp-sub-toprow">
+
+      <a class="csp-crumb" href="https://library.csp.edu/home" aria-label="Back to CSP Library">
+        <i class="bi bi-chevron-left csp-crumb-chevron" aria-hidden="true"></i>
+        <img class="csp-crumb-logo" src="https://libapps.s3.amazonaws.com/customers/955/images/csplib-logo.png" alt="">
+        <span class="csp-crumb-label">CSP Library</span>
+      </a>
+
+      <div class="csp-sub-identity">
+        <div class="csp-sub-icon"><i class="bi bi-pencil-square" aria-hidden="true"></i></div>
+        <span class="csp-sub-name">Writing Center</span>
+      </div>
+
+      <button class="csp-sub-toggle"
+              aria-expanded="false"
+              aria-controls="wcCollapse"
+              aria-label="Toggle Writing Center navigation"
+              onclick="toggleSubNav(this,'wcCollapse')">
+        <i class="bi bi-list icon-open"  aria-hidden="true"></i>
+        <i class="bi bi-x-lg icon-close" aria-hidden="true"></i>
+      </button>
+
+      <div class="csp-sub-right" role="navigation" aria-label="Writing Center links">
+        <a class="csp-sub-link is-active" href="https://library.csp.edu/writing-center/">Home</a>
+        <a class="csp-sub-link" href="https://library.csp.edu/writing-center/apa">Citation Guides</a>
+        <a class="csp-sub-link" href="https://library.csp.edu/undergrad-student/appt">Undergraduate Students</a>
+        <a class="csp-sub-link" href="https://library.csp.edu/grad-student/submit-paper">Graduate Students</a>
+        <a class="csp-sub-link" href="https://library.csp.edu/writing-center/faculty-resources/tutor">Faculty Resources</a>
+        <div class="csp-sub-cta-wrap">
+          <a class="csp-sub-cta" href="https://library.csp.edu/undergrad-student/appt">
+            <i class="bi bi-calendar-check" aria-hidden="true"></i>Make an Appointment
+          </a>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="csp-sub-collapse" id="wcCollapse" role="navigation" aria-label="Writing Center mobile menu">
+      <div class="csp-sub-collapse-inner">
+        <a class="csp-sub-mobile-link is-active" href="https://library.csp.edu/writing-center/">Home</a>
+        <a class="csp-sub-mobile-link" href="https://library.csp.edu/writing-center/apa">Citation Guides</a>
+        <a class="csp-sub-mobile-link" href="https://library.csp.edu/undergrad-student/appt">Undergraduate Students</a>
+        <a class="csp-sub-mobile-link" href="https://library.csp.edu/grad-student/submit-paper">Graduate Students</a>
+        <a class="csp-sub-mobile-link" href="https://library.csp.edu/writing-center/faculty-resources/tutor">Faculty Resources</a>
+        <a class="csp-sub-mobile-cta" href="https://library.csp.edu/undergrad-student/appt">
+          <i class="bi bi-calendar-check" aria-hidden="true"></i>Make an Appointment
+        </a>
+      </div>
+    </div>
+  </div>
+</nav>
