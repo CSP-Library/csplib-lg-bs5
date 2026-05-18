@@ -1,24 +1,18 @@
 /* ═══════════════════════════════════════════════════════════════════
    CSP LIBRARY — CUSTOM CSS
    LibGuides Admin → System Settings → Look & Feel → Custom JS/CSS → Custom CSS
-   ═══════════════════════════════════════════════════════════════════
-
-   CHANGES IN THIS VERSION:
-   • Stats bar styles removed
-   • Feature bar styles added (.feature-bar, .feature-bar-inner,
-     .feature-bar-eyebrow, .feature-bar-badge, .feature-bar-body,
-     .feature-bar-heading, .feature-bar-desc, .feature-bar-cta,
-     .feature-bar-learn)
 
    INSTRUCTIONS:
    1. Paste the entire contents of this file into the Custom CSS field.
    2. Do NOT include <style> tags — paste only the CSS itself.
-   3. The @import url('https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css');
-@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Barlow:wght@400;500;600&display=swap');
+   3. External dependencies (Bootstrap 5, Bootstrap Icons, Google Fonts)
+      are loaded via <link> tags in libguides-3-header-html.html — do NOT
+      add @import rules here, as LibGuides may strip them.
+   ═══════════════════════════════════════════════════════════════════ */
 
 /* ═══════════════════════════════════════════════════════════════
-       BRAND TOKENS — global.csp.edu visual re-skin
-    ═══════════════════════════════════════════════════════════════ */
+   BRAND TOKENS
+   ═══════════════════════════════════════════════════════════════ */
     :root {
       --csp-navy:        #003055;
       --csp-navy-80:     #1A496D;
