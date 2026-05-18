@@ -532,3 +532,86 @@ body,
   .csp-crumb-label { display: none; }
   .csp-crumb       { padding-right: 12px; margin-right: 12px; }
 }
+
+/* ═══════════════════════════════════════════════════════════════════
+   SUBSITE FOOTER — shared styles for CIC, Writing Center, Archives, etc.
+   Place the accent class on the <footer> element itself.
+   ═══════════════════════════════════════════════════════════════════ */
+
+.csp-sub-footer {
+  background: var(--csp-navy);
+  color: rgba(255,255,255,.7);
+  border-top: 4px solid;
+  padding: 48px 0 0;
+  font-family: var(--font-body);
+}
+
+/* ── Accent top-border colors ─────────────────────────────────────── */
+.csp-sub-footer.accent-teal { border-top-color: var(--csp-teal); }
+.csp-sub-footer.accent-gold { border-top-color: var(--csp-gold); }
+.csp-sub-footer.accent-navy { border-top-color: var(--csp-navy-20); }
+
+/* ── Three-column grid ────────────────────────────────────────────── */
+.csp-sub-footer-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 40px;
+  padding-bottom: 40px;
+  border-bottom: 1px solid rgba(255,255,255,.08);
+}
+
+/* ── Identity column ──────────────────────────────────────────────── */
+.csp-sub-footer-name {
+  font-family: var(--font-display);
+  font-size: 1rem; font-weight: 800;
+  letter-spacing: .04em; text-transform: uppercase;
+  color: #fff; margin: 0 0 8px;
+}
+.csp-sub-footer-tagline {
+  font-size: .825rem; color: rgba(255,255,255,.5);
+  line-height: 1.6; margin: 0 0 24px; max-width: 28ch;
+}
+.csp-sub-footer-logo {
+  height: 28px;
+  filter: brightness(0) invert(1); opacity: .5;
+  display: block; transition: opacity .15s;
+}
+.csp-sub-footer-logo:hover { opacity: .9; }
+
+/* ── Link columns ─────────────────────────────────────────────────── */
+.csp-sub-footer-col-heading {
+  font-family: var(--font-display);
+  font-size: .68rem; font-weight: 700;
+  letter-spacing: .14em; text-transform: uppercase;
+  color: var(--csp-gold-mid); margin: 0 0 16px;
+}
+.csp-sub-footer-links { list-style: none; padding: 0; margin: 0; }
+.csp-sub-footer-links li { margin-bottom: 10px; }
+.csp-sub-footer-links a {
+  color: rgba(255,255,255,.55); text-decoration: none;
+  font-size: .875rem; display: inline-flex; align-items: center; gap: 7px;
+  transition: color .15s;
+}
+.csp-sub-footer-links a:hover { color: #fff; }
+.csp-sub-footer-links a i { opacity: .45; font-size: .85rem; flex-shrink: 0; transition: opacity .15s; }
+.csp-sub-footer-links a:hover i { opacity: 1; }
+
+/* ── Bottom bar ───────────────────────────────────────────────────── */
+.csp-sub-footer-bottom {
+  padding: 18px 0;
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 10px;
+}
+.csp-sub-footer-bottom p { margin: 0; font-size: .78rem; color: rgba(255,255,255,.3); }
+.csp-sub-footer-bottom a {
+  font-size: .78rem; color: rgba(255,255,255,.3);
+  text-decoration: none; transition: color .15s;
+  display: inline-flex; align-items: center; gap: 5px;
+}
+.csp-sub-footer-bottom a:hover { color: rgba(255,255,255,.7); }
+
+/* ── Mobile (≤ 767px) ─────────────────────────────────────────────── */
+@media (max-width: 767px) {
+  .csp-sub-footer { padding: 36px 0 0; }
+  .csp-sub-footer-grid { grid-template-columns: 1fr; gap: 28px; }
+}
