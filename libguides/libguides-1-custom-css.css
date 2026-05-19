@@ -147,6 +147,43 @@
       .hero-stat { flex: 1; min-width: 140px; border-left: none; border-top: 3px solid rgba(255,255,255,.1); border-radius: 4px; }
     }
 
+    /* ── Subsite hero — accent overrides ─────────────────────────
+       Add accent-teal / accent-gold / accent-navy to the <section>
+       to override the default gold top-bar and eyebrow color.
+       Set background-image inline on .hero-bg per subsite.         */
+    .hero.accent-teal::before               { background: var(--csp-teal); }
+    .hero.accent-teal .hero-eyebrow         { color: var(--csp-teal-light); }
+    .hero.accent-teal .hero-eyebrow::before { background: var(--csp-teal); }
+    .hero.accent-teal .hero-heading em      { color: var(--csp-teal); }
+
+    .hero.accent-navy::before               { background: var(--csp-navy-20); }
+    .hero.accent-navy .hero-eyebrow         { color: var(--csp-navy-20); }
+    .hero.accent-navy .hero-eyebrow::before { background: var(--csp-navy-20); }
+    .hero.accent-navy .hero-heading em      { color: var(--csp-navy-20); }
+
+    /* ── Subsite hero — CTA buttons (replace the search form) ────── */
+    .hero-ctas { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 24px; }
+    .hero-cta-primary,
+    .hero-cta-ghost {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-family: var(--font-display); font-size: .9rem; font-weight: 700;
+      letter-spacing: .06em; text-transform: uppercase;
+      padding: 12px 24px; border-radius: 4px; text-decoration: none;
+      white-space: nowrap; transition: background .15s, color .15s, border-color .15s;
+    }
+    .hero-cta-ghost {
+      background: transparent;
+      border: 1.5px solid rgba(255,255,255,.3); color: rgba(255,255,255,.85);
+    }
+    .hero-cta-ghost:hover { border-color: rgba(255,255,255,.7); color: #fff; background: rgba(255,255,255,.08); }
+
+    .accent-teal .hero-cta-primary       { background: var(--csp-teal); color: #fff; }
+    .accent-teal .hero-cta-primary:hover { background: var(--csp-teal-hover); color: #fff; }
+    .accent-gold .hero-cta-primary       { background: var(--csp-gold); color: var(--csp-navy); }
+    .accent-gold .hero-cta-primary:hover { background: var(--csp-gold-hover); color: var(--csp-navy); }
+    .accent-navy .hero-cta-primary       { background: rgba(255,255,255,.15); color: #fff; border: 1.5px solid rgba(255,255,255,.3); }
+    .accent-navy .hero-cta-primary:hover { background: rgba(255,255,255,.25); color: #fff; }
+
     /* ── Feature bar ───────────────────────────────────────────── */
     .feature-bar {
       background: var(--csp-navy);
