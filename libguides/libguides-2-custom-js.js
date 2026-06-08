@@ -31,24 +31,34 @@ if (localStorage.getItem('csp-retro') === '1') {
 
 document.addEventListener('DOMContentLoaded', function () {
 
+  /* ─── Subsite detection ───────────────────────────────────────────
+     Stamps .csp-subsite on <body> whenever a subsite nav is present.
+     CSS targets body.csp-subsite instead of :has() for reliability. */
+  if (document.querySelector('.csp-subsite-nav')) {
+    document.body.classList.add('csp-subsite');
+  }
+
   /* Sync retro toggle label on load */
   var retroBtn = document.getElementById('retro-toggle');
   if (retroBtn && localStorage.getItem('csp-retro') === '1') {
     retroBtn.textContent = '[Go modern]';
   }
 
-/* ─── OneSearch ───────────────────────────────────────────────── */
+  /* ─── OneSearch ─────────────────────────────────────────────────── */
+  var heroSearch = document.getElementById('heroSearch');
+  if (heroSearch) {
     function doSearch() {
-      var q = document.getElementById('heroSearch').value.trim();
+      var q = heroSearch.value.trim();
       if (!q) return;
       window.location.href =
         'https://clic-concordia.primo.exlibrisgroup.com/discovery/search' +
         '?query=any,contains,' + encodeURIComponent(q) +
         '&vid=01CLIC_CONCORDIA:CSP&lang=en&search_scope=MyInst_and_CI';
     }
-    document.getElementById('heroSearch').addEventListener('keydown', function(e) {
+    heroSearch.addEventListener('keydown', function(e) {
       if (e.key === 'Enter') doSearch();
     });
+  }
 
     /* ─── Nav dropdown controller ─────────────────────────────────── */
     (function () {
