@@ -67,7 +67,7 @@ The main library homepage hero (Box 1) includes a OneSearch form and feature bar
 
 ## Known Issues / Pending
 
-- CIC `footer.html`: "Contact CIC" links to the CIC home page — needs a real email address or contact form URL.
+- CIC `footer.html`: "Contact CIC" now uses `mailto:cic@csp.edu` (confirmed from old footer).
 - CIC `hero.html`: Background image is a placeholder (the main library photo) — needs a CIC-specific image.
 - Writing Center URL paths need verification in LibGuides (especially `/writing-center/apa` and `/writing-center/faculty-resources/tutor`).
 - Hero and card images are hosted on a dev Amplify URL (`main.dy1n2ifa5qdl6.amplifyapp.com`) — should be migrated to LibGuides file assets (`libapps.s3.amazonaws.com/customers/955/images/`) before going live.

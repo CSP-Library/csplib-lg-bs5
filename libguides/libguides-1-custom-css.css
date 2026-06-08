@@ -646,3 +646,32 @@ body,
   .csp-sub-footer { padding: 36px 0 0; }
   .csp-sub-footer-grid { grid-template-columns: 1fr; gap: 28px; }
 }
+
+/* ═══════════════════════════════════════════════════════════════════
+   SUBSITE CONTENT BACKGROUND
+   Pages with .csp-subsite-nav (any subsite group header) get a white
+   panel at content width over the site-wide #f5f4f2 page background.
+   body / #s-lg-guide-main stay #f5f4f2 so the outer gutter is visible.
+   Higher specificity beats the existing !important rules above.
+   ═══════════════════════════════════════════════════════════════════ */
+
+body:has(.csp-subsite-nav) #s-lg-guide-main > .container,
+body:has(.csp-subsite-nav) #s-lg-guide-main > .container > .row,
+body:has(.csp-subsite-nav) .s-lg-col-md-12 {
+  background-color: #fff !important;
+}
+
+/* Override the LibGuides box background (set to #f5f4f2 in Admin →
+   Content Customizations → Boxes → Background Color). */
+body:has(.csp-subsite-nav) #s-lg-guide-main .s-lg-box,
+body:has(.csp-subsite-nav) #s-lg-guide-main .s-lg-box-body,
+body:has(.csp-subsite-nav) #s-lg-guide-main .s-lib-box-body,
+body:has(.csp-subsite-nav) #s-lg-guide-main .s-lg-box-header,
+body:has(.csp-subsite-nav) #s-lg-guide-main .s-lg-box-header-title,
+body:has(.csp-subsite-nav) #s-lg-guide-main .s-lg-box-title,
+body:has(.csp-subsite-nav) #s-lg-guide-main .card,
+body:has(.csp-subsite-nav) #s-lg-guide-main .card-body,
+body:has(.csp-subsite-nav) #s-lg-guide-main .card-header,
+body:has(.csp-subsite-nav) #s-lg-guide-main .s-lg-box-wrapper {
+  background-color: #fff !important;
+}
