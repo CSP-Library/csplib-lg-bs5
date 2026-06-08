@@ -31,13 +31,6 @@ if (localStorage.getItem('csp-retro') === '1') {
 
 document.addEventListener('DOMContentLoaded', function () {
 
-  /* ─── Subsite detection ───────────────────────────────────────────
-     Stamps .csp-subsite on <body> whenever a subsite nav is present.
-     CSS targets body.csp-subsite instead of :has() for reliability. */
-  if (document.querySelector('.csp-subsite-nav')) {
-    document.body.classList.add('csp-subsite');
-  }
-
   /* Sync retro toggle label on load */
   var retroBtn = document.getElementById('retro-toggle');
   if (retroBtn && localStorage.getItem('csp-retro') === '1') {

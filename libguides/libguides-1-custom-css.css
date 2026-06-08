@@ -250,6 +250,7 @@
     .section { padding: 72px 0; }
     .section-alt { background: #fff; }
     .section-dark { background: var(--csp-navy); }
+    .section-warm { background: var(--csp-page-bg); }
     .section-header { margin-bottom: 40px; }
     .section-eyebrow { font-family: var(--font-display); font-size: .75rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; margin: 0 0 8px; }
     .section-title { font-family: var(--font-display); font-size: clamp(1.8rem, 3vw, 2.5rem); font-weight: 800; text-transform: uppercase; letter-spacing: .03em; line-height: 1; margin: 0; }
@@ -375,7 +376,7 @@
 /* ── Full-bleed: escape the LibGuides content container ─────────────
    "Floating Box" must be checked on full-bleed boxes in LibGuides.  */
 /* ── LibGuides box chrome — strip borders, padding, and shadow ───────────────
-   Background color is set to #f5f4f2 in LibGuides Content Customizations
+   Box background color is set to #ffffff in LibGuides Content Customizations
    (Admin → Look & Feel → Content Customizations → Boxes → Background Color).
    These rules zero out the borders, padding, and shadows so LibGuides' box
    wrapper doesn't add visual gaps around our section elements.               */
@@ -645,33 +646,4 @@ body,
 @media (max-width: 767px) {
   .csp-sub-footer { padding: 36px 0 0; }
   .csp-sub-footer-grid { grid-template-columns: 1fr; gap: 28px; }
-}
-
-/* ═══════════════════════════════════════════════════════════════════
-   SUBSITE CONTENT BACKGROUND
-   body.csp-subsite is stamped by JS (libguides-2-custom-js.js) whenever
-   .csp-subsite-nav is detected on the page. Content-width container gets
-   a white panel over the site-wide #f5f4f2 background; body and
-   #s-lg-guide-main stay #f5f4f2 so the outer gutter remains visible.
-   ═══════════════════════════════════════════════════════════════════ */
-
-body.csp-subsite #s-lg-guide-main > .container,
-body.csp-subsite #s-lg-guide-main > .container > .row,
-body.csp-subsite .s-lg-col-md-12 {
-  background-color: #fff !important;
-}
-
-/* Override the LibGuides box background (set to #f5f4f2 in Admin →
-   Content Customizations → Boxes → Background Color). */
-body.csp-subsite #s-lg-guide-main .s-lg-box,
-body.csp-subsite #s-lg-guide-main .s-lg-box-body,
-body.csp-subsite #s-lg-guide-main .s-lib-box-body,
-body.csp-subsite #s-lg-guide-main .s-lg-box-header,
-body.csp-subsite #s-lg-guide-main .s-lg-box-header-title,
-body.csp-subsite #s-lg-guide-main .s-lg-box-title,
-body.csp-subsite #s-lg-guide-main .card,
-body.csp-subsite #s-lg-guide-main .card-body,
-body.csp-subsite #s-lg-guide-main .card-header,
-body.csp-subsite #s-lg-guide-main .s-lg-box-wrapper {
-  background-color: #fff !important;
 }
