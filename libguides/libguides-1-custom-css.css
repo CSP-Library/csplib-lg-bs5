@@ -477,6 +477,11 @@ body,
   letter-spacing: 0.01em;
   line-height: 1;
 }
+/* More vertical breathing room in the nav band row */
+.csp-sub-nav-band .csp-sub-toprow {
+  height: auto;
+  padding: 14px 0;
+}
 /* Nav links and toggle: override dark defaults for navy background */
 .csp-sub-nav-band .csp-sub-link {
   color: rgba(255,255,255,.75);
