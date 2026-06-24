@@ -9,54 +9,65 @@
      - main-js.js            (system-wide Custom JS)
    ========================================================================== -->
 
-<nav class="csp-subsite-nav accent-teal" aria-label="CIC navigation">
-  <div class="container">
-    <div class="csp-sub-toprow">
+<div class="csp-subsite-nav accent-teal">
 
-      <a class="csp-crumb" href="https://library.csp.edu/home" aria-label="Back to CSP Library">
-        <i class="bi bi-chevron-left csp-crumb-chevron" aria-hidden="true"></i>
-        <img class="csp-crumb-logo" src="https://libapps.s3.amazonaws.com/customers/955/images/csplib-logo.png" alt="">
-        <span class="csp-crumb-label">CSP Library</span>
+  <!-- Band 1: white CSP Library crumb -->
+  <div class="csp-sub-crumb-band">
+    <div class="container">
+      <a class="csp-sub-crumb-link" href="https://library.csp.edu/home" aria-label="Back to CSP Library">
+        <i class="bi bi-chevron-left" aria-hidden="true"></i>
+        <img class="csp-sub-crumb-logo" src="https://libapps.s3.amazonaws.com/customers/955/images/csplib-logo.png" alt="">
+        <span>CSP Library</span>
       </a>
+    </div>
+  </div>
 
-      <div class="csp-sub-identity">
-        <div class="csp-sub-icon"><i class="bi bi-mortarboard" aria-hidden="true"></i></div>
-        <span class="csp-sub-name">Curriculum &amp; Instruction Center</span>
+  <!-- Band 2: navy identity + nav links -->
+  <nav class="csp-sub-nav-band" aria-label="CIC navigation">
+    <div class="container">
+      <div class="csp-sub-toprow">
+
+        <div class="csp-sub-identity">
+          <div class="csp-sub-icon"><i class="bi bi-mortarboard" aria-hidden="true"></i></div>
+          <span class="csp-sub-name">Curriculum &amp; Instruction Center</span>
+        </div>
+
+        <button class="csp-sub-toggle"
+          aria-expanded="false"
+          aria-controls="cicCollapse"
+          aria-label="Toggle CIC navigation"
+          onclick="toggleSubNav(this,'cicCollapse')">
+          <i class="bi bi-list icon-open" aria-hidden="true"></i>
+          <i class="bi bi-x-lg icon-close" aria-hidden="true"></i>
+        </button>
+
+        <div class="csp-sub-right" role="navigation" aria-label="CIC links">
+          <a class="csp-sub-link is-active" href="https://library.csp.edu/cic/home">Home</a>
+          <a class="csp-sub-link" href="https://library.csp.edu/cic/policies/course-copies">Policies</a>
+          <a class="csp-sub-link" href="https://library.csp.edu/cic/teaching-resources/supported-tools">Teaching Resources</a>
+          <a class="csp-sub-link" href="https://library.csp.edu/cic/course-design/home">Course Design</a>
+          <div class="csp-sub-cta-wrap">
+            <a class="csp-sub-cta" href="https://helpcenter.csp.edu/new/">
+              <i class="bi bi-ticket-perforated" aria-hidden="true"></i>Submit a Ticket
+            </a>
+          </div>
+        </div>
+
       </div>
 
-      <button class="csp-sub-toggle"
-              aria-expanded="false"
-              aria-controls="cicCollapse"
-              aria-label="Toggle CIC navigation"
-              onclick="toggleSubNav(this,'cicCollapse')">
-        <i class="bi bi-list icon-open"  aria-hidden="true"></i>
-        <i class="bi bi-x-lg icon-close" aria-hidden="true"></i>
-      </button>
-
-      <div class="csp-sub-right" role="navigation" aria-label="CIC links">
-        <a class="csp-sub-link is-active" href="https://library.csp.edu/cic/home">Home</a>
-        <a class="csp-sub-link" href="https://library.csp.edu/cic/policies/course-copies">Policies</a>
-        <a class="csp-sub-link" href="https://library.csp.edu/cic/teaching-resources/supported-tools">Teaching Resources</a>
-        <a class="csp-sub-link" href="https://library.csp.edu/cic/course-design/home">Course Design</a>
-        <div class="csp-sub-cta-wrap">
-          <a class="csp-sub-cta" href="https://helpcenter.csp.edu/new/">
+      <div class="csp-sub-collapse" id="cicCollapse" role="navigation" aria-label="CIC mobile menu">
+        <div class="csp-sub-collapse-inner">
+          <a class="csp-sub-mobile-link is-active" href="https://library.csp.edu/cic/home">Home</a>
+          <a class="csp-sub-mobile-link" href="https://library.csp.edu/cic/policies/course-copies">Policies</a>
+          <a class="csp-sub-mobile-link" href="https://library.csp.edu/cic/teaching-resources/supported-tools">Teaching Resources</a>
+          <a class="csp-sub-mobile-link" href="https://library.csp.edu/cic/course-design/home">Course Design</a>
+          <a class="csp-sub-mobile-cta" href="https://helpcenter.csp.edu/new/">
             <i class="bi bi-ticket-perforated" aria-hidden="true"></i>Submit a Ticket
           </a>
         </div>
       </div>
 
     </div>
+  </nav>
 
-    <div class="csp-sub-collapse" id="cicCollapse" role="navigation" aria-label="CIC mobile menu">
-      <div class="csp-sub-collapse-inner">
-        <a class="csp-sub-mobile-link is-active" href="https://library.csp.edu/cic/home">Home</a>
-        <a class="csp-sub-mobile-link" href="https://library.csp.edu/cic/policies/course-copies">Policies</a>
-        <a class="csp-sub-mobile-link" href="https://library.csp.edu/cic/teaching-resources/supported-tools">Teaching Resources</a>
-        <a class="csp-sub-mobile-link" href="https://library.csp.edu/cic/course-design/home">Course Design</a>
-        <a class="csp-sub-mobile-cta" href="https://helpcenter.csp.edu/new/">
-          <i class="bi bi-ticket-perforated" aria-hidden="true"></i>Submit a Ticket
-        </a>
-      </div>
-    </div>
-  </div>
-</nav>
+</div>
