@@ -471,11 +471,34 @@ body,
 }
 .csp-sub-nav-band .csp-sub-name {
   font-family: var(--font-display);
-  font-size: 22px;
+  font-size: 28px;
   font-weight: 600;
   color: #fff;
   letter-spacing: 0.01em;
   line-height: 1;
+}
+/* Nav links and toggle: override dark defaults for navy background */
+.csp-sub-nav-band .csp-sub-link {
+  color: rgba(255,255,255,.75);
+}
+.csp-sub-nav-band .csp-sub-link:hover {
+  color: #fff;
+  border-bottom-color: var(--accent-color, var(--csp-teal));
+}
+.csp-sub-nav-band .csp-sub-link.is-active {
+  color: #fff;
+  font-weight: 600;
+  border-bottom-color: var(--accent-color, var(--csp-teal));
+}
+.csp-sub-nav-band .csp-sub-cta-wrap {
+  border-left-color: rgba(255,255,255,.15);
+}
+.csp-sub-nav-band .csp-sub-toggle {
+  color: rgba(255,255,255,.85);
+  border-color: rgba(255,255,255,.25);
+}
+.csp-sub-nav-band .csp-sub-toggle:hover {
+  background: rgba(255,255,255,.1);
 }
 
 /* ── Top row — always visible ─────────────────────────────────────── */
