@@ -18,9 +18,9 @@ Each `libguides/` file maps to exactly one Admin field. Never add `<style>` or `
 | `libguides-4-footer-html.html` | Admin → System Settings → Look & Feel → Header & Footer → Footer |
 | `libguides-5-box*.html` | Homepage guide → individual Rich Text/HTML boxes (one file per box) |
 | `libguides-6-retro-css.css` | Append to the Custom CSS paste (optional retro easter egg) |
-| `working/[subsite]/header.html` | Group → Look & Feel → Header (one per subsite group) |
-| `working/[subsite]/footer.html` | Group → Look & Feel → Footer (one per subsite group) |
-| `working/[subsite]/hero.html` | Individual box in that subsite's homepage guide, with Floating Box checked |
+| `subsites/[subsite]/header.html` | Group → Look & Feel → Header (one per subsite group) |
+| `subsites/[subsite]/footer.html` | Group → Look & Feel → Footer (one per subsite group) |
+| `subsites/[subsite]/hero.html` | Individual box in that subsite's homepage guide, with Floating Box checked |
 
 ## Critical LibGuides Constraints
 
@@ -44,26 +44,35 @@ Apply one accent class to the root element (`<nav>`, `<footer>`, `<section class
 - `accent-gold` — Writing Center
 - `accent-navy` — Archives & Special Collections
 
-Each subsite needs its own `working/[subsite]/header.html` (group Custom Header), `footer.html` (group Custom Footer), and optionally `hero.html` (floating box on the subsite homepage). The system-wide header/footer from `libguides/` still loads on every page — the group-level header appears **above** the system-wide header.
+Each subsite needs its own `subsites/[subsite]/header.html` (group Custom Header), `footer.html` (group Custom Footer), and optionally `hero.html` (floating box on the subsite homepage). The system-wide header/footer from `libguides/` still loads on every page — the group-level header appears **above** the system-wide header.
 
 ### Hero Variants
 
 The main library homepage hero (Box 1) includes a OneSearch form and feature bar. Subsite heroes replace the search form with `.hero-ctas` (primary + ghost CTA buttons) and keep `.hero-search-alts` for quick links. The background image is set inline on `.hero-bg` so each subsite can use a different photo without touching the CSS.
 
-## Working Files
+## Repo Structure
 
-`working/` contains reference demos and per-subsite paste targets:
+`working/` contains reference demos and design mockups (not paste targets):
 - `csp-subsite-nav-pattern2.html` — full demo showing all three subsite nav variants side-by-side; use as the template when adding a new subsite
 - `cic-subsite-nav.html` — CIC-specific demo with parent nav context for visual comparison
-- `csp-homepage-global-style.html`, `csp-brand-comparison.html` — design reference mockups; not paste targets
+- `csp-homepage-global-style.html`, `csp-brand-comparison.html` — design reference mockups
+
+`subsites/` contains per-subsite paste targets, one directory per subsite:
+- `cic/` — Curriculum & Instruction Center (header ✓, footer ✓, hero ✓)
+- `writing/` — Writing Center (header ✓; footer and hero pending)
+- `archives/` — Archives & Special Collections (not yet started)
+- `tutoring/` — Tutoring Support (not yet started)
+- `digital-scholarship/` — Digital Scholarship (not yet started)
 
 ## Subsite Status
 
 | Subsite | header.html | footer.html | hero.html |
 |---|---|---|---|
-| CIC | ✓ `working/cic/` | ✓ `working/cic/` | ✓ `working/cic/` |
-| Writing Center | ✓ `working/writing-center/` | not yet created | not yet created |
+| CIC | ✓ `subsites/cic/` | ✓ `subsites/cic/` | ✓ `subsites/cic/` |
+| Writing Center | ✓ `subsites/writing/` | not yet created | not yet created |
 | Archives | not yet created | not yet created | not yet created |
+| Tutoring | not yet created | not yet created | not yet created |
+| Digital Scholarship | not yet created | not yet created | not yet created |
 
 ## Known Issues / Pending
 
