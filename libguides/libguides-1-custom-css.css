@@ -5,10 +5,10 @@
 
    INSTRUCTIONS:
    1. Paste the entire contents of this file into the Custom CSS field,
-      including the <style>/</style> tags — LibGuides does NOT wrap
-      this field automatically; the tags must be pasted in manually.
+      including the opening and closing style tags — LibGuides does NOT
+      wrap this field automatically; the tags must be pasted in manually.
    2. External dependencies (Bootstrap 5, Bootstrap Icons, Google Fonts)
-      are loaded via <link> tags in libguides-3-header-html.html — do NOT
+      are loaded via link tags in libguides-3-header-html.html — do NOT
       add @import rules here, as LibGuides may strip them.
    ═══════════════════════════════════════════════════════════════════ */
 
@@ -62,7 +62,7 @@
     .csp-brand img { height: 34px; width: auto;
       /* Converts the white logo to CSP Navy (#003055).
          TO USE THE BLUE LOGO FILE INSTEAD: upload CSP_Library-02.png to
-         LibGuides Admin → Files, copy the URL, replace the <img> src in the
+         LibGuides Admin → Files, copy the URL, replace the img src in the
          Header HTML, and remove this filter rule. */
       filter: brightness(0) saturate(100%) invert(11%) sepia(85%) saturate(1088%) hue-rotate(190deg) brightness(97%) contrast(101%);
     }
@@ -117,7 +117,7 @@
     .hero-inner { position: relative; z-index: 3; max-width: 760px; margin: 0 auto; width: 100%; padding: 80px 24px 72px; }
     /* TO RESTORE STATUS TILES: add this inline style to the .hero-inner div in Box 1:
        style="max-width:1200px; display:grid; grid-template-columns:1fr 300px; gap:48px 64px; align-items:start; padding:72px 24px 60px;"
-       then re-add the <aside class="hero-stats"> block after the search nav. */
+       then re-add the aside class="hero-stats" block after the search nav. */
     .hero-eyebrow { display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-display); font-size: .8rem; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: var(--csp-gold-mid); margin: 0 0 16px; }
     .hero-eyebrow::before { content: ''; display: block; width: 28px; height: 2px; background: var(--csp-gold); }
     .hero-heading { font-family: var(--font-display); font-size: clamp(2.8rem, 5vw, 4rem); font-weight: 800; line-height: .96; letter-spacing: .01em; text-transform: uppercase; color: #fff; margin: 0 0 20px; }
@@ -151,7 +151,7 @@
     }
 
     /* ── Subsite hero — accent overrides ─────────────────────────
-       Add accent-teal / accent-gold / accent-navy to the <section>
+       Add accent-teal / accent-gold / accent-navy to the section
        to override the default gold top-bar and eyebrow color.
        Set background-image inline on .hero-bg per subsite.         */
     .hero.accent-teal::before               { background: var(--csp-teal); }
@@ -432,7 +432,7 @@ body,
 
 /* ═══════════════════════════════════════════════════════════════════
    SUBSITE NAV — shared styles for CIC, Writing Center, Archives, etc.
-   Each group's Custom Header contains the <nav> block with the
+   Each group's Custom Header contains the nav block with the
    appropriate accent class (accent-teal / accent-gold / accent-navy).
    ═══════════════════════════════════════════════════════════════════ */
 
@@ -662,7 +662,7 @@ body,
 
 /* ═══════════════════════════════════════════════════════════════════
    SUBSITE FOOTER — shared styles for CIC, Writing Center, Archives, etc.
-   Place the accent class on the <footer> element itself.
+   Place the accent class on the footer element itself.
    ═══════════════════════════════════════════════════════════════════ */
 
 .csp-sub-footer {
@@ -751,7 +751,7 @@ body,
    Scoped under body.retro-mode and inert until the user clicks the
    "Go retro" link in the footer. Toggle is wired in
    libguides-2-custom-js.js and persists via localStorage (key: csp-retro).
-   Delete this whole block (down to the closing </style> below) to drop
+   Delete this whole block (down to the closing style tag below) to drop
    the easter egg entirely — also remove the "Go retro" link from
    libguides-4-footer-html.html and the toggle code from libguides-2-custom-js.js.
    ═══════════════════════════════════════════════════════════════════ */
