@@ -107,26 +107,6 @@
       height: var(--csp-sub-height); gap: 0;
     }
 
-    /* ── Parent crumb ───────────────────────────────────────────── */
-    .csp-crumb {
-      display: flex; align-items: center; gap: 6px;
-      padding-right: 18px; margin-right: 18px;
-      border-right: 1px solid rgba(0,0,0,.1);
-      text-decoration: none; flex-shrink: 0;
-    }
-    .csp-crumb-chevron {
-      color: var(--csp-navy-40); font-size: .8rem;
-      transition: transform .2s var(--csp-ease), color .15s;
-    }
-    .csp-crumb:hover .csp-crumb-chevron { transform: translateX(-3px); color: var(--csp-navy); }
-    .csp-crumb-logo { height: 22px; opacity: .6; transition: opacity .15s; }
-    .csp-crumb:hover .csp-crumb-logo { opacity: 1; }
-    .csp-crumb-label {
-      font-size: .72rem; font-weight: 600; letter-spacing: .04em;
-      color: var(--csp-navy-60); white-space: nowrap; transition: color .15s;
-    }
-    .csp-crumb:hover .csp-crumb-label { color: var(--csp-navy); }
-
     /* ── Subsite identity ───────────────────────────────────────── */
     .csp-sub-identity { display: flex; align-items: center; gap: 9px; flex-shrink: 0; }
     .csp-sub-icon {
@@ -243,8 +223,6 @@
       .csp-sub-toggle  { display: flex; align-items: center; }
       .csp-sub-right   { display: none; }
       .csp-sub-name    { font-size: .85rem; overflow: hidden; text-overflow: ellipsis; max-width: 38vw; }
-      .csp-crumb-label { display: none; }
-      .csp-crumb       { padding-right: 12px; margin-right: 12px; }
     }
 
     /* ─────────────────────────────────────────────────────────────────
@@ -293,7 +271,7 @@
     </nav>
     <div class="demo-stub">
       <h2>Library Home</h2>
-      <p>Parent site — full mega-menu nav with Hours + Get Help CTAs. Users arrive back here via the crumb on any subsite.</p>
+      <p>Parent site — full mega-menu nav with Hours + Get Help CTAs. This renders above every subsite nav below (inherited from the system-wide Header at the Group level), so it's how users get back here — no separate crumb needed on the subsite nav itself.</p>
     </div>
   </div>
 
@@ -306,12 +284,6 @@
     <nav class="csp-subsite-nav accent-teal" aria-label="CIC navigation">
       <div class="container">
         <div class="csp-sub-toprow">
-
-          <a class="csp-crumb" href="https://library.csp.edu/home" aria-label="Back to CSP Library">
-            <i class="bi bi-chevron-left csp-crumb-chevron" aria-hidden="true"></i>
-            <img class="csp-crumb-logo" src="https://libapps.s3.amazonaws.com/customers/955/images/csplib-logo.png" alt="">
-            <span class="csp-crumb-label">CSP Library</span>
-          </a>
 
           <div class="csp-sub-identity">
             <div class="csp-sub-icon"><i class="bi bi-journals" aria-hidden="true"></i></div>
@@ -372,12 +344,6 @@
       <div class="container">
         <div class="csp-sub-toprow">
 
-          <a class="csp-crumb" href="https://library.csp.edu/home" aria-label="Back to CSP Library">
-            <i class="bi bi-chevron-left csp-crumb-chevron" aria-hidden="true"></i>
-            <img class="csp-crumb-logo" src="https://libapps.s3.amazonaws.com/customers/955/images/csplib-logo.png" alt="">
-            <span class="csp-crumb-label">CSP Library</span>
-          </a>
-
           <div class="csp-sub-identity">
             <div class="csp-sub-icon"><i class="bi bi-pencil-square" aria-hidden="true"></i></div>
             <span class="csp-sub-name">Writing Center</span>
@@ -434,12 +400,6 @@
     <nav class="csp-subsite-nav accent-navy" aria-label="Archives navigation">
       <div class="container">
         <div class="csp-sub-toprow">
-
-          <a class="csp-crumb" href="https://library.csp.edu/home" aria-label="Back to CSP Library">
-            <i class="bi bi-chevron-left csp-crumb-chevron" aria-hidden="true"></i>
-            <img class="csp-crumb-logo" src="https://libapps.s3.amazonaws.com/customers/955/images/csplib-logo.png" alt="">
-            <span class="csp-crumb-label">CSP Library</span>
-          </a>
 
           <div class="csp-sub-identity">
             <div class="csp-sub-icon"><i class="bi bi-archive" aria-hidden="true"></i></div>

@@ -455,33 +455,7 @@ body,
   box-shadow: 0 2px 12px rgba(0,0,0,.06);
 }
 
-/* ── Two-band layout: crumb band (white) + nav band (navy) ─────────── */
-.csp-sub-crumb-band {
-  background: #fff;
-  border-bottom: 1px solid #e8edf2;
-}
-.csp-sub-crumb-band .container {
-  display: flex;
-  align-items: center;
-  height: 34px;
-}
-.csp-sub-crumb-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  font-family: var(--font-body);
-  font-size: 12.5px;
-  font-weight: 500;
-  color: var(--csp-navy);
-  text-decoration: none;
-}
-.csp-sub-crumb-link:hover { color: var(--csp-teal); }
-.csp-sub-crumb-link .bi-chevron-left { font-size: 10px; color: var(--csp-navy-40); }
-.csp-sub-crumb-logo {
-  height: 16px;
-  width: auto;
-  display: block;
-}
+/* ── Navy identity/nav band ───────────────────────────────────────── */
 .csp-sub-nav-band {
   background: var(--csp-navy);
   border-bottom: 3px solid var(--accent-color, var(--csp-teal));
@@ -539,26 +513,6 @@ body,
   align-items: center;
   height: var(--csp-sub-height);
 }
-
-/* ── Parent crumb ─────────────────────────────────────────────────── */
-.csp-crumb {
-  display: flex; align-items: center; gap: 6px;
-  padding-right: 18px; margin-right: 18px;
-  border-right: 1px solid rgba(0,0,0,.1);
-  text-decoration: none; flex-shrink: 0;
-}
-.csp-crumb-chevron {
-  color: var(--csp-navy-40); font-size: .8rem;
-  transition: transform .2s var(--ease), color .15s;
-}
-.csp-crumb:hover .csp-crumb-chevron { transform: translateX(-3px); color: var(--csp-navy); }
-.csp-crumb-logo { height: 22px; opacity: .6; transition: opacity .15s; }
-.csp-crumb:hover .csp-crumb-logo { opacity: 1; }
-.csp-crumb-label {
-  font-size: .72rem; font-weight: 600; letter-spacing: .04em;
-  color: var(--csp-navy-60); white-space: nowrap; transition: color .15s;
-}
-.csp-crumb:hover .csp-crumb-label { color: var(--csp-navy); }
 
 /* ── Subsite identity ─────────────────────────────────────────────── */
 .csp-sub-identity { display: flex; align-items: center; gap: 9px; flex-shrink: 0; }
@@ -668,8 +622,6 @@ body,
   .csp-sub-toggle  { display: flex; align-items: center; }
   .csp-sub-right   { display: none; }
   .csp-sub-name    { font-size: .85rem; overflow: hidden; text-overflow: ellipsis; max-width: 38vw; }
-  .csp-crumb-label { display: none; }
-  .csp-crumb       { padding-right: 12px; margin-right: 12px; }
 }
 
 /* ═══════════════════════════════════════════════════════════════════

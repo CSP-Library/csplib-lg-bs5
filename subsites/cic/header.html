@@ -2,27 +2,16 @@
    CIC Subsite Nav — Group Custom Header
    Paste into: LibGuides → [CIC group] → Look & Feel → Header/Footer → Custom Header
 
-   Prerequisites (load once via system-wide LibGuides admin settings):
-     - Bootstrap 5 CSS & JS  (cdn.jsdelivr.net/npm/bootstrap@5.3.3)
-     - Bootstrap Icons CSS   (cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3)
-     - main-css.css          (system-wide Custom CSS)
-     - main-js.js            (system-wide Custom JS)
+   Relies on the system-wide Header (libguides-3-header-html.html) being
+   inherited above this at the Group level — that's where the CSP Library
+   navbar/logo and the "back to library" affordance live, and where
+   Bootstrap 5 CSS/JS, Bootstrap Icons, and the Google Fonts link are
+   loaded. This file has no back-to-library crumb of its own; it would
+   just duplicate what the inherited system header already provides.
    ========================================================================== -->
 
 <div class="csp-subsite-nav accent-teal">
 
-  <!-- Band 1: white CSP Library crumb -->
-  <div class="csp-sub-crumb-band">
-    <div class="container">
-      <a class="csp-sub-crumb-link" href="https://library.csp.edu/home" aria-label="Back to CSP Library">
-        <i class="bi bi-chevron-left" aria-hidden="true"></i>
-        <img class="csp-sub-crumb-logo" src="https://libapps.s3.amazonaws.com/customers/955/images/csplib-logo.png" alt="">
-        <span>CSP Library</span>
-      </a>
-    </div>
-  </div>
-
-  <!-- Band 2: navy identity + nav links -->
   <nav class="csp-sub-nav-band" aria-label="CIC navigation">
     <div class="container">
       <div class="csp-sub-toprow">

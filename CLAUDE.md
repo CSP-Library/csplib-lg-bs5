@@ -40,6 +40,8 @@ Brand colors: `--csp-navy` (#003055), `--csp-gold` (#E6B222), `--csp-teal` (#00A
 
 Typography: `--font-display` (Barlow Condensed — headings, nav, CTAs, eyebrows) and `--font-body` (Barlow — body copy). Easing: `--ease` (not `--csp-ease`). Gray border color: `--csp-gray` (not `--csp-gray-light`).
 
+The Google Fonts `<link>` for Barlow Condensed/Barlow lives only in `libguides-3-header-html.html` (the system-wide header), not in any subsite file. Subsite CSS classes (`.hero-heading`, `.csp-sub-name`, etc., all in `libguides-1-custom-css.css`) already reference the same `var(--font-display)`/`var(--font-body)` tokens as the main site — don't add separate font declarations or Google Fonts links to a subsite header. Fonts match automatically as long as the system-wide header is actually inheriting on that page (see the Subsite Accent Pattern section below if it isn't).
+
 ### Subsite Accent Pattern
 
 Apply one accent class to the root element (`<nav>`, `<footer>`, `<section class="hero">`). All color variations cascade from that single class:
@@ -47,7 +49,11 @@ Apply one accent class to the root element (`<nav>`, `<footer>`, `<section class
 - `accent-gold` — Writing Center
 - `accent-navy` — Archives & Special Collections
 
-Each subsite needs its own `subsites/[subsite]/header.html` (group Custom Header), `footer.html` (group Custom Footer), and optionally `hero.html` (floating box on the subsite homepage). The system-wide header/footer from `libguides/` still loads on every page — the group-level header appears **above** the system-wide header.
+Each subsite needs its own `subsites/[subsite]/header.html` (group Custom Header), `footer.html` (group Custom Footer), and optionally `hero.html` (floating box on the subsite homepage). The system-wide header/footer from `libguides/` renders on every page — the group-level header appears **above** the system-wide header. Confirmed working (2026-10) on a CIC guide placed in its own dedicated Group with the Group's own Look & Feel → Header/Footer set to `subsites/cic/header.html` / `footer.html`: the system-wide header/footer rendered correctly above/below it.
+
+If a guide's system-wide header *doesn't* seem to be inheriting (no `.csp-navbar`, no Google Fonts link, body falls back to LibGuides' default theme font), the likely cause is that the guide doesn't belong to a Group with its own properly-configured Header/Footer — e.g. an ad-hoc duplicated ("Copy of …") guide, or one sitting in a Group that still has legacy/pre-redesign header settings. Fix it by moving the guide into (or creating) a Group whose Look & Feel is set up per this table, rather than trying to fix it in code — this is an Admin configuration issue, not a template bug. Custom CSS, by contrast, is a System-wide setting and reliably applies everywhere regardless of Group.
+
+**Subsite headers/footers must not include their own "back to library" link, logo, or breadcrumb.** Early versions of `subsites/cic/header.html` and `subsites/writing/header.html` each had one (`.csp-sub-crumb-band`/`.csp-sub-crumb-link` or `.csp-crumb`), on the assumption they might need to stand alone. Now that the system-wide header is confirmed to reliably render above the group header, that affordance is already provided by the system header's own logo/nav — a second one on the subsite nav is pure duplication. These classes were removed from the CSS entirely; don't reintroduce them in a new subsite header.
 
 ### Hero Variants
 
@@ -79,9 +85,11 @@ The main library homepage hero (Box 1) includes a OneSearch form and feature bar
 | Tutoring | not yet created | not yet created | not yet created |
 | Digital Scholarship | not yet created | not yet created | not yet created |
 
+Table above tracks whether the files exist in this repo, not whether they're live. CIC is the only subsite confirmed working end-to-end on an actual LibGuides page (a guide in its own dedicated Group, system header correctly inheriting above the group header) — that's the known-good reference setup to replicate for the others. The production `/cic/home` guide (no dev group) is still on LibGuides' old default theme and hasn't been migrated.
+
 ## Known Issues / Pending
 
 - CIC `footer.html`: "Contact CIC" now uses `mailto:cic@csp.edu` (confirmed from old footer).
-- CIC `hero.html`: Background image is a placeholder (the main library photo) — needs a CIC-specific image.
+- CIC `hero.html`: now uses a CIC-specific building-entrance photo (`images/csp-library-hero-cic.jpg`, 2026-10), replacing the main-library-photo placeholder. The source photo was only 1500px wide — short of the "at least 1600px" convention noted in the file's own comment (not upscaled, to avoid softening it). Swap in a wider original if one becomes available.
 - Writing Center URL paths need verification in LibGuides (especially `/writing-center/apa` and `/writing-center/faculty-resources/tutor`).
 - Hero and card images are hosted on a dev Amplify URL (`main.dy1n2ifa5qdl6.amplifyapp.com`) — should be migrated to LibGuides file assets (`libapps.s3.amazonaws.com/customers/955/images/`) before going live.
