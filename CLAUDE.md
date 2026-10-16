@@ -10,7 +10,7 @@ A **static asset repo** — no build tools, no npm, no compilation. Every file i
 
 Each `libguides/` file maps to exactly one Admin field.
 
-- **CSS files** (`libguides-1-custom-css.css`, `libguides-6-retro-css.css`) must include their own `<style>`/`</style>` wrapper tags, written directly in the file (first and last lines). LibGuides does **not** add this wrapper automatically — it has to be pasted in manually.
+- **CSS files** (`libguides-1-custom-css.css`) must include their own `<style>`/`</style>` wrapper tags, written directly in the file (first and last lines). LibGuides does **not** add this wrapper automatically — it has to be pasted in manually.
 - **JS files** (`libguides-2-custom-js.js`) — do NOT add `<script>` wrapper tags; LibGuides wraps the Custom JS field automatically.
 
 | File | LibGuides destination |
@@ -20,10 +20,11 @@ Each `libguides/` file maps to exactly one Admin field.
 | `libguides-3-header-html.html` | Admin → System Settings → Look & Feel → Header & Footer → Header |
 | `libguides-4-footer-html.html` | Admin → System Settings → Look & Feel → Header & Footer → Footer |
 | `libguides-5-box*.html` | Homepage guide → individual Rich Text/HTML boxes (one file per box) |
-| `libguides-6-retro-css.css` | Append to the Custom CSS paste (optional retro easter egg) |
 | `subsites/[subsite]/header.html` | Group → Look & Feel → Header (one per subsite group) |
 | `subsites/[subsite]/footer.html` | Group → Look & Feel → Footer (one per subsite group) |
 | `subsites/[subsite]/hero.html` | Individual box in that subsite's homepage guide, with Floating Box checked |
+
+The "retro terminal mode" easter egg (toggled by the "Go retro" footer link) lives entirely inside `libguides-1-custom-css.css`, in a clearly delimited block at the end of the file (scoped under `body.retro-mode`). It used to be a separate `libguides-6-retro-css.css` file appended by hand to the Custom CSS paste; it was folded in because the toggle link/JS are always deployed regardless, so the split only added a manual step with no real opt-out benefit. To remove the easter egg, delete that block plus the "Go retro" link in `libguides-4-footer-html.html` and the toggle code in `libguides-2-custom-js.js`.
 
 ## Critical LibGuides Constraints
 

@@ -11,8 +11,8 @@
 
 /* ─── Retro mode toggle ───────────────────────────────────────────
    Toggled by the "Go retro" link in the footer. State persists via
-   localStorage (key: csp-retro). The retro CSS in libguides-6-retro-css.css
-   must be appended to the Custom CSS paste for this to have any effect. */
+   localStorage (key: csp-retro). The retro CSS lives at the bottom
+   of libguides-1-custom-css.css, scoped under body.retro-mode. */
 function toggleRetro(e) {
   e.preventDefault();
   var isRetro = document.body.classList.toggle('retro-mode');
