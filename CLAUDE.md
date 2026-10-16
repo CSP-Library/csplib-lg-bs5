@@ -24,12 +24,11 @@ Each `libguides/` file maps to exactly one Admin field.
 | `subsites/[subsite]/footer.html` | Group → Look & Feel → Footer (one per subsite group) |
 | `subsites/[subsite]/hero.html` | Individual box in that subsite's homepage guide, with Floating Box checked |
 
-The "retro terminal mode" easter egg (toggled by the "Go retro" footer link) lives entirely inside `libguides-1-custom-css.css`, in a clearly delimited block at the end of the file (scoped under `body.retro-mode`). It used to be a separate `libguides-6-retro-css.css` file appended by hand to the Custom CSS paste; it was folded in because the toggle link/JS are always deployed regardless, so the split only added a manual step with no real opt-out benefit. To remove the easter egg, delete that block plus the "Go retro" link in `libguides-4-footer-html.html` and the toggle code in `libguides-2-custom-js.js`.
-
 ## Critical LibGuides Constraints
 
 - **No `@import` in Custom CSS** — LibGuides strips them. All external CDN dependencies (Bootstrap 5, Bootstrap Icons, Google Fonts) are loaded via `<link>` tags in `libguides-3-header-html.html` only.
-- **Custom CSS character limit** — ~50–100K chars. No base64 data URIs; use hosted image URLs.
+- **Custom CSS character limit is ~59K characters** — confirmed by a live truncation (not the ~50–100K originally assumed). The Admin field silently cuts off anything past this length *without* closing the `<style>` tag, which breaks the entire page (everything after becomes inert text inside the unclosed style element — the page renders blank). Always verify after pasting that the field didn't truncate. No base64 data URIs; use hosted image URLs.
+- A "retro terminal mode" easter egg (a `body.retro-mode`-scoped CSS block, a "Go retro" footer link, and a JS toggle) existed briefly and was removed (2026-10) specifically because it pushed the CSS file past this character limit and broke the live site. Don't re-add a similar feature without first confirming there's headroom under the ~59K limit.
 - **Full-bleed sections** require wrapping in `<div class="s-lg-box-wrapper-hero">` and checking "Floating Box" on the box.
 - **`toggleSubNav()`** must stay in global scope in `libguides-2-custom-js.js` — it is called via inline `onclick` attributes on subsite nav toggle buttons and cannot be inside `DOMContentLoaded`.
 
