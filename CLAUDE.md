@@ -8,7 +8,10 @@ A **static asset repo** — no build tools, no npm, no compilation. Every file i
 
 ## Deployment Model
 
-Each `libguides/` file maps to exactly one Admin field. Never add `<style>` or `<script>` wrapper tags to CSS/JS files — LibGuides wraps them automatically.
+Each `libguides/` file maps to exactly one Admin field.
+
+- **CSS files** (`libguides-1-custom-css.css`, `libguides-6-retro-css.css`) must include their own `<style>`/`</style>` wrapper tags, written directly in the file (first and last lines). LibGuides does **not** add this wrapper automatically — it has to be pasted in manually.
+- **JS files** (`libguides-2-custom-js.js`) — do NOT add `<script>` wrapper tags; LibGuides wraps the Custom JS field automatically.
 
 | File | LibGuides destination |
 |---|---|

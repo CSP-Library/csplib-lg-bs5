@@ -1,13 +1,16 @@
+<style>
 /* ═══════════════════════════════════════════════════════════════════
    CSP LIBRARY — RETRO TERMINAL MODE
    Inspired by 1980s OPAC terminals (NOTIS, Dynix, VT100 green-screen)
    ═══════════════════════════════════════════════════════════════════
 
    INSTRUCTIONS:
-   Append the entire contents of this file to libguides-1-custom-css.css
-   when preparing the LibGuides Custom CSS paste. Do NOT include <style>
-   tags. All rules here are scoped under body.retro-mode and are inert
-   until the user clicks the "Go retro" link in the footer.
+   Append the entire contents of this file, including its own
+   <style>/</style> tags, after libguides-1-custom-css.css when
+   preparing the LibGuides Custom CSS paste — LibGuides does NOT wrap
+   this field automatically, so each file's tags must be pasted in
+   manually. All rules here are scoped under body.retro-mode and are
+   inert until the user clicks the "Go retro" link in the footer.
 
    The toggle is wired in libguides-2-custom-js.js and persists across
    page loads via localStorage (key: csp-retro).
@@ -603,3 +606,4 @@ body.retro-mode #retro-toggle {
   font-family: 'Courier New', Courier, monospace !important;
   text-shadow: 0 0 6px rgba(51, 255, 51, 0.6) !important;
 }
+</style>

@@ -1,11 +1,13 @@
+<style>
 /* ═══════════════════════════════════════════════════════════════════
    CSP LIBRARY — CUSTOM CSS
    LibGuides Admin → System Settings → Look & Feel → Custom JS/CSS → Custom CSS
 
    INSTRUCTIONS:
-   1. Paste the entire contents of this file into the Custom CSS field.
-   2. Do NOT include <style> tags — paste only the CSS itself.
-   3. External dependencies (Bootstrap 5, Bootstrap Icons, Google Fonts)
+   1. Paste the entire contents of this file into the Custom CSS field,
+      including the <style>/</style> tags — LibGuides does NOT wrap
+      this field automatically; the tags must be pasted in manually.
+   2. External dependencies (Bootstrap 5, Bootstrap Icons, Google Fonts)
       are loaded via <link> tags in libguides-3-header-html.html — do NOT
       add @import rules here, as LibGuides may strip them.
    ═══════════════════════════════════════════════════════════════════ */
@@ -263,8 +265,8 @@
     @media (max-width: 767px) { .section { padding: 48px 0; } }
 
     /* ── Services ──────────────────────────────────────────────── */
-    .services-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 2px; border-radius: 6px; overflow: hidden; box-shadow: 0 4px 24px rgba(0,0,0,.1); }
-    .service-card { background: #fff; padding: 36px 30px 30px; display: flex; flex-direction: column; position: relative; transition: background .2s; }
+    .services-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 28px; }
+    .service-card { background: #fff; border-radius: 8px; box-shadow: 0 2px 14px rgba(0,0,0,.07); padding: 36px 30px 30px; display: flex; flex-direction: column; position: relative; transition: background .2s; }
     .service-card::after { content: ''; position: absolute; bottom: 0; left: 30px; right: 30px; height: 3px; background: var(--csp-gold); transform: scaleX(0); transform-origin: left; transition: transform .25s var(--ease); }
     .service-card:hover { background: #fafaf8; }
     .service-card:hover::after { transform: scaleX(1); }
@@ -328,13 +330,14 @@
     @media (max-width: 600px) { .popular-grid { grid-template-columns: 1fr; } }
 
     /* ── News & Events ─────────────────────────────────────────── */
-    .news-events-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
-    .ne-card { background: #fff; border-radius: 6px; border: 1px solid rgba(0,0,0,.07); overflow: hidden; }
-    .ne-card-header { padding: 16px 22px; border-bottom: 1px solid rgba(0,0,0,.06); display: flex; align-items: center; justify-content: space-between; }
+    .news-events-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; }
+    .ne-card { background: transparent; }
+    .ne-card:not(:first-child) { border-left: 1px solid rgba(0,48,85,.12); padding-left: 40px; }
+    .ne-card-header { padding: 0 0 14px; border-bottom: 1px solid rgba(0,48,85,.12); display: flex; align-items: center; justify-content: space-between; }
     .ne-card-title { font-family: var(--font-display); font-size: 1.05rem; font-weight: 800; text-transform: uppercase; letter-spacing: .06em; color: var(--csp-navy); margin: 0; }
     .ne-card-link { font-family: var(--font-display); font-size: .7rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--csp-navy-60); text-decoration: none; display: inline-flex; align-items: center; gap: 4px; transition: color .15s; }
     .ne-card-link:hover { color: var(--csp-navy); }
-    .ne-card-body { padding: 24px 22px; min-height: 160px; }
+    .ne-card-body { padding: 20px 0 0; min-height: 160px; }
     .ne-placeholder { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 120px; text-align: center; color: var(--csp-navy-40); }
     .ne-placeholder i { font-size: 2rem; margin-bottom: 8px; opacity: .35; }
     .ne-placeholder p { font-size: .8rem; margin: 0; line-height: 1.5; }
@@ -741,3 +744,4 @@ body,
   .csp-sub-footer { padding: 36px 0 0; }
   .csp-sub-footer-grid { grid-template-columns: 1fr; gap: 28px; }
 }
+</style>
