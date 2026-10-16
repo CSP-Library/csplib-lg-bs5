@@ -60,6 +60,8 @@ The main library homepage hero (Box 1) includes a OneSearch form and feature bar
 - `cic-subsite-nav.html` — CIC-specific demo with parent nav context for visual comparison
 - `csp-homepage-global-style.html`, `csp-brand-comparison.html` — design reference mockups
 
+**`libguides-5-homepage-content.html` is NOT a paste target** — it's the original monolithic file the `box1`–`box6` files were split out of (May 2026), kept only as a single-file reference for reading the whole homepage at once. The **`box1`–`box6` files are the only ones actually pasted into LibGuides**, per the table above. This file is not updated automatically when the box files change — if you edit a box file's content, manually mirror the change here too, or this file silently goes stale (it already has once: a fix landed in a box file but not here, and the stale copy got mistaken for the source of truth, pointing a re-paste at the wrong file entirely). When in doubt about which is current, diff this file's section against the corresponding box file rather than assuming either is right.
+
 `subsites/` contains per-subsite paste targets, one directory per subsite:
 - `cic/` — Curriculum & Instruction Center (header ✓, footer ✓, hero ✓)
 - `writing/` — Writing Center (header ✓; footer and hero pending)
