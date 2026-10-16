@@ -420,6 +420,18 @@ body,
   margin-bottom: 0 !important;
 }
 
+/* ── Close the gap above the first box ────────────────────────────────────
+   #s-lg-guide-main has a default 10px top padding, and #s-lg-tabs-container
+   (LibGuides' guide-tabs row, empty on single-tab guides like this one)
+   carries a 16px top padding of its own — together they push the hero
+   down from the nav. Zeroing both is safe: every box here supplies its
+   own internal spacing, and this only removes a redundant spacer above
+   wherever a guide's tab bar renders (the tabs themselves are untouched). */
+#s-lg-guide-main,
+#s-lg-tabs-container {
+  padding-top: 0 !important;
+}
+
 /* ── Full-bleed sections ─────────────────────────────────────────────────────
    Floating Box must be checked on each full-bleed box in LibGuides.          */
 .s-lg-box-wrapper-hero {
