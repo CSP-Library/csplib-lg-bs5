@@ -18,10 +18,10 @@
         <h1 class="hero-heading" id="hero-heading">Start your research.<br>Get the <em>support</em> you need.</h1>
         <p class="hero-sub">Books, articles, databases, tutoring, and writing support — all in one place for the Concordia community.</p>
 
-        <div class="hero-search-form" role="search" aria-label="OneSearch">
-          <input type="text" id="heroSearch" placeholder="Search books, articles, journals, and more…" aria-label="Search OneSearch">
-          <button type="button" onclick="doSearch()">Search</button>
-        </div>
+        <form class="hero-search-form" id="heroSearchForm" role="search" aria-label="OneSearch">
+          <input type="text" id="heroSearch" name="q" placeholder="Search books, articles, journals, and more…" aria-label="Search OneSearch">
+          <button type="submit">Search</button>
+        </form>
 
         <nav class="hero-search-alts" aria-label="Search alternatives">
           <a class="hero-alt-link" href="https://library.csp.edu/?b=s&group_id=28452">

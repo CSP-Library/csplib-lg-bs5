@@ -613,13 +613,20 @@ body:has(.csp-subsite-nav.subsite-cic) .csp-navbar .csp-nav-cta-help {
   border: 1.5px solid transparent; transition: background .15s, color .15s;
 }
 
-/* ── Mobile collapse panel ────────────────────────────────────────── */
+/* ── Mobile collapse panel ─────────────────────────────────────────
+   QA-007: max-height:0 alone only visually clips closed content —
+   it stays in the tab order and accessibility tree. The panel now
+   also carries a `hidden` attribute by default, toggled by JS
+   (toggleSubNav/toggleDisclosurePanel) in sync with this transition,
+   so closed links are genuinely unreachable. max-height is bumped
+   well past any realistic content height (including 200%+ text) so
+   it only drives the animation and never clips. */
 .csp-sub-collapse {
   max-height: 0; overflow: hidden;
   transition: max-height .28s var(--ease);
   border-top: 0 solid rgba(0,0,0,.07);
 }
-.csp-sub-collapse.is-open { max-height: 480px; border-top-width: 1px; }
+.csp-sub-collapse.is-open { max-height: 2000px; border-top-width: 1px; }
 .csp-sub-collapse-inner { padding: 8px 0 14px; }
 .csp-sub-mobile-link {
   display: flex; align-items: center; gap: 10px;
@@ -653,10 +660,14 @@ body:has(.csp-subsite-nav.subsite-cic) .csp-navbar .csp-nav-cta-help {
 .csp-sub-mobile-trigger .csp-sub-caret { transition: transform var(--csp-duration) var(--ease); }
 .csp-sub-mobile-trigger[aria-expanded="true"] .csp-sub-caret { transform: rotate(180deg); }
 .csp-sub-mobile-dropdown {
+  /* QA-007 (same pattern as .csp-sub-collapse above): `hidden` does the
+     real a11y hiding, JS-coordinated with this transition; max-height
+     is just the animation and is bumped well past realistic content
+     height so it doesn't clip at 200%+ text. */
   max-height: 0; overflow: hidden;
   transition: max-height .22s var(--ease);
 }
-.csp-sub-mobile-dropdown.is-open { max-height: 320px; }
+.csp-sub-mobile-dropdown.is-open { max-height: 1000px; }
 .csp-sub-mobile-dropdown-item {
   display: block; padding: 9px 16px 9px 34px; font-size: .875rem;
   color: #555; text-decoration: none; border-left: 3px solid transparent;
