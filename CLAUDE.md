@@ -55,6 +55,10 @@ If a guide's system-wide header *doesn't* seem to be inheriting (no `.csp-navbar
 
 **Subsite headers/footers must not include their own "back to library" link, logo, or breadcrumb.** Early versions of `subsites/cic/header.html` and `subsites/writing/header.html` each had one (`.csp-sub-crumb-band`/`.csp-sub-crumb-link` or `.csp-crumb`), on the assumption they might need to stand alone. Now that the system-wide header is confirmed to reliably render above the group header, that affordance is already provided by the system header's own logo/nav — a second one on the subsite nav is pure duplication. These classes were removed from the CSS entirely; don't reintroduce them in a new subsite header.
 
+### Subsite Header CTA Visibility
+
+Each subsite's outer nav wrapper (`.csp-subsite-nav` in its `header.html`) carries a `subsite-[name]` class (e.g. `subsite-cic`) alongside its accent class. This lets `libguides-1-custom-css.css` hide the system-wide navbar's Hours/Get Help buttons (`.csp-nav-cta-hours` / `.csp-nav-cta-help` in `libguides-3-header-html.html`) on a per-subsite basis via `body:has(.csp-subsite-nav.subsite-[name]) .csp-navbar .csp-nav-cta-*` — used for CIC, since its own nav already has an equivalent "Get Support" CTA. To opt another subsite in or out, add/remove its block in the CSS's "Subsite header CTA visibility" section; no JS or per-subsite markup beyond the one class is needed.
+
 ### Hero Variants
 
 The main library homepage hero (Box 1) includes a OneSearch form and feature bar. Subsite heroes replace the search form with `.hero-ctas` (primary + ghost CTA buttons) and keep `.hero-search-alts` for quick links. The background image is set inline on `.hero-bg` so each subsite can use a different photo without touching the CSS.

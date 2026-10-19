@@ -448,6 +448,20 @@ body,
    appropriate accent class (accent-teal / accent-gold / accent-navy).
    ═══════════════════════════════════════════════════════════════════ */
 
+/* ── Subsite header CTA visibility ───────────────────────────────────
+   The system-wide navbar's Hours/Get Help buttons (.csp-nav-cta-hours /
+   .csp-nav-cta-help in libguides-3-header-html.html) can be hidden on a
+   subsite-by-subsite basis when that subsite's own nav already has an
+   equivalent CTA — e.g. CIC's "Get Support" duplicates Get Help.
+   Each subsite's outer nav div (.csp-subsite-nav) carries its own
+   subsite-[name] class (in addition to its accent-* color class) for
+   this to key off of. To opt a subsite in, add a block like CIC's
+   below; to opt back out, delete or comment out its block. */
+body:has(.csp-subsite-nav.subsite-cic) .csp-navbar .csp-nav-cta-hours,
+body:has(.csp-subsite-nav.subsite-cic) .csp-navbar .csp-nav-cta-help {
+  display: none !important;
+}
+
 /* ── Nav shell ────────────────────────────────────────────────────── */
 .csp-subsite-nav {
   background: #fff;
