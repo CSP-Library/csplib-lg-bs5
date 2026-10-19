@@ -209,8 +209,14 @@ function toggleSubDropdown(btn, panelId) { toggleDisclosurePanel(btn, panelId); 
    Operates on .csp-sub-item/.csp-sub-trigger/.csp-sub-dropdown, which
    live inside each subsite's own Custom Header. Independent of the
    system-wide nav controller above — different classes, own state —
-   so the two dropdown systems never conflict, even on the same page. */
-(function () {
+   so the two dropdown systems never conflict, even on the same page.
+
+   Wrapped in DOMContentLoaded (confirmed live, 2026-10): run as plain
+   top-level code, this queried .csp-sub-item before the subsite header
+   markup existed in the DOM on at least one real guide page, silently
+   finding zero elements and attaching no listeners at all — hover and
+   click both did nothing, with no console error. */
+document.addEventListener('DOMContentLoaded', function () {
   'use strict';
   var MOBILE = 767, DELAY = 120;
   var items = document.querySelectorAll('.csp-sub-item');
@@ -269,7 +275,7 @@ function toggleSubDropdown(btn, panelId) { toggleDisclosurePanel(btn, panelId); 
       trig && trig.focus();
     }
   });
-})();
+});
 
 /* Close all subsite mobile panels when the viewport widens past mobile,
    and reset desktop dropdown state when it narrows into mobile */
