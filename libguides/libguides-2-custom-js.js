@@ -116,13 +116,93 @@ function toggleSubNav(btn, panelId) {
   panel.classList.toggle('is-open', !expanded);
 }
 
-/* Close all subsite mobile panels when the viewport widens past mobile */
+/* ─── Subsite nav dropdowns — mobile accordion ──────────────────────
+   toggleSubDropdown is called via inline onclick on each dropdown-
+   capable item's mobile trigger, inside a subsite's .csp-sub-collapse
+   panel (see e.g. subsites/cic/header.html). Must stay in global
+   scope, like toggleSubNav. */
+function toggleSubDropdown(btn, panelId) {
+  var panel    = document.getElementById(panelId);
+  var expanded = btn.getAttribute('aria-expanded') === 'true';
+  btn.setAttribute('aria-expanded', String(!expanded));
+  panel.classList.toggle('is-open', !expanded);
+}
+
+/* ─── Subsite nav dropdowns — desktop (hover + click) ────────────────
+   Operates on .csp-sub-item/.csp-sub-trigger/.csp-sub-dropdown, which
+   live inside each subsite's own Custom Header. Independent of the
+   system-wide nav controller above — different classes, own state —
+   so the two dropdown systems never conflict, even on the same page. */
+(function () {
+  'use strict';
+  var MOBILE = 767, DELAY = 120;
+  var items = document.querySelectorAll('.csp-sub-item');
+  var openItem = null, closeTimer = null;
+
+  function isDesktop() { return window.innerWidth > MOBILE; }
+  function getDrop(item) { return item.querySelector('.csp-sub-dropdown'); }
+  function getTrig(item) { return item.querySelector('.csp-sub-trigger'); }
+
+  function open(item) {
+    if (!isDesktop()) return;
+    clearTimeout(closeTimer);
+    if (openItem && openItem !== item) closeNow(openItem);
+    openItem = item; item.classList.add('is-open');
+    getTrig(item).setAttribute('aria-expanded', 'true');
+  }
+
+  function schedule(item) {
+    clearTimeout(closeTimer);
+    closeTimer = setTimeout(function () { closeNow(item); }, DELAY);
+  }
+
+  function closeNow(item) {
+    if (!item) return;
+    item.classList.remove('is-open');
+    getTrig(item).setAttribute('aria-expanded', 'false');
+    if (openItem === item) openItem = null;
+  }
+
+  items.forEach(function (item) {
+    var drop = getDrop(item), trig = getTrig(item);
+    if (!drop || !trig) return;
+    item.addEventListener('mouseenter', function () { if (isDesktop()) open(item); });
+    item.addEventListener('mouseleave', function () { if (isDesktop()) schedule(item); });
+  });
+
+  document.addEventListener('click', function (e) {
+    if (openItem && !openItem.contains(e.target)) closeNow(openItem);
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && openItem) {
+      var trig = getTrig(openItem);
+      closeNow(openItem);
+      trig && trig.focus();
+    }
+  });
+})();
+
+/* Close all subsite mobile panels when the viewport widens past mobile,
+   and reset desktop dropdown state when it narrows into mobile */
 window.addEventListener('resize', function () {
   if (window.innerWidth > 767) {
     document.querySelectorAll('.csp-sub-collapse').forEach(function (p) {
       p.classList.remove('is-open');
     });
     document.querySelectorAll('.csp-sub-toggle').forEach(function (b) {
+      b.setAttribute('aria-expanded', 'false');
+    });
+    document.querySelectorAll('.csp-sub-mobile-dropdown').forEach(function (p) {
+      p.classList.remove('is-open');
+    });
+    document.querySelectorAll('.csp-sub-mobile-trigger').forEach(function (b) {
+      b.setAttribute('aria-expanded', 'false');
+    });
+  } else {
+    document.querySelectorAll('.csp-sub-item.is-open').forEach(function (i) {
+      i.classList.remove('is-open');
+    });
+    document.querySelectorAll('.csp-sub-trigger').forEach(function (b) {
       b.setAttribute('aria-expanded', 'false');
     });
   }

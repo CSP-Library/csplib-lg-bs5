@@ -32,9 +32,54 @@
 
         <div class="csp-sub-right" role="navigation" aria-label="CIC links">
           <a class="csp-sub-link is-active" href="https://library.csp.edu/cic/home">Home</a>
-          <a class="csp-sub-link" href="https://library.csp.edu/cic/policies/course-copies">Policies</a>
-          <a class="csp-sub-link" href="https://library.csp.edu/cic/teaching-resources/supported-tools">Teaching Resources</a>
-          <a class="csp-sub-link" href="https://library.csp.edu/cic/course-design/home">Course Design</a>
+
+          <div class="csp-sub-item">
+            <button class="csp-sub-link csp-sub-trigger" type="button"
+              aria-haspopup="true" aria-expanded="false" aria-controls="cicDropPolicies">
+              Policies
+              <svg class="csp-sub-caret" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                <path d="M2.5 5l4.5 4.5L11.5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+            <div class="csp-sub-dropdown" id="cicDropPolicies" role="region" aria-label="Policies">
+              <a class="csp-sub-dropdown-item" href="https://library.csp.edu/cic/policies/course-copies">Course Copies</a>
+              <a class="csp-sub-dropdown-item" href="https://library.csp.edu/cic/policies/course-copies#s-lg-box-wrapper-41275529">Course Enrollment Policy</a>
+              <a class="csp-sub-dropdown-item" href="https://library.csp.edu/cic/policies/course-copies#s-lg-box-wrapper-41276347">Course Merge Process</a>
+              <a class="csp-sub-dropdown-item" href="https://library.csp.edu/cic/policies/course-copies#s-lg-box-wrapper-41294759">Primary and Development Courses</a>
+            </div>
+          </div>
+
+          <div class="csp-sub-item">
+            <button class="csp-sub-link csp-sub-trigger" type="button"
+              aria-haspopup="true" aria-expanded="false" aria-controls="cicDropTeaching">
+              Teaching Resources
+              <svg class="csp-sub-caret" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                <path d="M2.5 5l4.5 4.5L11.5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+            <div class="csp-sub-dropdown" id="cicDropTeaching" role="region" aria-label="Teaching Resources">
+              <a class="csp-sub-dropdown-item" href="https://library.csp.edu/cic/teaching-resources/supported-tools">CIC Supported Tools</a>
+              <a class="csp-sub-dropdown-item" href="https://library.csp.edu/cic/teaching-resources/ai-guidance">Generative AI Guidance</a>
+              <a class="csp-sub-dropdown-item" href="https://library.csp.edu/cic/teaching-resources/inclusive-teaching">Inclusive Teaching</a>
+              <a class="csp-sub-dropdown-item" href="https://library.csp.edu/cic/teaching-resources/instructional-media-studio">Instructional Media Studio</a>
+            </div>
+          </div>
+
+          <div class="csp-sub-item">
+            <button class="csp-sub-link csp-sub-trigger" type="button"
+              aria-haspopup="true" aria-expanded="false" aria-controls="cicDropCourseDesign">
+              Course Design
+              <svg class="csp-sub-caret" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                <path d="M2.5 5l4.5 4.5L11.5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+            <div class="csp-sub-dropdown" id="cicDropCourseDesign" role="region" aria-label="Course Design">
+              <a class="csp-sub-dropdown-item" href="https://library.csp.edu/cic/course-design/home">Instructional Design</a>
+              <a class="csp-sub-dropdown-item" href="https://library.csp.edu/cic/course-design/primary-courses">Primary Courses</a>
+              <a class="csp-sub-dropdown-item" href="https://library.csp.edu/cic/course-design/student-success">Tracking Student Success</a>
+            </div>
+          </div>
+
           <div class="csp-sub-cta-wrap">
             <a class="csp-sub-cta" href="https://helpcenter.csp.edu/new/">
               <i class="bi bi-ticket-perforated" aria-hidden="true"></i>Get Support
@@ -47,9 +92,57 @@
       <div class="csp-sub-collapse" id="cicCollapse" role="navigation" aria-label="CIC mobile menu">
         <div class="csp-sub-collapse-inner">
           <a class="csp-sub-mobile-link is-active" href="https://library.csp.edu/cic/home">Home</a>
-          <a class="csp-sub-mobile-link" href="https://library.csp.edu/cic/policies/course-copies">Policies</a>
-          <a class="csp-sub-mobile-link" href="https://library.csp.edu/cic/teaching-resources/supported-tools">Teaching Resources</a>
-          <a class="csp-sub-mobile-link" href="https://library.csp.edu/cic/course-design/home">Course Design</a>
+
+          <div class="csp-sub-mobile-item">
+            <button class="csp-sub-mobile-link csp-sub-mobile-trigger" type="button"
+              aria-expanded="false" aria-controls="cicMobDropPolicies"
+              onclick="toggleSubDropdown(this,'cicMobDropPolicies')">
+              Policies
+              <svg class="csp-sub-caret" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                <path d="M2.5 5l4.5 4.5L11.5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+            <div class="csp-sub-mobile-dropdown" id="cicMobDropPolicies">
+              <a class="csp-sub-mobile-dropdown-item" href="https://library.csp.edu/cic/policies/course-copies">Course Copies</a>
+              <a class="csp-sub-mobile-dropdown-item" href="https://library.csp.edu/cic/policies/course-copies#s-lg-box-wrapper-41275529">Course Enrollment Policy</a>
+              <a class="csp-sub-mobile-dropdown-item" href="https://library.csp.edu/cic/policies/course-copies#s-lg-box-wrapper-41276347">Course Merge Process</a>
+              <a class="csp-sub-mobile-dropdown-item" href="https://library.csp.edu/cic/policies/course-copies#s-lg-box-wrapper-41294759">Primary and Development Courses</a>
+            </div>
+          </div>
+
+          <div class="csp-sub-mobile-item">
+            <button class="csp-sub-mobile-link csp-sub-mobile-trigger" type="button"
+              aria-expanded="false" aria-controls="cicMobDropTeaching"
+              onclick="toggleSubDropdown(this,'cicMobDropTeaching')">
+              Teaching Resources
+              <svg class="csp-sub-caret" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                <path d="M2.5 5l4.5 4.5L11.5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+            <div class="csp-sub-mobile-dropdown" id="cicMobDropTeaching">
+              <a class="csp-sub-mobile-dropdown-item" href="https://library.csp.edu/cic/teaching-resources/supported-tools">CIC Supported Tools</a>
+              <a class="csp-sub-mobile-dropdown-item" href="https://library.csp.edu/cic/teaching-resources/ai-guidance">Generative AI Guidance</a>
+              <a class="csp-sub-mobile-dropdown-item" href="https://library.csp.edu/cic/teaching-resources/inclusive-teaching">Inclusive Teaching</a>
+              <a class="csp-sub-mobile-dropdown-item" href="https://library.csp.edu/cic/teaching-resources/instructional-media-studio">Instructional Media Studio</a>
+            </div>
+          </div>
+
+          <div class="csp-sub-mobile-item">
+            <button class="csp-sub-mobile-link csp-sub-mobile-trigger" type="button"
+              aria-expanded="false" aria-controls="cicMobDropCourseDesign"
+              onclick="toggleSubDropdown(this,'cicMobDropCourseDesign')">
+              Course Design
+              <svg class="csp-sub-caret" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                <path d="M2.5 5l4.5 4.5L11.5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+            <div class="csp-sub-mobile-dropdown" id="cicMobDropCourseDesign">
+              <a class="csp-sub-mobile-dropdown-item" href="https://library.csp.edu/cic/course-design/home">Instructional Design</a>
+              <a class="csp-sub-mobile-dropdown-item" href="https://library.csp.edu/cic/course-design/primary-courses">Primary Courses</a>
+              <a class="csp-sub-mobile-dropdown-item" href="https://library.csp.edu/cic/course-design/student-success">Tracking Student Success</a>
+            </div>
+          </div>
+
           <a class="csp-sub-mobile-cta" href="https://helpcenter.csp.edu/new/">
             <i class="bi bi-ticket-perforated" aria-hidden="true"></i>Get Support
           </a>

@@ -564,6 +564,42 @@ body:has(.csp-subsite-nav.subsite-cic) .csp-navbar .csp-nav-cta-help {
 .csp-sub-link:hover     { color: var(--csp-navy); border-bottom-color: var(--csp-gold); }
 .csp-sub-link.is-active { color: var(--csp-navy); font-weight: 600; border-bottom-color: var(--csp-gold); }
 
+/* ── Dropdown-capable nav items (desktop) ─────────────────────────────
+   .csp-sub-item wraps a .csp-sub-trigger button and its .csp-sub-dropdown
+   panel. Entirely separate class namespace from the system-wide nav's
+   .csp-nav-item/.csp-dropdown (different classes, own JS controller
+   below) so the two dropdown systems can run side by side without
+   conflicting, even on the same page. */
+.csp-sub-item { position: relative; }
+.csp-sub-trigger {
+  border: none; border-bottom: 2px solid transparent; background: none;
+  font: inherit; cursor: pointer; gap: 5px;
+}
+.csp-sub-caret { width: 11px; height: 11px; flex-shrink: 0; transition: transform var(--csp-duration) var(--ease); }
+.csp-sub-item.is-open .csp-sub-caret { transform: rotate(180deg); }
+.csp-sub-dropdown {
+  position: absolute; top: 100%; left: 0; min-width: 240px; margin-top: 1px;
+  background: #fff; border-top: 3px solid var(--csp-gold);
+  border-radius: 0 0 var(--csp-drop-radius) var(--csp-drop-radius);
+  box-shadow: var(--csp-drop-shadow); padding: 8px 4px; z-index: 1020;
+  opacity: 0; visibility: hidden; transform: translateY(-8px); pointer-events: none;
+  transition: opacity var(--csp-duration) var(--ease), transform var(--csp-duration) var(--ease), visibility var(--csp-duration);
+}
+.csp-sub-item.is-open .csp-sub-dropdown {
+  opacity: 1; visibility: visible; transform: translateY(0); pointer-events: auto;
+}
+.csp-sub-dropdown-item {
+  display: block; padding: 8px 16px; font-size: .875rem; color: #333;
+  text-decoration: none; border-radius: 6px; font-family: var(--font-body);
+  transition: background .1s, color .1s, padding-left .15s;
+}
+.csp-sub-dropdown-item:hover { background: var(--csp-gold-light); color: var(--csp-navy); padding-left: 20px; }
+/* Navy band: open state matches the existing hover/active treatment */
+.csp-sub-nav-band .csp-sub-item.is-open > .csp-sub-link {
+  color: #fff;
+  border-bottom-color: var(--accent-color, var(--csp-teal));
+}
+
 /* ── CTA button ───────────────────────────────────────────────────── */
 .csp-sub-cta-wrap {
   display: flex; align-items: center;
@@ -604,6 +640,30 @@ body:has(.csp-subsite-nav.subsite-cic) .csp-navbar .csp-nav-cta-help {
   font-size: .9rem; font-weight: 700; border-radius: 8px;
   text-decoration: none; transition: background .15s;
   border: 1.5px solid transparent;
+}
+
+/* ── Mobile dropdown accordion (nested inside .csp-sub-collapse) ─────
+   Same independence rationale as the desktop dropdowns above: own
+   classes, own toggleSubDropdown() function, no shared state with the
+   system-wide nav's mobile Bootstrap collapse. */
+.csp-sub-mobile-trigger {
+  width: 100%; border: none; border-left: 3px solid transparent; background: none;
+  font: inherit; justify-content: space-between; cursor: pointer;
+}
+.csp-sub-mobile-trigger .csp-sub-caret { transition: transform var(--csp-duration) var(--ease); }
+.csp-sub-mobile-trigger[aria-expanded="true"] .csp-sub-caret { transform: rotate(180deg); }
+.csp-sub-mobile-dropdown {
+  max-height: 0; overflow: hidden;
+  transition: max-height .22s var(--ease);
+}
+.csp-sub-mobile-dropdown.is-open { max-height: 320px; }
+.csp-sub-mobile-dropdown-item {
+  display: block; padding: 9px 16px 9px 34px; font-size: .875rem;
+  color: #555; text-decoration: none; border-left: 3px solid transparent;
+  transition: background .12s, color .12s, border-color .12s;
+}
+.csp-sub-mobile-dropdown-item:hover {
+  background: var(--csp-gold-light); color: var(--csp-navy); border-left-color: var(--csp-gold);
 }
 
 /* ── Accent variants ──────────────────────────────────────────────── */
