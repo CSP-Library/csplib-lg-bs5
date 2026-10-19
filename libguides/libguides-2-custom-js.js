@@ -1,13 +1,18 @@
+<script>
 /* ═══════════════════════════════════════════════════════════════════
    CSP LIBRARY — CUSTOM JS
    LibGuides Admin → System Settings → Look & Feel → Custom JS/CSS → Custom JS
-   ═══════════════════════════════════════════════════════════════════
 
    INSTRUCTIONS:
-   Paste the entire contents of this file into the Custom JS field.
-   Do NOT include script tags — paste only the JavaScript itself.
-   LibGuides wraps this in its own script block automatically.
-════════════════════════════════════════════════════════════════════ */
+   Paste the entire contents of this file into the Custom JS field,
+   including the opening and closing <script> tags — LibGuides does
+   NOT wrap this field automatically, so the tags have to be pasted in
+   manually (same as the Custom CSS field's <style>/</style> wrapper).
+   Forgetting them leaves this raw text sitting unexecuted in <head>,
+   which browsers then relocate into visible page text at the top of
+   <body> — every nav/search/dropdown behavior on the site silently
+   stops working, with no console error to flag it.
+   ═══════════════════════════════════════════════════════════════════ */
 
 document.addEventListener('DOMContentLoaded', function () {
 
@@ -295,3 +300,4 @@ window.addEventListener('resize', function () {
     });
   }
 }, { passive: true });
+</script>

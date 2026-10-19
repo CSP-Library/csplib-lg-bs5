@@ -11,7 +11,7 @@ A **static asset repo** — no build tools, no npm, no compilation. Every file i
 Each `libguides/` file maps to exactly one Admin field.
 
 - **CSS files** (`libguides-1-custom-css.css`) must include their own `<style>`/`</style>` wrapper tags, written directly in the file (first and last lines). LibGuides does **not** add this wrapper automatically — it has to be pasted in manually.
-- **JS files** (`libguides-2-custom-js.js`) — do NOT add `<script>` wrapper tags; LibGuides wraps the Custom JS field automatically.
+- **JS files** (`libguides-2-custom-js.js`) must include their own `<script>`/`</script>` wrapper tags, written directly in the file (first and last lines) — same convention as the CSS file's `<style>` wrapper. LibGuides does **not** wrap the Custom JS field automatically (confirmed 2026-10: a paste missing the tags leaves the whole file sitting as unexecuted raw text relocated into visible page content, with every nav/search/dropdown behavior silently broken and no console error to flag it).
 
 | File | LibGuides destination |
 |---|---|

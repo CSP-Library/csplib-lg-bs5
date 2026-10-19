@@ -131,7 +131,7 @@ Paste the full contents of `libguides-1-custom-css.css`.
 #### 2. Custom JS
 **Admin → System Settings → Look & Feel → Custom JS/CSS → Custom JS**
 
-Paste the full contents of `libguides-2-custom-js.js`. Do **not** include `<script>` tags — LibGuides wraps the contents automatically.
+Paste the full contents of `libguides-2-custom-js.js`, **including** its opening and closing `<script>` tags — LibGuides does not wrap this field automatically.
 
 #### 3. Header HTML
 **Admin → System Settings → Look & Feel → Header & Footer → Header**
