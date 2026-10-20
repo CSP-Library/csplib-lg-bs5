@@ -98,6 +98,6 @@ Table above tracks whether the files exist in this repo, not whether they're liv
 ## Known Issues / Pending
 
 - CIC `footer.html`: "Contact CIC" now uses `mailto:cic@csp.edu` (confirmed from old footer).
-- CIC `hero.html`: now uses a CIC-specific building-entrance photo (`images/csp-library-hero-cic.jpg`, 2026-10), replacing the main-library-photo placeholder. The source photo was only 1500px wide — short of the "at least 1600px" convention noted in the file's own comment (not upscaled, to avoid softening it). Swap in a wider original if one becomes available.
+- CIC `hero.html`: reverted (2026-10) to the main site's hero photo (`images/csp-library-hero.jpg`) after discovering the CIC-specific photo (`images/csp-library-hero-cic.jpg`, a building-entrance shot, 1500px wide) was never actually uploaded to the dev Amplify host — the live page was requesting a URL that 404'd, rendering the hero as a flat gradient with no photo. The CIC-specific file still exists in the repo; swap it back in once it's actually uploaded to whatever host serves images (ideally alongside migrating off the dev Amplify host per the item below).
 - Writing Center URL paths need verification in LibGuides (especially `/writing-center/apa` and `/writing-center/faculty-resources/tutor`).
 - Hero and card images are hosted on a dev Amplify URL (`main.dy1n2ifa5qdl6.amplifyapp.com`) — should be migrated to LibGuides file assets (`libapps.s3.amazonaws.com/customers/955/images/`) before going live.
