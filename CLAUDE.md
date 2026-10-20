@@ -53,11 +53,11 @@ Apply one accent class to the root element (`<nav>`, `<footer>`, `<section class
 - `accent-gold` — Writing Center
 - `accent-navy` — Archives & Special Collections
 
-Each subsite needs its own `subsites/[subsite]/header.html` (group Custom Header), `footer.html` (group Custom Footer), and optionally `hero.html` (floating box on the subsite homepage). The system-wide header/footer from `libguides/` renders on every page — the group-level header appears **above** the system-wide header. Confirmed working (2026-10) on a CIC guide placed in its own dedicated Group with the Group's own Look & Feel → Header/Footer set to `subsites/cic/header.html` / `footer.html`: the system-wide header/footer rendered correctly above/below it.
+Each subsite needs its own `subsites/[subsite]/header.html` (group Custom Header), `footer.html` (group Custom Footer), and optionally `hero.html` (floating box on the subsite homepage). The system-wide header/footer from `libguides/` renders on every page — the group-level header appears **above** the system-wide header. Confirmed working (2026-10) on a CIC guide placed in its own dedicated Group with the Group's own Look & Feel → Header/Footer set to `subsites/cic/group/header.html` / `footer.html`: the system-wide header/footer rendered correctly above/below it.
 
 If a guide's system-wide header *doesn't* seem to be inheriting (no `.csp-navbar`, no Google Fonts link, body falls back to LibGuides' default theme font), the likely cause is that the guide doesn't belong to a Group with its own properly-configured Header/Footer — e.g. an ad-hoc duplicated ("Copy of …") guide, or one sitting in a Group that still has legacy/pre-redesign header settings. Fix it by moving the guide into (or creating) a Group whose Look & Feel is set up per this table, rather than trying to fix it in code — this is an Admin configuration issue, not a template bug. Custom CSS, by contrast, is a System-wide setting and reliably applies everywhere regardless of Group.
 
-**Subsite headers/footers must not include their own "back to library" link, logo, or breadcrumb.** Early versions of `subsites/cic/header.html` and `subsites/writing/header.html` each had one (`.csp-sub-crumb-band`/`.csp-sub-crumb-link` or `.csp-crumb`), on the assumption they might need to stand alone. Now that the system-wide header is confirmed to reliably render above the group header, that affordance is already provided by the system header's own logo/nav — a second one on the subsite nav is pure duplication. These classes were removed from the CSS entirely; don't reintroduce them in a new subsite header.
+**Subsite headers/footers must not include their own "back to library" link, logo, or breadcrumb.** Early versions of `subsites/cic/group/header.html` and `subsites/writing/header.html` each had one (`.csp-sub-crumb-band`/`.csp-sub-crumb-link` or `.csp-crumb`), on the assumption they might need to stand alone. Now that the system-wide header is confirmed to reliably render above the group header, that affordance is already provided by the system header's own logo/nav — a second one on the subsite nav is pure duplication. These classes were removed from the CSS entirely; don't reintroduce them in a new subsite header.
 
 ### Subsite Header CTA Visibility
 
@@ -77,7 +77,7 @@ The main library homepage hero (Box 1) includes a OneSearch form and feature bar
 **`libguides-5-homepage-content.html` is NOT a paste target** — it's the original monolithic file the `box1`–`box6` files were split out of (May 2026), kept only as a single-file reference for reading the whole homepage at once. The **`box1`–`box6` files are the only ones actually pasted into LibGuides**, per the table above. This file is not updated automatically when the box files change — if you edit a box file's content, manually mirror the change here too, or this file silently goes stale (it already has once: a fix landed in a box file but not here, and the stale copy got mistaken for the source of truth, pointing a re-paste at the wrong file entirely). When in doubt about which is current, diff this file's section against the corresponding box file rather than assuming either is right.
 
 `subsites/` contains per-subsite paste targets, one directory per subsite:
-- `cic/` — Curriculum & Instruction Center (header ✓, footer ✓, hero ✓)
+- `cic/` — Curriculum & Instruction Center (header ✓, footer ✓, hero ✓). Split into `group/` (header.html, footer.html — pasted at the Group level) and `guide/` (hero.html — pasted at the individual guide level), since those are two different Admin locations. Other subsites haven't been split this way yet; do it as each one picks up a hero/guide-level file of its own.
 - `writing/` — Writing Center (header ✓; footer and hero pending)
 - `archives/` — Archives & Special Collections (not yet started)
 - `tutoring/` — Tutoring Support (not yet started)
@@ -87,7 +87,7 @@ The main library homepage hero (Box 1) includes a OneSearch form and feature bar
 
 | Subsite | header.html | footer.html | hero.html |
 |---|---|---|---|
-| CIC | ✓ `subsites/cic/` | ✓ `subsites/cic/` | ✓ `subsites/cic/` |
+| CIC | ✓ `subsites/cic/group/` | ✓ `subsites/cic/group/` | ✓ `subsites/cic/guide/` |
 | Writing Center | ✓ `subsites/writing/` | not yet created | not yet created |
 | Archives | not yet created | not yet created | not yet created |
 | Tutoring | not yet created | not yet created | not yet created |
