@@ -2,6 +2,7 @@
 /* ═══════════════════════════════════════════════════════════════════
    CSP LIBRARY — CUSTOM JS
    LibGuides Admin → System Settings → Look & Feel → Custom JS/CSS → Custom JS
+   Version: 1
 
    INSTRUCTIONS:
    Paste the entire contents of this file into the Custom JS field,

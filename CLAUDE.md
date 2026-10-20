@@ -24,6 +24,10 @@ Each `libguides/` file maps to exactly one Admin field.
 | `subsites/[subsite]/footer.html` | Group → Look & Feel → Footer (one per subsite group) |
 | `subsites/[subsite]/hero.html` | Individual box in that subsite's homepage guide, with Floating Box checked |
 
+### Version tracking
+
+Every paste-target file above carries a hand-maintained `Version: N` line in its top comment block. Bump it by 1 whenever you edit that specific file (each file has its own independent counter — editing the CSS doesn't bump the JS's version). This lets the version number pasted into a LibGuides Admin field be visually compared against the repo's current version to tell whether that field is stale, without needing git access from inside Admin. `libguides-5-homepage-content.html` is excluded (it's reference-only, not a paste target — see below).
+
 ## Critical LibGuides Constraints
 
 - **No `@import` in Custom CSS** — LibGuides strips them. All external CDN dependencies (Bootstrap 5, Bootstrap Icons, Google Fonts) are loaded via `<link>` tags in `libguides-3-header-html.html` only.
