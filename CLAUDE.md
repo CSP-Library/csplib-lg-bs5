@@ -42,6 +42,10 @@ Every paste-target file above carries a hand-maintained `Version: N` line in its
 
 Brand colors: `--csp-navy` (#003055), `--csp-gold` (#E6B222), `--csp-teal` (#00A9A3), `--csp-gray` (#E1E8EC), `--csp-page-bg` (#f5f4f2), plus `-80/-60/-40/-20/-10` navy tints and `-hover/-light/-mid` gold/teal variants.
 
+Text-safe tokens (QA-003/004): never put white text on `--csp-teal` (2.92:1). Use `--csp-teal-action` / `--csp-teal-action-hover` for teal buttons with white text, and `--csp-on-navy-muted` for secondary text on navy. Don't drop white text on navy below .55 opacity (4.5:1 needs about .5).
+
+Skip links: the system header has no skip link of its own. LibGuides renders `#s-lg-public-skiplink` → `#s-lg-guide-main` first in `<body>`, and the footer's Back to top targets that link. Don't reintroduce `#main-content`; that ID doesn't exist on LibGuides pages.
+
 Typography: `--font-display` (Barlow Condensed — headings, nav, CTAs, eyebrows) and `--font-body` (Barlow — body copy). Easing: `--ease` (not `--csp-ease`). Gray border color: `--csp-gray` (not `--csp-gray-light`).
 
 The Google Fonts `<link>` for Barlow Condensed/Barlow lives only in `libguides-3-header-html.html` (the system-wide header), not in any subsite file. Subsite CSS classes (`.hero-heading`, `.csp-sub-name`, etc., all in `libguides-1-custom-css.css`) already reference the same `var(--font-display)`/`var(--font-body)` tokens as the main site — don't add separate font declarations or Google Fonts links to a subsite header. Fonts match automatically as long as the system-wide header is actually inheriting on that page (see the Subsite Accent Pattern section below if it isn't).

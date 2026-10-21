@@ -52,3 +52,46 @@ Files: `libguides/libguides-1-custom-css.css`, `libguides/libguides-2-custom-js.
 - Full 320/390/768/991/992/1280/1440 responsive sweep, 200% text and 400% zoom checks (that's W4's territory, not started).
 - Real assistive-technology verification (VoiceOver+Safari, NVDA+Chrome) — explicitly flagged in the work orders as needing a human AT tester, not a browser accessibility-tree read.
 - The deployed-field verification itself (pasting these files into LibGuides Admin) — not done; per the operating contract, repository edits and deployment are separate operations, and this pass did not get authorization to paste into Admin fields.
+
+---
+
+# Remediation log — W3 pass (2026-10-21)
+
+Source at start of this pass: ddd4aad (`updates`). This pass covers W3 only (QA-003, QA-004, QA-005). W1/W2 open items above are unchanged; W4–W7 are untouched.
+
+Files changed: `libguides/libguides-1-custom-css.css` (Version 1→2), `libguides/libguides-3-header-html.html` (1→2), `libguides/libguides-4-footer-html.html` (1→2). Subsite HTML files were not edited; their fixes come through the shared CSS.
+
+Custom CSS after this pass: 49,380 characters / ~53.5K bytes, against the ~59K-character Admin cutoff. `<style>` first line and `</style>` last line intact.
+
+## How this was verified
+
+Contrast ratios were measured in Chrome against a composed copy of the live homepage (fetched 2026-10-21) with the repo's CSS, JS, header and footer swapped in, served from the dev VM. Alpha text was composited over the nearest solid ancestor background using WCAG sRGB luminance. Subsite rules (CIC/teal) were checked by injecting sample `.accent-teal` CTA, hero and footer markup into that page, since the homepage doesn't render them. This is a **source/pre-deployment** check, not a post-paste verification.
+
+## W3 — QA-003 (P1) — implemented, deployment verification pending
+
+- Added `--csp-teal-action` (#007f7b, the existing teal-hover value) and `--csp-teal-action-hover` (#00635F) as text-safe action tokens. `--csp-teal` (#00A9A3) is unchanged and still used for decorative borders, eyebrows, icons and accent stripes, so there was no global brand-color change.
+- Moved white-text teal buttons onto the action tokens: `.cta-teal` (homepage Research Assistance CTA), `.accent-teal .csp-sub-cta` / `.csp-sub-mobile-cta` (CIC Get Support), `.accent-teal .hero-cta-primary` (CIC hero; same failing pairing, not named in the audit).
+- Added `:visited` color coverage for these (`color:#fff !important`), matching the pattern already used for navy CTAs, so platform visited-link rules can't override them.
+- Measured: white on #007f7b = **4.86:1** default/visited; hover #00635F = 7.12:1 (previously 2.92:1).
+- **Design note for the owner:** the teal buttons render visibly darker. The other option the work order allowed (navy text on brand teal, 4.64:1) keeps the brighter teal but has no obvious hover state that passes. Either is easy to swap if the brand owner prefers it.
+
+## W3 — QA-004 (P1) — implemented, deployment verification pending
+
+- Added `--csp-on-navy-muted` = rgba(255,255,255,.6), **5.78:1** on navy, and applied it to every failing small text on solid navy: `.footer-brand p` (.50), `.footer-address` (.38), `.footer-bottom p`/`a`/`:visited` (.30), `.feature-bar-learn`/`:visited` (.45, measured 3.9:1; not named in the audit but the same defect), `.csp-sub-footer-tagline` (.50), `.csp-sub-footer-bottom p`/`a`/`:visited` (.30).
+- Admin link: removed inline `color:rgba(255,255,255,.2)` (1.83:1) and the `onmouseover`/`onmouseout` handlers (also part of QA-018); it now uses a `.footer-admin` class and inherits the muted token. It's still visually secondary through its smaller size (.72rem).
+- Hover/focus on footer-bottom links now goes to `#fff !important`. Before, the `!important` visited rule beat the plain hover rule, so visited links never changed on hover.
+- The existing .55 footer links (5.10:1) were left alone, per the audit.
+- Measured minimum across all footer/feature-bar text on the composed page: 5.10:1.
+
+## W3 — QA-005 (P1) — implemented, deployment verification pending
+
+- Removed both custom skip links from the system header: the duplicate to `#s-lg-guide-main` and the broken one to `#main-content`. The single bypass is now LibGuides' own `#s-lg-public-skiplink` → `#s-lg-guide-main`, which the platform renders as the first element of `<body>` and shows on focus (bordered white box, platform CSS). Removed the now-unused `.skip-link` CSS.
+- Back to top now targets `#s-lg-public-skiplink` instead of the missing `#main-content`. That's the real top of every LibGuides page, above any group header, so it also works on subsite pages.
+- Added `scroll-margin-top` on `#s-lg-guide-main` so a skip-link landing isn't hidden under the sticky navbar. Without it, main landed at y=0 behind the ~76px navbar, which is relevant to WCAG 2.4.11.
+- Verified (keyboard, real Enter key presses): every `href="#…"` on the page resolves to exactly one element. Back to top → focus on the skip link at the top of the page, visible. Enter on the skip link → focus on `#s-lg-guide-main`, landing at the navbar's bottom edge (before the 16px buffer was added).
+
+## Not done / residual for W3
+
+- Hero text over the photo (`.hero-sub` .65, `.hero-alt-link` .5) can't be measured from source because the background is an image under a gradient overlay. It needs a live pixel-level check at several widths; not changed.
+- Focus-indicator contrast (1.4.11) for controls was not swept; the work order's item 6 (search input outline) was left as is, since the audit observed a working live outline.
+- Post-paste verification in LibGuides Admin (these three fields) has not been done.

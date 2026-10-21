@@ -2,7 +2,7 @@
 /* ═══════════════════════════════════════════════════════════════════
    CSP LIBRARY — CUSTOM CSS
    LibGuides Admin → System Settings → Look & Feel → Custom JS/CSS → Custom CSS
-   Version: 1
+   Version: 2
 
    INSTRUCTIONS:
    1. Paste the entire contents of this file into the Custom CSS field,
@@ -30,6 +30,11 @@
       --csp-teal:        #00A9A3;
       --csp-teal-light:  #e0f6f5;
       --csp-teal-hover:  #007f7b;
+      /* QA-003/004: text-safe tokens. Brand teal stays for decoration;
+         white on #00A9A3 is only 2.92:1. Ratios are with white text / on navy. */
+      --csp-teal-action: #007f7b;        /* 4.86:1 */
+      --csp-teal-action-hover: #00635F;  /* 7.12:1 */
+      --csp-on-navy-muted: rgba(255,255,255,.6); /* 5.77:1 on navy */
       --csp-gray:        #E1E8EC;
       --csp-page-bg:     #f5f4f2;
       --font-display:    'Barlow Condensed', 'Arial Narrow', sans-serif;
@@ -45,11 +50,9 @@
     }
     *, *::before, *::after { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
+    /* QA-005: keep skip-link landings clear of the sticky navbar */
+    #s-lg-guide-main { scroll-margin-top: calc(var(--csp-nav-height) + 16px); }
     body { font-family: var(--font-body); background: var(--csp-page-bg); color: #1a1a1a; margin: 0; }
-
-    /* ── Skip link ─────────────────────────────────────────────── */
-    .skip-link { position: absolute; top: -100px; left: 16px; z-index: 9999; background: var(--csp-gold); color: var(--csp-navy); font-weight: 700; padding: 8px 16px; border-radius: 0 0 6px 6px; text-decoration: none; font-size: .875rem; transition: top .15s; }
-    .skip-link:focus { top: 0; }
 
     /* ── Announcement bar ──────────────────────────────────────── */
     .announcement-bar { background: var(--csp-gold); color: var(--csp-navy); text-align: center; padding: 9px 16px; font-family: var(--font-body); font-size: .8rem; font-weight: 600; letter-spacing: .02em; display: none; }
@@ -182,9 +185,9 @@
     .hero-cta-ghost:visited { color: rgba(255,255,255,.85) !important; }
     .hero-cta-ghost:hover { border-color: rgba(255,255,255,.7); color: #fff; background: rgba(255,255,255,.08); }
 
-    .accent-teal .hero-cta-primary       { background: var(--csp-teal); color: #fff; }
+    .accent-teal .hero-cta-primary       { background: var(--csp-teal-action); color: #fff; }
     .accent-teal .hero-cta-primary:visited { color: #fff !important; }
-    .accent-teal .hero-cta-primary:hover { background: var(--csp-teal-hover); color: #fff; }
+    .accent-teal .hero-cta-primary:hover { background: var(--csp-teal-action-hover); color: #fff; }
     .accent-gold .hero-cta-primary       { background: var(--csp-gold); color: var(--csp-navy); }
     .accent-gold .hero-cta-primary:visited { color: var(--csp-navy) !important; }
     .accent-gold .hero-cta-primary:hover { background: var(--csp-gold-hover); color: var(--csp-navy); }
@@ -241,12 +244,12 @@
     .feature-bar-cta .bi-arrow-right { transition: transform .2s var(--ease); }
     .feature-bar-cta:hover .bi-arrow-right { transform: translateX(3px); }
     .feature-bar-learn {
-      font-size: .8rem; color: rgba(255,255,255,.45); text-decoration: none;
+      font-size: .8rem; color: var(--csp-on-navy-muted); text-decoration: none;
       flex-shrink: 0; white-space: nowrap; transition: color .15s;
       border-bottom: 1px solid rgba(255,255,255,.2);
       padding-bottom: 1px;
     }
-    .feature-bar-learn:visited { color: rgba(255,255,255,.45) !important; }
+    .feature-bar-learn:visited { color: var(--csp-on-navy-muted) !important; }
     .feature-bar-learn:hover { color: #fff; border-bottom-color: rgba(255,255,255,.6); }
     @media (max-width: 767px) {
       .feature-bar-inner { gap: 14px; }
@@ -285,8 +288,8 @@
     .service-links a i { font-size: .8rem; opacity: .3; }
     .badge-live { font-family: var(--font-display); font-size: .58rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; background: #dcfce7; color: #166534; padding: 2px 7px; border-radius: 20px; }
     .service-cta { display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 24px; padding: 11px; font-family: var(--font-display); font-size: .85rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; border-radius: 4px; text-decoration: none; transition: background .15s, color .15s; }
-    .cta-teal { background: var(--csp-teal); color: #fff; }
-    .cta-teal:hover { background: var(--csp-teal-hover); color: #fff; }
+    .cta-teal, .cta-teal:visited { background: var(--csp-teal-action); color: #fff !important; }
+    .cta-teal:hover { background: var(--csp-teal-action-hover); }
     .cta-gold { background: var(--csp-gold); color: var(--csp-navy); }
     .cta-gold:hover { background: var(--csp-gold-hover); color: var(--csp-navy); }
     .cta-navy { background: var(--csp-navy); color: #fff; }
@@ -349,8 +352,8 @@
     .site-footer { background: var(--csp-navy); color: rgba(255,255,255,.7); padding: 64px 0 0; font-family: var(--font-body); }
     .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; padding-bottom: 56px; border-bottom: 1px solid rgba(255,255,255,.08); }
     .footer-brand img { height: 36px; filter: brightness(0) invert(1); opacity: .85; display: block; margin-bottom: 16px; }
-    .footer-brand p { font-size: .825rem; line-height: 1.7; color: rgba(255,255,255,.5); max-width: 26ch; margin: 0 0 20px; }
-    .footer-address { font-style: normal; font-size: .8rem; line-height: 1.7; color: rgba(255,255,255,.38); }
+    .footer-brand p { font-size: .825rem; line-height: 1.7; color: var(--csp-on-navy-muted); max-width: 26ch; margin: 0 0 20px; }
+    .footer-address { font-style: normal; font-size: .8rem; line-height: 1.7; color: var(--csp-on-navy-muted); }
     .footer-col-title { font-family: var(--font-display); font-size: .68rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--csp-gold-mid); margin: 0 0 16px; }
     .footer-links { list-style: none; padding: 0; margin: 0; }
     .footer-links li { margin-bottom: 9px; }
@@ -368,10 +371,11 @@
     .footer-social a:visited { color: rgba(255,255,255,.55) !important; }
     .footer-social a:hover { background: var(--csp-gold); color: var(--csp-navy); border-color: transparent; }
     .footer-bottom { padding: 20px 0; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
-    .footer-bottom p { margin: 0; font-size: .78rem; color: rgba(255,255,255,.3); }
-    .footer-bottom a { font-size: .78rem; color: rgba(255,255,255,.3); text-decoration: none; display: inline-flex; align-items: center; gap: 5px; transition: color .15s; }
-    .footer-bottom a:visited { color: rgba(255,255,255,.3) !important; }
-    .footer-bottom a:hover { color: rgba(255,255,255,.7); }
+    .footer-bottom p { margin: 0; font-size: .78rem; color: var(--csp-on-navy-muted); }
+    .footer-bottom a { font-size: .78rem; color: var(--csp-on-navy-muted); text-decoration: none; display: inline-flex; align-items: center; gap: 5px; transition: color .15s; }
+    .footer-bottom a:visited { color: var(--csp-on-navy-muted) !important; }
+    .footer-bottom a:hover, .footer-bottom a:focus-visible { color: #fff !important; }
+    .footer-bottom .footer-admin { font-size: .72rem; }
     @media (max-width: 991px) { .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; } }
     @media (max-width: 600px) { .footer-grid { grid-template-columns: 1fr; } }
 
@@ -682,10 +686,8 @@ body:has(.csp-subsite-nav.subsite-cic) .csp-navbar .csp-nav-cta-help {
 
 /* Teal — Curriculum & Instruction Center */
 .accent-teal .csp-sub-icon             { background: var(--csp-teal-light); color: var(--csp-teal); }
-.accent-teal .csp-sub-cta              { background: var(--csp-teal); color: #fff; }
-.accent-teal .csp-sub-cta:hover        { background: var(--csp-teal-hover); }
-.accent-teal .csp-sub-mobile-cta       { background: var(--csp-teal); color: #fff; }
-.accent-teal .csp-sub-mobile-cta:hover { background: var(--csp-teal-hover); }
+.accent-teal .csp-sub-cta, .accent-teal .csp-sub-mobile-cta { background: var(--csp-teal-action); color: #fff !important; }
+.accent-teal .csp-sub-cta:hover, .accent-teal .csp-sub-mobile-cta:hover { background: var(--csp-teal-action-hover); }
 
 /* Gold — Writing Center */
 .accent-gold .csp-sub-icon             { background: var(--csp-gold-light); color: #8a6a0d; }
@@ -745,7 +747,7 @@ body:has(.csp-subsite-nav.subsite-cic) .csp-navbar .csp-nav-cta-help {
   color: #fff; margin: 0 0 8px;
 }
 .csp-sub-footer-tagline {
-  font-size: .825rem; color: rgba(255,255,255,.5);
+  font-size: .825rem; color: var(--csp-on-navy-muted);
   line-height: 1.6; margin: 0 0 24px; max-width: 28ch;
 }
 .csp-sub-footer-logo {
@@ -780,14 +782,14 @@ body:has(.csp-subsite-nav.subsite-cic) .csp-navbar .csp-nav-cta-help {
   display: flex; align-items: center; justify-content: space-between;
   flex-wrap: wrap; gap: 10px;
 }
-.csp-sub-footer-bottom p { margin: 0; font-size: .78rem; color: rgba(255,255,255,.3); }
+.csp-sub-footer-bottom p { margin: 0; font-size: .78rem; color: var(--csp-on-navy-muted); }
 .csp-sub-footer-bottom a {
-  font-size: .78rem; color: rgba(255,255,255,.3);
+  font-size: .78rem; color: var(--csp-on-navy-muted);
   text-decoration: none; transition: color .15s;
   display: inline-flex; align-items: center; gap: 5px;
 }
-.csp-sub-footer-bottom a:visited { color: rgba(255,255,255,.3) !important; }
-.csp-sub-footer-bottom a:hover { color: rgba(255,255,255,.7); }
+.csp-sub-footer-bottom a:visited { color: var(--csp-on-navy-muted) !important; }
+.csp-sub-footer-bottom a:hover, .csp-sub-footer-bottom a:focus-visible { color: #fff !important; }
 
 /* ── Mobile (≤ 767px) ─────────────────────────────────────────────── */
 @media (max-width: 767px) {

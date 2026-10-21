@@ -1,7 +1,7 @@
 <!-- ═══════════════════════════════════════════════════════════════════
    CSP LIBRARY — SITE-WIDE HEADER
    LibGuides Admin → System Settings → Look & Feel → Header & Footer → Header
-   Version: 1
+   Version: 2
    ═══════════════════════════════════════════════════════════════════
 
    INSTRUCTIONS:
@@ -37,17 +37,16 @@
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc4s9bIOgUxi8T/jzmruXF/6bSfM9lMGvX4OdvSGjO4"
         crossorigin="anonymous"></script>
 
-<!-- Accessibility: skip link target -->
-<a class="skip-link" href="#s-lg-guide-main">Skip to main content</a>
+<!-- Accessibility (QA-005): no custom skip link here. LibGuides already
+     renders #s-lg-public-skiplink -> #s-lg-guide-main as the first element
+     of <body>; a second copy was a duplicate and a third pointed at a
+     #main-content target that never existed. -->
 
 <!-- Announcement bar -->
   <div class="announcement-bar" role="banner" style="display:block">
     Library summer hours now in effect.
     <a href="https://csp.libcal.com/hours/">See current hours →</a>
   </div>
-
-  <!-- Skip link -->
-  <a class="skip-link" href="#main-content">Skip to main content</a>
 
   <!-- Backdrop -->
   <div class="csp-backdrop" id="cspBackdrop" aria-hidden="true"></div>
