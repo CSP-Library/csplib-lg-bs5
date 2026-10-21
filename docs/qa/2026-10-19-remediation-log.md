@@ -1,3 +1,40 @@
+# QA remediation log
+
+Baseline: [2026-10-19 audit](2026-10-19-baseline-audit.md) · [work orders](2026-10-19-remediation-work-orders.md)
+
+## Status register
+
+One row per audit finding. **Update this table in the same commit as any fix**, then add or extend the detailed section below it.
+
+Status values (from the work orders' completion template): **Open** · **Owner decision** (blocked on a named owner) · **Implemented** (in the repo, not pasted) · **Deployed, awaiting verification** (pasted, not re-tested on the live page) · **Verified** (tested on the live page after pasting; put the date in *Deployment check*) · **Accepted risk**.
+
+*Deployment check* is the date someone tested the fix on the live page after pasting. "Code seen live" means the fixed code was found on the live homepage (`/bs5home?bs5=1`, 2026-10-21) but the acceptance tests weren't rerun there. Group-level fields (CIC/Writing headers) can't be seen from the homepage and are noted separately.
+
+| ID | Pri | Finding | Status | Commits | Deployment check | Details | Notes / blocker |
+|---|---|---|---|---|---|---|---|
+| QA-001 | P1 | Search button fails | Deployed, awaiting verification | `d67c01f` | Not checked (code seen live 2026-10-21) | [log](#qa-001) · [audit](2026-10-19-baseline-audit.md#qa-001--p1--search-button-fails-confirmed-live-and-source) | Owner question: Primo view URL. Edge-case searches untested. |
+| QA-002 | P1 | Desktop dropdowns need a pointer | Deployed, awaiting verification | `d67c01f`, `0673777` | Not checked (system nav seen live 2026-10-21) | [log](#qa-002) · [audit](2026-10-19-baseline-audit.md#qa-002--p1--desktop-dropdowns-require-a-pointer-confirmed-live-and-source) | CIC group header not checked live. Screen-reader check pending (W7). |
+| QA-003 | P1 | Teal buttons fail contrast | Implemented | `462b10b` | Not deployed | [log](#qa-003) · [audit](2026-10-19-baseline-audit.md#qa-003--p1--teal-actions-fail-text-contrast-confirmed-livesource) | Brand owner may prefer navy-on-teal instead. |
+| QA-004 | P1 | Footer text too faint | Implemented | `462b10b` | Not deployed | [log](#qa-004) · [audit](2026-10-19-baseline-audit.md#qa-004--p1--footer-text-is-deliberately-too-faint-confirmed-livesource) | — |
+| QA-005 | P1 | Broken skip / back-to-top targets | Implemented | `462b10b` | Not deployed | [log](#qa-005) · [audit](2026-10-19-baseline-audit.md#qa-005--p1--invalid-skipback-to-top-targets-confirmed-livesource) | — |
+| QA-006 | P2 | Horizontal overflow (full bleed) | Open | — | — | [audit](2026-10-19-baseline-audit.md#qa-006--p2--horizontal-overflow-in-full-bleed-layout-confirmed-live-wcag-failure-pending-exact-test) | W4 |
+| QA-007 | P1 | Closed subsite nav still focusable | Deployed in part, awaiting verification | `d67c01f` | Not checked (system CSS/JS seen live 2026-10-21) | [log](#qa-007) · [audit](2026-10-19-baseline-audit.md#qa-007--p1--collapsed-subsite-navigation-retains-focusable-links-confirmed-source-live-subsite-validation-needed) | CIC and Writing group headers not checked live. |
+| QA-008 | P2 | Extra Bootstrap layer | Open | — | — | [audit](2026-10-19-baseline-audit.md#qa-008--p2--extra-bootstrap-layer-can-conflict-with-platform-assets-confirmed-asset-inventory-behavioral-risk) | W4 |
+| QA-009 | P2 | Global chrome hiding | Open | — | — | [audit](2026-10-19-baseline-audit.md#qa-009--p2--global-chrome-suppression-has-broad-regression-potential-confirmed-source) | W4 |
+| QA-010 | P2 | News/events placeholders | Open | — | — | [audit](2026-10-19-baseline-audit.md#qa-010--p2--newsevents-are-public-developer-placeholders-confirmed-livesource) | W5 |
+| QA-011 | P2 | Hardcoded time-sensitive claims | Owner decision | — | — | [audit](2026-10-19-baseline-audit.md#qa-011--p2--time-sensitive-claims-are-hardcoded-confirmed-livesource) | W5. Needs current hours/chat wording from service owners. |
+| QA-012 | P2 | Inconsistent link destinations | Open | — | — | [audit](2026-10-19-baseline-audit.md#qa-012--p2--link-destinations-are-inconsistent-and-incompletely-verified-confirmed-source-reachability-open) | W5. Needs owners to confirm intended destinations. |
+| QA-013 | P2 | Images on dev Amplify host | Owner decision | — | — | [audit](2026-10-19-baseline-audit.md#qa-013--p2--production-visuals-depend-on-a-development-asset-host-confirmed-sourcelive-hero) | W5. Needs an approved permanent image host. |
+| QA-014 | P2 | Branding docs vs current site | Owner decision | — | — | [audit](2026-10-19-baseline-audit.md#qa-014--p2--branding-documentation-no-longer-matches-the-current-comparison-site-confirmed-visual-comparison) | W6. Needs brand owner sign-off. |
+| QA-015 | P2 | README points to stale files | Open | — | — | [audit](2026-10-19-baseline-audit.md#qa-015--p2--readme-sends-editors-to-stalereference-content-confirmed-source) | W6 |
+| QA-016 | P2 | No deployment provenance | Open | — | — | [audit](2026-10-19-baseline-audit.md#qa-016--p2--deployment-provenance-and-regression-gates-are-absent-confirmed-repository-treesource) | W6 |
+| QA-017 | P2 | Analytics and security headers | Owner decision | — | — | [audit](2026-10-19-baseline-audit.md#qa-017--p2--analyticsconsent-and-security-headers-need-administrator-verification-risk) | W7. Platform/analytics admins. |
+| QA-018 | P3 | Inline handlers, DOM assumptions | Open (partly fixed) | `d67c01f`, `462b10b` | — | [audit](2026-10-19-baseline-audit.md#qa-018--p3--inline-handlers-and-dom-assumptions-make-maintenancecsp-harder-confirmed-source) | Search and footer Admin handlers removed. Subsite toggle onclicks remain. |
+| QA-019 | P3 | Icons in link names | Deployed, awaiting verification | `d67c01f` | Not checked (code seen live 2026-10-21) | [log](#qa-019) · [audit](2026-10-19-baseline-audit.md#qa-019--p3--decorative-icons-contaminate-accessible-link-names-confirmed-livesource) | Screen-reader check pending (W7). |
+| QA-020 | P3 | Motion and target size | Open | — | — | [audit](2026-10-19-baseline-audit.md#qa-020--p3--motion-and-target-size-coverage-is-incomplete-confirmed-source-aa-outcomes-unverified) | W4 |
+
+---
+
 # Remediation log — W1/W2 pass
 
 Baseline: [2026-10-19 audit](2026-10-19-baseline-audit.md) + [work orders](2026-10-19-remediation-work-orders.md).
@@ -8,6 +45,8 @@ This pass covers W1 and W2 only. W3–W7 are untouched.
 
 The audit's pinned baseline (f66ccfa) predates a commit already on `updates` when this pass started: a9fc0bf, "Add dropdown menus to CIC subsite nav." That commit added new desktop dropdown triggers to `subsites/cic/header.html` using the same hover-only interaction model as the (flawed) system nav controller it mirrored — i.e. it reproduced the QA-002 pattern in code the audit never saw. Since `subsites/cic/header.html` was already listed as an allowed file under W2, this pass treats that as in-scope rather than a separate finding, and fixes it alongside the system nav.
 
+<a id="qa-001"></a>
+
 ## W1 — QA-001 (P1) — implemented, deployment verification pending
 
 - Changed: `libguides/libguides-5-box1-hero.html` (div→form, button type=button→submit, removed inline onclick), `libguides/libguides-2-custom-js.js` (single submit handler, removed scoped `doSearch`/separate Enter listener).
@@ -15,6 +54,8 @@ The audit's pinned baseline (f66ccfa) predates a commit already on `updates` whe
 - Verified after (live browser test against the actual repo files, not just read): button click, with input "fermentation", navigates to `.../nde/search?...&query=fermentation` — same destination the audit recorded for Enter. No console errors.
 - Not changed: URL/view semantics (CSP legacy view, redirects to NDE) — left exactly as-is per the work order's explicit instruction to get owner confirmation before changing that. See "Open questions" below.
 - Acceptance not yet covered by this pass: ampersand/apostrophe/non-ASCII/blank-input edge cases, and the live LibGuides-deployed field (this was verified against the repo source only, per the operating contract's repository-vs-deployment separation).
+
+<a id="qa-002"></a>
 
 ## W2 — QA-002 (P1) — implemented, deployment verification pending
 
@@ -27,6 +68,8 @@ Files: `libguides/libguides-2-custom-js.js` (system nav controller + the CIC sub
 - Verified live: first click opens + sets aria-expanded=true; a second click does not close it (self-cancel fixed); focus moving to a link inside the panel keeps it open; focus moving to another top-level trigger closes it; Escape closes and returns focus to the trigger; resize closes an open panel. Confirmed for both the system nav (Find Resources) and the CIC subsite nav (Policies).
 - One environment note: testing this required overriding `window.innerWidth` and forcing `.navbar-collapse` visible in the test harness, because Bootstrap's own `@media (min-width:992px)` rule (not just this codebase's `isDesktop()` check) gates the nav's visibility at the real automation window's width (960px). Real users at genuine desktop widths aren't affected; this was purely a test-environment constraint.
 
+<a id="qa-007"></a>
+
 ## W2 — QA-007 (P1) — implemented, deployment verification pending
 
 Files: `libguides/libguides-1-custom-css.css`, `libguides/libguides-2-custom-js.js`, `subsites/cic/header.html`, `subsites/writing/header.html`.
@@ -37,6 +80,8 @@ Files: `libguides/libguides-1-custom-css.css`, `libguides/libguides-2-custom-js.
 - Removed hardcoded `is-active`/implicit "Home is always active" from both CIC's and Writing's Home links (desktop + mobile); added a small current-page-detection block to the JS that compares each `.csp-sub-link`/`.csp-sub-mobile-link`'s `.pathname` against `location.pathname` and sets `.is-active`/`aria-current="page"` dynamically. Guards against matching the dropdown trigger buttons (which share these classes for styling, not navigation).
 - Verified live (served the assembled page at a `/cic/home`-shaped path so `location.pathname` matching could be tested realistically): Home correctly marked active + `aria-current="page"` at that path; a Policies link correctly not marked active; outer panel correctly hidden by default, reachable only once open, re-hidden once the close transition ends; same for the nested accordion; resize-triggered hard reset also sets `hidden` directly.
 - Writing Center's header got the same `is-active`/`hidden` fixes but was **not** otherwise touched — it's still on the older single-band nav layout (pre-dates CIC's two-band refactor) and has no dropdown items, so none of the dropdown-specific work applied there. Not re-platforming it to match CIC was a deliberate scope decision (unrelated redesign), not an oversight.
+
+<a id="qa-019"></a>
 
 ## W2 — QA-019 (P3) — implemented, deployment verification pending
 
@@ -67,6 +112,8 @@ Custom CSS after this pass: 49,380 characters / ~53.5K bytes, against the ~59K-c
 
 Contrast ratios were measured in Chrome against a composed copy of the live homepage (fetched 2026-10-21) with the repo's CSS, JS, header and footer swapped in, served from the dev VM. Alpha text was composited over the nearest solid ancestor background using WCAG sRGB luminance. Subsite rules (CIC/teal) were checked by injecting sample `.accent-teal` CTA, hero and footer markup into that page, since the homepage doesn't render them. This is a **source/pre-deployment** check, not a post-paste verification.
 
+<a id="qa-003"></a>
+
 ## W3 — QA-003 (P1) — implemented, deployment verification pending
 
 - Added `--csp-teal-action` (#007f7b, the existing teal-hover value) and `--csp-teal-action-hover` (#00635F) as text-safe action tokens. `--csp-teal` (#00A9A3) is unchanged and still used for decorative borders, eyebrows, icons and accent stripes, so there was no global brand-color change.
@@ -75,6 +122,8 @@ Contrast ratios were measured in Chrome against a composed copy of the live home
 - Measured: white on #007f7b = **4.86:1** default/visited; hover #00635F = 7.12:1 (previously 2.92:1).
 - **Design note for the owner:** the teal buttons render visibly darker. The other option the work order allowed (navy text on brand teal, 4.64:1) keeps the brighter teal but has no obvious hover state that passes. Either is easy to swap if the brand owner prefers it.
 
+<a id="qa-004"></a>
+
 ## W3 — QA-004 (P1) — implemented, deployment verification pending
 
 - Added `--csp-on-navy-muted` = rgba(255,255,255,.6), **5.78:1** on navy, and applied it to every failing small text on solid navy: `.footer-brand p` (.50), `.footer-address` (.38), `.footer-bottom p`/`a`/`:visited` (.30), `.feature-bar-learn`/`:visited` (.45, measured 3.9:1; not named in the audit but the same defect), `.csp-sub-footer-tagline` (.50), `.csp-sub-footer-bottom p`/`a`/`:visited` (.30).
@@ -82,6 +131,8 @@ Contrast ratios were measured in Chrome against a composed copy of the live home
 - Hover/focus on footer-bottom links now goes to `#fff !important`. Before, the `!important` visited rule beat the plain hover rule, so visited links never changed on hover.
 - The existing .55 footer links (5.10:1) were left alone, per the audit.
 - Measured minimum across all footer/feature-bar text on the composed page: 5.10:1.
+
+<a id="qa-005"></a>
 
 ## W3 — QA-005 (P1) — implemented, deployment verification pending
 
