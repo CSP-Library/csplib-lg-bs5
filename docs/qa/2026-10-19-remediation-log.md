@@ -14,9 +14,9 @@ Status values (from the work orders' completion template): **Open** · **Owner d
 |---|---|---|---|---|---|---|---|
 | QA-001 | P1 | Search button fails | Deployed, awaiting verification | `d67c01f` | Not checked (code seen live 2026-10-21) | [log](#qa-001) · [audit](2026-10-19-baseline-audit.md#qa-001--p1--search-button-fails-confirmed-live-and-source) | Owner question: Primo view URL. Edge-case searches untested. |
 | QA-002 | P1 | Desktop dropdowns need a pointer | Deployed, awaiting verification | `d67c01f`, `0673777` | Not checked (system nav seen live 2026-10-21) | [log](#qa-002) · [audit](2026-10-19-baseline-audit.md#qa-002--p1--desktop-dropdowns-require-a-pointer-confirmed-live-and-source) | CIC group header not checked live. Screen-reader check pending (W7). |
-| QA-003 | P1 | Teal buttons fail contrast | Implemented | `462b10b` | Not deployed | [log](#qa-003) · [audit](2026-10-19-baseline-audit.md#qa-003--p1--teal-actions-fail-text-contrast-confirmed-livesource) | Brand owner may prefer navy-on-teal instead. |
-| QA-004 | P1 | Footer text too faint | Implemented | `462b10b` | Not deployed | [log](#qa-004) · [audit](2026-10-19-baseline-audit.md#qa-004--p1--footer-text-is-deliberately-too-faint-confirmed-livesource) | — |
-| QA-005 | P1 | Broken skip / back-to-top targets | Implemented | `462b10b` | Not deployed | [log](#qa-005) · [audit](2026-10-19-baseline-audit.md#qa-005--p1--invalid-skipback-to-top-targets-confirmed-livesource) | — |
+| QA-003 | P1 | Teal buttons fail contrast | Verified | `462b10b` | 2026-10-21 | [log](#qa-003) · [audit](2026-10-19-baseline-audit.md#qa-003--p1--teal-actions-fail-text-contrast-confirmed-livesource) | Brand owner may prefer navy-on-teal instead. |
+| QA-004 | P1 | Footer text too faint | Verified | `462b10b` | 2026-10-21 | [log](#qa-004) · [audit](2026-10-19-baseline-audit.md#qa-004--p1--footer-text-is-deliberately-too-faint-confirmed-livesource) | — |
+| QA-005 | P1 | Broken skip / back-to-top targets | Verified | `462b10b` | 2026-10-21 | [log](#qa-005) · [audit](2026-10-19-baseline-audit.md#qa-005--p1--invalid-skipback-to-top-targets-confirmed-livesource) | — |
 | QA-006 | P2 | Horizontal overflow (full bleed) | Open | — | — | [audit](2026-10-19-baseline-audit.md#qa-006--p2--horizontal-overflow-in-full-bleed-layout-confirmed-live-wcag-failure-pending-exact-test) | W4 |
 | QA-007 | P1 | Closed subsite nav still focusable | Deployed in part, awaiting verification | `d67c01f` | Not checked (system CSS/JS seen live 2026-10-21) | [log](#qa-007) · [audit](2026-10-19-baseline-audit.md#qa-007--p1--collapsed-subsite-navigation-retains-focusable-links-confirmed-source-live-subsite-validation-needed) | CIC and Writing group headers not checked live. |
 | QA-008 | P2 | Extra Bootstrap layer | Open | — | — | [audit](2026-10-19-baseline-audit.md#qa-008--p2--extra-bootstrap-layer-can-conflict-with-platform-assets-confirmed-asset-inventory-behavioral-risk) | W4 |
@@ -114,7 +114,7 @@ Contrast ratios were measured in Chrome against a composed copy of the live home
 
 <a id="qa-003"></a>
 
-## W3 — QA-003 (P1) — implemented, deployment verification pending
+## W3 — QA-003 (P1) — verified 2026-10-21
 
 - Added `--csp-teal-action` (#007f7b, the existing teal-hover value) and `--csp-teal-action-hover` (#00635F) as text-safe action tokens. `--csp-teal` (#00A9A3) is unchanged and still used for decorative borders, eyebrows, icons and accent stripes, so there was no global brand-color change.
 - Moved white-text teal buttons onto the action tokens: `.cta-teal` (homepage Research Assistance CTA), `.accent-teal .csp-sub-cta` / `.csp-sub-mobile-cta` (CIC Get Support), `.accent-teal .hero-cta-primary` (CIC hero; same failing pairing, not named in the audit).
@@ -124,7 +124,7 @@ Contrast ratios were measured in Chrome against a composed copy of the live home
 
 <a id="qa-004"></a>
 
-## W3 — QA-004 (P1) — implemented, deployment verification pending
+## W3 — QA-004 (P1) — verified 2026-10-21
 
 - Added `--csp-on-navy-muted` = rgba(255,255,255,.6), **5.78:1** on navy, and applied it to every failing small text on solid navy: `.footer-brand p` (.50), `.footer-address` (.38), `.footer-bottom p`/`a`/`:visited` (.30), `.feature-bar-learn`/`:visited` (.45, measured 3.9:1; not named in the audit but the same defect), `.csp-sub-footer-tagline` (.50), `.csp-sub-footer-bottom p`/`a`/`:visited` (.30).
 - Admin link: removed inline `color:rgba(255,255,255,.2)` (1.83:1) and the `onmouseover`/`onmouseout` handlers (also part of QA-018); it now uses a `.footer-admin` class and inherits the muted token. It's still visually secondary through its smaller size (.72rem).
@@ -134,7 +134,7 @@ Contrast ratios were measured in Chrome against a composed copy of the live home
 
 <a id="qa-005"></a>
 
-## W3 — QA-005 (P1) — implemented, deployment verification pending
+## W3 — QA-005 (P1) — verified 2026-10-21
 
 - Removed both custom skip links from the system header: the duplicate to `#s-lg-guide-main` and the broken one to `#main-content`. The single bypass is now LibGuides' own `#s-lg-public-skiplink` → `#s-lg-guide-main`, which the platform renders as the first element of `<body>` and shows on focus (bordered white box, platform CSS). Removed the now-unused `.skip-link` CSS.
 - Back to top now targets `#s-lg-public-skiplink` instead of the missing `#main-content`. That's the real top of every LibGuides page, above any group header, so it also works on subsite pages.
@@ -145,4 +145,11 @@ Contrast ratios were measured in Chrome against a composed copy of the live home
 
 - Hero text over the photo (`.hero-sub` .65, `.hero-alt-link` .5) can't be measured from source because the background is an image under a gradient overlay. It needs a live pixel-level check at several widths; not changed.
 - Focus-indicator contrast (1.4.11) for controls was not swept; the work order's item 6 (search input outline) was left as is, since the audit observed a working live outline.
-- Post-paste verification in LibGuides Admin (these three fields) has not been done.
+- The CIC page wasn't reported as checked after the paste. The teal and subsite-footer fixes reach it through the shared Custom CSS, which is confirmed live, but the CIC group fields weren't looked at directly.
+
+## Post-deployment verification (2026-10-21)
+
+Custom CSS, Header and Footer were pasted at `Version: 2` (source `462b10b`) and checked on `https://library.csp.edu/bs5home?bs5=1`.
+
+- **Owner check (2026-10-21):** the page owner walked through the paste checklist and reported everything looked good: darker teal Research Assistance button, readable footer text, skip link shown on first Tab and landing below the navbar, Back to top returning focus to the skip link.
+- **Source match (2026-10-21):** fetched the live page. All three fields report `Version: 2`. The live Custom CSS block is 49,379 characters and identical to the repo file (ignoring whitespace), so nothing was truncated, and it closes with `</style>`. The live page has no `.skip-link`, no `#main-content` links and no `onmouseover` handlers. Back to top targets `#s-lg-public-skiplink`, the Admin link carries `.footer-admin`, and the `#s-lg-guide-main` scroll offset is present.
