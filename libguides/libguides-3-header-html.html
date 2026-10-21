@@ -1,6 +1,7 @@
 <!-- ═══════════════════════════════════════════════════════════════════
    CSP LIBRARY — SITE-WIDE HEADER
    LibGuides Admin → System Settings → Look & Feel → Header & Footer → Header
+   Version: 2
    ═══════════════════════════════════════════════════════════════════
 
    INSTRUCTIONS:
@@ -36,17 +37,16 @@
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc4s9bIOgUxi8T/jzmruXF/6bSfM9lMGvX4OdvSGjO4"
         crossorigin="anonymous"></script>
 
-<!-- Accessibility: skip link target -->
-<a class="skip-link" href="#s-lg-guide-main">Skip to main content</a>
+<!-- Accessibility (QA-005): no custom skip link here. LibGuides already
+     renders #s-lg-public-skiplink -> #s-lg-guide-main as the first element
+     of <body>; a second copy was a duplicate and a third pointed at a
+     #main-content target that never existed. -->
 
 <!-- Announcement bar -->
   <div class="announcement-bar" role="banner" style="display:block">
     Library summer hours now in effect.
     <a href="https://csp.libcal.com/hours/">See current hours →</a>
   </div>
-
-  <!-- Skip link -->
-  <a class="skip-link" href="#main-content">Skip to main content</a>
 
   <!-- Backdrop -->
   <div class="csp-backdrop" id="cspBackdrop" aria-hidden="true"></div>
@@ -74,28 +74,26 @@
 
           <!-- Find Resources -->
           <li class="nav-item csp-nav-item" id="cspItemFind" role="listitem">
-            <button class="nav-link csp-nav-link" id="cspTriggerFind"
-                    aria-haspopup="true" aria-expanded="false" aria-controls="cspDropFind" type="button">
+            <button class="nav-link csp-nav-link" id="cspTriggerFind" aria-expanded="false" aria-controls="cspDropFind" type="button">
               Find Resources
               <svg class="csp-caret" viewBox="0 0 14 14" fill="none" aria-hidden="true">
                 <path d="M2.5 5l4.5 4.5L11.5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
             </button>
             <div class="csp-dropdown csp-dropdown-simple" id="cspDropFind" role="region" aria-labelledby="cspTriggerFind">
-              <a class="csp-dropdown-item" href="https://library.csp.edu/find/guides"><i class="bi bi-map"></i>Research Guides</a>
-              <a class="csp-dropdown-item" href="https://library.csp.edu/find/onesearch"><i class="bi bi-search"></i>OneSearch</a>
-              <a class="csp-dropdown-item" href="https://library.csp.edu/find/databases"><i class="bi bi-database"></i>Databases</a>
-              <a class="csp-dropdown-item" href="https://library.csp.edu/find/journals"><i class="bi bi-journal-text"></i>Journals</a>
-              <a class="csp-dropdown-item" href="https://library.csp.edu/find/newspapers"><i class="bi bi-newspaper"></i>Newspapers</a>
-              <a class="csp-dropdown-item" href="https://library.csp.edu/find/ebooks"><i class="bi bi-book"></i>Ebooks</a>
-              <a class="csp-dropdown-item" href="https://library.csp.edu/archives-special-collections"><i class="bi bi-archive"></i>Archives &amp; Special Collections</a>
+              <a class="csp-dropdown-item" href="https://library.csp.edu/find/guides"><i class="bi bi-map" aria-hidden="true"></i>Research Guides</a>
+              <a class="csp-dropdown-item" href="https://library.csp.edu/find/onesearch"><i class="bi bi-search" aria-hidden="true"></i>OneSearch</a>
+              <a class="csp-dropdown-item" href="https://library.csp.edu/find/databases"><i class="bi bi-database" aria-hidden="true"></i>Databases</a>
+              <a class="csp-dropdown-item" href="https://library.csp.edu/find/journals"><i class="bi bi-journal-text" aria-hidden="true"></i>Journals</a>
+              <a class="csp-dropdown-item" href="https://library.csp.edu/find/newspapers"><i class="bi bi-newspaper" aria-hidden="true"></i>Newspapers</a>
+              <a class="csp-dropdown-item" href="https://library.csp.edu/find/ebooks"><i class="bi bi-book" aria-hidden="true"></i>Ebooks</a>
+              <a class="csp-dropdown-item" href="https://library.csp.edu/archives-special-collections"><i class="bi bi-archive" aria-hidden="true"></i>Archives &amp; Special Collections</a>
             </div>
           </li>
 
           <!-- Services -->
           <li class="nav-item csp-nav-item has-mega" id="cspItemServices" role="listitem">
-            <button class="nav-link csp-nav-link" id="cspTriggerServices"
-                    aria-haspopup="true" aria-expanded="false" aria-controls="cspDropServices" type="button">
+            <button class="nav-link csp-nav-link" id="cspTriggerServices" aria-expanded="false" aria-controls="cspDropServices" type="button">
               Services
               <svg class="csp-caret" viewBox="0 0 14 14" fill="none" aria-hidden="true">
                 <path d="M2.5 5l4.5 4.5L11.5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
@@ -105,29 +103,29 @@
               <div class="csp-mega-grid">
                 <div>
                   <p class="csp-col-heading">Library Support</p>
-                  <a class="csp-mega-link" href="https://library.csp.edu/services/help"><i class="bi bi-chat-dots"></i><span>Ask a Librarian</span></a>
-                  <a class="csp-mega-link" href="https://library.csp.edu/services/accounts"><i class="bi bi-person-badge"></i><span>Your Library Account &amp; Card</span></a>
-                  <a class="csp-mega-link" href="https://library.csp.edu/services/library-materials"><i class="bi bi-collection"></i><span>Using Library Materials</span></a>
-                  <a class="csp-mega-link" href="https://library.csp.edu/services/ill"><i class="bi bi-arrow-left-right"></i><span>Interlibrary Loan</span></a>
-                  <a class="csp-mega-link" href="https://library.csp.edu/services/study-rooms"><i class="bi bi-door-open"></i><span>Study Rooms</span></a>
-                  <a class="csp-mega-link" href="https://library.csp.edu/services/appointment"><i class="bi bi-calendar-check"></i><span>Make an Appointment</span></a>
+                  <a class="csp-mega-link" href="https://library.csp.edu/services/help"><i class="bi bi-chat-dots" aria-hidden="true"></i><span>Ask a Librarian</span></a>
+                  <a class="csp-mega-link" href="https://library.csp.edu/services/accounts"><i class="bi bi-person-badge" aria-hidden="true"></i><span>Your Library Account &amp; Card</span></a>
+                  <a class="csp-mega-link" href="https://library.csp.edu/services/library-materials"><i class="bi bi-collection" aria-hidden="true"></i><span>Using Library Materials</span></a>
+                  <a class="csp-mega-link" href="https://library.csp.edu/services/ill"><i class="bi bi-arrow-left-right" aria-hidden="true"></i><span>Interlibrary Loan</span></a>
+                  <a class="csp-mega-link" href="https://library.csp.edu/services/study-rooms"><i class="bi bi-door-open" aria-hidden="true"></i><span>Study Rooms</span></a>
+                  <a class="csp-mega-link" href="https://library.csp.edu/services/appointment"><i class="bi bi-calendar-check" aria-hidden="true"></i><span>Make an Appointment</span></a>
                 </div>
                 <div>
                   <p class="csp-col-heading">Tutoring &amp; Writing</p>
-                  <a class="csp-mega-link" href="https://library.csp.edu/tutoring-support"><i class="bi bi-mortarboard"></i><span>Tutoring Support</span></a>
-                  <a class="csp-mega-link" href="https://library.csp.edu/writing-center"><i class="bi bi-pencil-square"></i><span>Writing Center</span></a>
-                  <a class="csp-mega-link" href="https://library.csp.edu/citation-guides"><i class="bi bi-quote"></i><span>Citation Styles</span></a>
+                  <a class="csp-mega-link" href="https://library.csp.edu/tutoring-support"><i class="bi bi-mortarboard" aria-hidden="true"></i><span>Tutoring Support</span></a>
+                  <a class="csp-mega-link" href="https://library.csp.edu/writing-center"><i class="bi bi-pencil-square" aria-hidden="true"></i><span>Writing Center</span></a>
+                  <a class="csp-mega-link" href="https://library.csp.edu/citation-guides"><i class="bi bi-quote" aria-hidden="true"></i><span>Citation Styles</span></a>
                 </div>
                 <div>
                   <p class="csp-col-heading">Faculty Support</p>
-                  <a class="csp-mega-link" href="https://library.csp.edu/faculty"><i class="bi bi-building"></i><span>Faculty Guide to the Library</span></a>
-                  <a class="csp-mega-link" href="https://library.csp.edu/faculty/instruction"><i class="bi bi-presentation"></i><span>Request Library Instruction</span></a>
-                  <a class="csp-mega-link" href="https://library.csp.edu/cic/home"><i class="bi bi-journals"></i><span>Curriculum &amp; Instruction Center</span></a>
+                  <a class="csp-mega-link" href="https://library.csp.edu/faculty"><i class="bi bi-building" aria-hidden="true"></i><span>Faculty Guide to the Library</span></a>
+                  <a class="csp-mega-link" href="https://library.csp.edu/faculty/instruction"><i class="bi bi-presentation" aria-hidden="true"></i><span>Request Library Instruction</span></a>
+                  <a class="csp-mega-link" href="https://library.csp.edu/cic/home"><i class="bi bi-journals" aria-hidden="true"></i><span>Curriculum &amp; Instruction Center</span></a>
                 </div>
                 <div>
                   <p class="csp-col-heading">Other Services</p>
-                  <a class="csp-mega-link" href="https://www.csp.edu/it-help-desk" target="_blank" rel="noopener"><i class="bi bi-laptop"></i><span>Technology Help Desk</span></a>
-                  <a class="csp-mega-link" href="https://www.csp.edu/center-for-hmong-studies/" target="_blank" rel="noopener"><i class="bi bi-globe-americas"></i><span>Center for Hmong Studies</span></a>
+                  <a class="csp-mega-link" href="https://www.csp.edu/it-help-desk" target="_blank" rel="noopener"><i class="bi bi-laptop" aria-hidden="true"></i><span>Technology Help Desk</span></a>
+                  <a class="csp-mega-link" href="https://www.csp.edu/center-for-hmong-studies/" target="_blank" rel="noopener"><i class="bi bi-globe-americas" aria-hidden="true"></i><span>Center for Hmong Studies</span></a>
                 </div>
               </div>
             </div>
@@ -135,28 +133,28 @@
 
           <!-- About -->
           <li class="nav-item csp-nav-item" id="cspItemAbout" role="listitem">
-            <button class="nav-link csp-nav-link" id="cspTriggerAbout"
-                    aria-haspopup="true" aria-expanded="false" aria-controls="cspDropAbout" type="button">
+            <button class="nav-link csp-nav-link" id="cspTriggerAbout" aria-expanded="false" aria-controls="cspDropAbout" type="button">
               About
               <svg class="csp-caret" viewBox="0 0 14 14" fill="none" aria-hidden="true">
                 <path d="M2.5 5l4.5 4.5L11.5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
             </button>
             <div class="csp-dropdown csp-dropdown-simple" id="cspDropAbout" role="region" aria-labelledby="cspTriggerAbout">
-              <a class="csp-dropdown-item" href="https://library.csp.edu/about/contact"><i class="bi bi-envelope"></i>Contact the Library</a>
-              <a class="csp-dropdown-item" href="https://library.csp.edu/about/staff"><i class="bi bi-people"></i>Staff</a>
-              <a class="csp-dropdown-item" href="https://library.csp.edu/blog"><i class="bi bi-megaphone"></i>Library News &amp; Updates</a>
-              <a class="csp-dropdown-item" href="https://library.csp.edu/about/policies"><i class="bi bi-file-text"></i>Policies</a>
+              <a class="csp-dropdown-item" href="https://library.csp.edu/about/contact"><i class="bi bi-envelope" aria-hidden="true"></i>Contact the Library</a>
+              <a class="csp-dropdown-item" href="https://library.csp.edu/about/staff"><i class="bi bi-people" aria-hidden="true"></i>Staff</a>
+              <a class="csp-dropdown-item" href="https://library.csp.edu/blog"><i class="bi bi-megaphone" aria-hidden="true"></i>Library News &amp; Updates</a>
+              <a class="csp-dropdown-item" href="https://library.csp.edu/about/policies"><i class="bi bi-file-text" aria-hidden="true"></i>Policies</a>
             </div>
           </li>
 
-          <!-- CTAs -->
-          <li class="nav-item ms-lg-2 my-2 my-lg-0" role="listitem">
+          <!-- CTAs — hideable per subsite via .csp-nav-cta-hours / .csp-nav-cta-help,
+               see "Subsite header CTA visibility" in libguides-1-custom-css.css -->
+          <li class="nav-item csp-nav-cta-hours ms-lg-2 my-2 my-lg-0" role="listitem">
             <a class="csp-btn-ghost" href="https://csp.libcal.com/hours/" target="_blank" rel="noopener">
               <i class="bi bi-clock" aria-hidden="true"></i>Hours
             </a>
           </li>
-          <li class="nav-item ms-lg-2 my-2 my-lg-0" role="listitem">
+          <li class="nav-item csp-nav-cta-help ms-lg-2 my-2 my-lg-0" role="listitem">
             <a class="csp-btn-primary" href="https://library.csp.edu/about/contact">
               <i class="bi bi-question-circle" aria-hidden="true"></i>Get Help
             </a>

@@ -1,12 +1,15 @@
+<style>
 /* ═══════════════════════════════════════════════════════════════════
    CSP LIBRARY — CUSTOM CSS
    LibGuides Admin → System Settings → Look & Feel → Custom JS/CSS → Custom CSS
+   Version: 2
 
    INSTRUCTIONS:
-   1. Paste the entire contents of this file into the Custom CSS field.
-   2. Do NOT include <style> tags — paste only the CSS itself.
-   3. External dependencies (Bootstrap 5, Bootstrap Icons, Google Fonts)
-      are loaded via <link> tags in libguides-3-header-html.html — do NOT
+   1. Paste the entire contents of this file into the Custom CSS field,
+      including the opening and closing style tags — LibGuides does NOT
+      wrap this field automatically; the tags must be pasted in manually.
+   2. External dependencies (Bootstrap 5, Bootstrap Icons, Google Fonts)
+      are loaded via link tags in libguides-3-header-html.html — do NOT
       add @import rules here, as LibGuides may strip them.
    ═══════════════════════════════════════════════════════════════════ */
 
@@ -27,6 +30,11 @@
       --csp-teal:        #00A9A3;
       --csp-teal-light:  #e0f6f5;
       --csp-teal-hover:  #007f7b;
+      /* QA-003/004: text-safe tokens. Brand teal stays for decoration;
+         white on #00A9A3 is only 2.92:1. Ratios are with white text / on navy. */
+      --csp-teal-action: #007f7b;        /* 4.86:1 */
+      --csp-teal-action-hover: #00635F;  /* 7.12:1 */
+      --csp-on-navy-muted: rgba(255,255,255,.6); /* 5.77:1 on navy */
       --csp-gray:        #E1E8EC;
       --csp-page-bg:     #f5f4f2;
       --font-display:    'Barlow Condensed', 'Arial Narrow', sans-serif;
@@ -42,11 +50,9 @@
     }
     *, *::before, *::after { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
+    /* QA-005: keep skip-link landings clear of the sticky navbar */
+    #s-lg-guide-main { scroll-margin-top: calc(var(--csp-nav-height) + 16px); }
     body { font-family: var(--font-body); background: var(--csp-page-bg); color: #1a1a1a; margin: 0; }
-
-    /* ── Skip link ─────────────────────────────────────────────── */
-    .skip-link { position: absolute; top: -100px; left: 16px; z-index: 9999; background: var(--csp-gold); color: var(--csp-navy); font-weight: 700; padding: 8px 16px; border-radius: 0 0 6px 6px; text-decoration: none; font-size: .875rem; transition: top .15s; }
-    .skip-link:focus { top: 0; }
 
     /* ── Announcement bar ──────────────────────────────────────── */
     .announcement-bar { background: var(--csp-gold); color: var(--csp-navy); text-align: center; padding: 9px 16px; font-family: var(--font-body); font-size: .8rem; font-weight: 600; letter-spacing: .02em; display: none; }
@@ -60,7 +66,7 @@
     .csp-brand img { height: 34px; width: auto;
       /* Converts the white logo to CSP Navy (#003055).
          TO USE THE BLUE LOGO FILE INSTEAD: upload CSP_Library-02.png to
-         LibGuides Admin → Files, copy the URL, replace the <img> src in the
+         LibGuides Admin → Files, copy the URL, replace the img src in the
          Header HTML, and remove this filter rule. */
       filter: brightness(0) saturate(100%) invert(11%) sepia(85%) saturate(1088%) hue-rotate(190deg) brightness(97%) contrast(101%);
     }
@@ -115,7 +121,7 @@
     .hero-inner { position: relative; z-index: 3; max-width: 760px; margin: 0 auto; width: 100%; padding: 80px 24px 72px; }
     /* TO RESTORE STATUS TILES: add this inline style to the .hero-inner div in Box 1:
        style="max-width:1200px; display:grid; grid-template-columns:1fr 300px; gap:48px 64px; align-items:start; padding:72px 24px 60px;"
-       then re-add the <aside class="hero-stats"> block after the search nav. */
+       then re-add the aside class="hero-stats" block after the search nav. */
     .hero-eyebrow { display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-display); font-size: .8rem; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: var(--csp-gold-mid); margin: 0 0 16px; }
     .hero-eyebrow::before { content: ''; display: block; width: 28px; height: 2px; background: var(--csp-gold); }
     .hero-heading { font-family: var(--font-display); font-size: clamp(2.8rem, 5vw, 4rem); font-weight: 800; line-height: .96; letter-spacing: .01em; text-transform: uppercase; color: #fff; margin: 0 0 20px; }
@@ -128,6 +134,7 @@
     .hero-search-form button:hover { background: var(--csp-gold-hover); }
     .hero-search-alts { display: flex; flex-wrap: wrap; gap: 6px 16px; }
     .hero-alt-link { font-size: .8rem; color: rgba(255,255,255,.5); text-decoration: none; display: inline-flex; align-items: center; gap: 5px; transition: color .15s; }
+    .hero-alt-link:visited { color: rgba(255,255,255,.5) !important; }
     .hero-alt-link:hover { color: var(--csp-gold-mid); }
     .hero-stats { display: flex; flex-direction: column; gap: 2px; }
     .hero-stat { padding: 18px 20px; background: rgba(255,255,255,.07); border-left: 3px solid rgba(255,255,255,.1); text-decoration: none; display: block; transition: background .15s, border-color .15s; }
@@ -148,7 +155,7 @@
     }
 
     /* ── Subsite hero — accent overrides ─────────────────────────
-       Add accent-teal / accent-gold / accent-navy to the <section>
+       Add accent-teal / accent-gold / accent-navy to the section
        to override the default gold top-bar and eyebrow color.
        Set background-image inline on .hero-bg per subsite.         */
     .hero.accent-teal::before               { background: var(--csp-teal); }
@@ -175,13 +182,17 @@
       background: transparent;
       border: 1.5px solid rgba(255,255,255,.3); color: rgba(255,255,255,.85);
     }
+    .hero-cta-ghost:visited { color: rgba(255,255,255,.85) !important; }
     .hero-cta-ghost:hover { border-color: rgba(255,255,255,.7); color: #fff; background: rgba(255,255,255,.08); }
 
-    .accent-teal .hero-cta-primary       { background: var(--csp-teal); color: #fff; }
-    .accent-teal .hero-cta-primary:hover { background: var(--csp-teal-hover); color: #fff; }
+    .accent-teal .hero-cta-primary       { background: var(--csp-teal-action); color: #fff; }
+    .accent-teal .hero-cta-primary:visited { color: #fff !important; }
+    .accent-teal .hero-cta-primary:hover { background: var(--csp-teal-action-hover); color: #fff; }
     .accent-gold .hero-cta-primary       { background: var(--csp-gold); color: var(--csp-navy); }
+    .accent-gold .hero-cta-primary:visited { color: var(--csp-navy) !important; }
     .accent-gold .hero-cta-primary:hover { background: var(--csp-gold-hover); color: var(--csp-navy); }
     .accent-navy .hero-cta-primary       { background: rgba(255,255,255,.15); color: #fff; border: 1.5px solid rgba(255,255,255,.3); }
+    .accent-navy .hero-cta-primary:visited { color: #fff !important; }
     .accent-navy .hero-cta-primary:hover { background: rgba(255,255,255,.25); color: #fff; }
 
     /* ── Feature bar ───────────────────────────────────────────── */
@@ -233,11 +244,12 @@
     .feature-bar-cta .bi-arrow-right { transition: transform .2s var(--ease); }
     .feature-bar-cta:hover .bi-arrow-right { transform: translateX(3px); }
     .feature-bar-learn {
-      font-size: .8rem; color: rgba(255,255,255,.45); text-decoration: none;
+      font-size: .8rem; color: var(--csp-on-navy-muted); text-decoration: none;
       flex-shrink: 0; white-space: nowrap; transition: color .15s;
       border-bottom: 1px solid rgba(255,255,255,.2);
       padding-bottom: 1px;
     }
+    .feature-bar-learn:visited { color: var(--csp-on-navy-muted) !important; }
     .feature-bar-learn:hover { color: #fff; border-bottom-color: rgba(255,255,255,.6); }
     @media (max-width: 767px) {
       .feature-bar-inner { gap: 14px; }
@@ -257,8 +269,8 @@
     @media (max-width: 767px) { .section { padding: 48px 0; } }
 
     /* ── Services ──────────────────────────────────────────────── */
-    .services-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 2px; border-radius: 6px; overflow: hidden; box-shadow: 0 4px 24px rgba(0,0,0,.1); }
-    .service-card { background: #fff; padding: 36px 30px 30px; display: flex; flex-direction: column; position: relative; transition: background .2s; }
+    .services-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 28px; }
+    .service-card { background: #fff; border-radius: 8px; box-shadow: 0 2px 14px rgba(0,0,0,.07); padding: 36px 30px 30px; display: flex; flex-direction: column; position: relative; transition: background .2s; }
     .service-card::after { content: ''; position: absolute; bottom: 0; left: 30px; right: 30px; height: 3px; background: var(--csp-gold); transform: scaleX(0); transform-origin: left; transition: transform .25s var(--ease); }
     .service-card:hover { background: #fafaf8; }
     .service-card:hover::after { transform: scaleX(1); }
@@ -276,11 +288,12 @@
     .service-links a i { font-size: .8rem; opacity: .3; }
     .badge-live { font-family: var(--font-display); font-size: .58rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; background: #dcfce7; color: #166534; padding: 2px 7px; border-radius: 20px; }
     .service-cta { display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 24px; padding: 11px; font-family: var(--font-display); font-size: .85rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; border-radius: 4px; text-decoration: none; transition: background .15s, color .15s; }
-    .cta-teal { background: var(--csp-teal); color: #fff; }
-    .cta-teal:hover { background: var(--csp-teal-hover); color: #fff; }
+    .cta-teal, .cta-teal:visited { background: var(--csp-teal-action); color: #fff !important; }
+    .cta-teal:hover { background: var(--csp-teal-action-hover); }
     .cta-gold { background: var(--csp-gold); color: var(--csp-navy); }
     .cta-gold:hover { background: var(--csp-gold-hover); color: var(--csp-navy); }
     .cta-navy { background: var(--csp-navy); color: #fff; }
+    .cta-navy:visited { color: #fff !important; }
     .cta-navy:hover { background: var(--csp-navy-80); color: #fff; }
     @media (max-width: 767px) { .services-grid { grid-template-columns: 1fr; } }
     @media (min-width:768px) and (max-width:991px) { .services-grid { grid-template-columns: 1fr 1fr; } }
@@ -291,6 +304,7 @@
     .audience-grid { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 28px; }
     .audience-item { display: inline-flex; align-items: center; gap: 9px; padding: 12px 22px; font-family: var(--font-display); font-size: .85rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; background: rgba(255,255,255,.07); border: 1.5px solid rgba(255,255,255,.12); color: #fff; border-radius: 4px; text-decoration: none; transition: background .15s, border-color .15s, color .15s; }
     .audience-item i { font-size: 1rem; opacity: .6; }
+    .audience-item:visited { color: #fff !important; }
     .audience-item:hover { background: var(--csp-gold); border-color: var(--csp-gold); color: var(--csp-navy); }
     .audience-item:hover i { opacity: 1; }
 
@@ -320,13 +334,14 @@
     @media (max-width: 600px) { .popular-grid { grid-template-columns: 1fr; } }
 
     /* ── News & Events ─────────────────────────────────────────── */
-    .news-events-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
-    .ne-card { background: #fff; border-radius: 6px; border: 1px solid rgba(0,0,0,.07); overflow: hidden; }
-    .ne-card-header { padding: 16px 22px; border-bottom: 1px solid rgba(0,0,0,.06); display: flex; align-items: center; justify-content: space-between; }
+    .news-events-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; }
+    .ne-card { background: transparent; }
+    .ne-card:not(:first-child) { border-left: 1px solid rgba(0,48,85,.12); padding-left: 40px; }
+    .ne-card-header { padding: 0 0 14px; border-bottom: 1px solid rgba(0,48,85,.12); display: flex; align-items: center; justify-content: space-between; }
     .ne-card-title { font-family: var(--font-display); font-size: 1.05rem; font-weight: 800; text-transform: uppercase; letter-spacing: .06em; color: var(--csp-navy); margin: 0; }
     .ne-card-link { font-family: var(--font-display); font-size: .7rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--csp-navy-60); text-decoration: none; display: inline-flex; align-items: center; gap: 4px; transition: color .15s; }
     .ne-card-link:hover { color: var(--csp-navy); }
-    .ne-card-body { padding: 24px 22px; min-height: 160px; }
+    .ne-card-body { padding: 20px 0 0; min-height: 160px; }
     .ne-placeholder { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 120px; text-align: center; color: var(--csp-navy-40); }
     .ne-placeholder i { font-size: 2rem; margin-bottom: 8px; opacity: .35; }
     .ne-placeholder p { font-size: .8rem; margin: 0; line-height: 1.5; }
@@ -337,25 +352,30 @@
     .site-footer { background: var(--csp-navy); color: rgba(255,255,255,.7); padding: 64px 0 0; font-family: var(--font-body); }
     .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; padding-bottom: 56px; border-bottom: 1px solid rgba(255,255,255,.08); }
     .footer-brand img { height: 36px; filter: brightness(0) invert(1); opacity: .85; display: block; margin-bottom: 16px; }
-    .footer-brand p { font-size: .825rem; line-height: 1.7; color: rgba(255,255,255,.5); max-width: 26ch; margin: 0 0 20px; }
-    .footer-address { font-style: normal; font-size: .8rem; line-height: 1.7; color: rgba(255,255,255,.38); }
+    .footer-brand p { font-size: .825rem; line-height: 1.7; color: var(--csp-on-navy-muted); max-width: 26ch; margin: 0 0 20px; }
+    .footer-address { font-style: normal; font-size: .8rem; line-height: 1.7; color: var(--csp-on-navy-muted); }
     .footer-col-title { font-family: var(--font-display); font-size: .68rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--csp-gold-mid); margin: 0 0 16px; }
     .footer-links { list-style: none; padding: 0; margin: 0; }
     .footer-links li { margin-bottom: 9px; }
     .footer-links a { color: rgba(255,255,255,.55); text-decoration: none; font-size: .875rem; transition: color .15s; display: inline-flex; align-items: center; gap: 5px; }
+    .footer-links a:visited { color: rgba(255,255,255,.55) !important; }
     .footer-links a:hover { color: #fff; }
     .footer-contact { display: flex; flex-direction: column; gap: 9px; }
     .footer-contact-item { display: flex; align-items: center; gap: 8px; color: rgba(255,255,255,.55); font-size: .825rem; }
     .footer-contact-item i { opacity: .5; font-size: .9rem; flex-shrink: 0; }
     .footer-contact-item a { color: rgba(255,255,255,.55); text-decoration: none; transition: color .15s; }
+    .footer-contact-item a:visited { color: rgba(255,255,255,.55) !important; }
     .footer-contact-item a:hover { color: #fff; }
     .footer-social { display: flex; gap: 10px; margin-top: 22px; }
     .footer-social a { width: 36px; height: 36px; border-radius: 4px; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.1); display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,.55); font-size: 1rem; text-decoration: none; transition: background .15s, color .15s; }
+    .footer-social a:visited { color: rgba(255,255,255,.55) !important; }
     .footer-social a:hover { background: var(--csp-gold); color: var(--csp-navy); border-color: transparent; }
     .footer-bottom { padding: 20px 0; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
-    .footer-bottom p { margin: 0; font-size: .78rem; color: rgba(255,255,255,.3); }
-    .footer-bottom a { font-size: .78rem; color: rgba(255,255,255,.3); text-decoration: none; display: inline-flex; align-items: center; gap: 5px; transition: color .15s; }
-    .footer-bottom a:hover { color: rgba(255,255,255,.7); }
+    .footer-bottom p { margin: 0; font-size: .78rem; color: var(--csp-on-navy-muted); }
+    .footer-bottom a { font-size: .78rem; color: var(--csp-on-navy-muted); text-decoration: none; display: inline-flex; align-items: center; gap: 5px; transition: color .15s; }
+    .footer-bottom a:visited { color: var(--csp-on-navy-muted) !important; }
+    .footer-bottom a:hover, .footer-bottom a:focus-visible { color: #fff !important; }
+    .footer-bottom .footer-admin { font-size: .72rem; }
     @media (max-width: 991px) { .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; } }
     @media (max-width: 600px) { .footer-grid { grid-template-columns: 1fr; } }
 
@@ -405,6 +425,18 @@ body,
   margin-bottom: 0 !important;
 }
 
+/* ── Close the gap above the first box ────────────────────────────────────
+   #s-lg-guide-main has a default 10px top padding, and #s-lg-tabs-container
+   (LibGuides' guide-tabs row, empty on single-tab guides like this one)
+   carries a 16px top padding of its own — together they push the hero
+   down from the nav. Zeroing both is safe: every box here supplies its
+   own internal spacing, and this only removes a redundant spacer above
+   wherever a guide's tab bar renders (the tabs themselves are untouched). */
+#s-lg-guide-main,
+#s-lg-tabs-container {
+  padding-top: 0 !important;
+}
+
 /* ── Full-bleed sections ─────────────────────────────────────────────────────
    Floating Box must be checked on each full-bleed box in LibGuides.          */
 .s-lg-box-wrapper-hero {
@@ -417,9 +449,23 @@ body,
 
 /* ═══════════════════════════════════════════════════════════════════
    SUBSITE NAV — shared styles for CIC, Writing Center, Archives, etc.
-   Each group's Custom Header contains the <nav> block with the
+   Each group's Custom Header contains the nav block with the
    appropriate accent class (accent-teal / accent-gold / accent-navy).
    ═══════════════════════════════════════════════════════════════════ */
+
+/* ── Subsite header CTA visibility ───────────────────────────────────
+   The system-wide navbar's Hours/Get Help buttons (.csp-nav-cta-hours /
+   .csp-nav-cta-help in libguides-3-header-html.html) can be hidden on a
+   subsite-by-subsite basis when that subsite's own nav already has an
+   equivalent CTA — e.g. CIC's "Get Support" duplicates Get Help.
+   Each subsite's outer nav div (.csp-subsite-nav) carries its own
+   subsite-[name] class (in addition to its accent-* color class) for
+   this to key off of. To opt a subsite in, add a block like CIC's
+   below; to opt back out, delete or comment out its block. */
+body:has(.csp-subsite-nav.subsite-cic) .csp-navbar .csp-nav-cta-hours,
+body:has(.csp-subsite-nav.subsite-cic) .csp-navbar .csp-nav-cta-help {
+  display: none !important;
+}
 
 /* ── Nav shell ────────────────────────────────────────────────────── */
 .csp-subsite-nav {
@@ -428,33 +474,7 @@ body,
   box-shadow: 0 2px 12px rgba(0,0,0,.06);
 }
 
-/* ── Two-band layout: crumb band (white) + nav band (navy) ─────────── */
-.csp-sub-crumb-band {
-  background: #fff;
-  border-bottom: 1px solid #e8edf2;
-}
-.csp-sub-crumb-band .container {
-  display: flex;
-  align-items: center;
-  height: 34px;
-}
-.csp-sub-crumb-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  font-family: var(--font-body);
-  font-size: 12.5px;
-  font-weight: 500;
-  color: var(--csp-navy);
-  text-decoration: none;
-}
-.csp-sub-crumb-link:hover { color: var(--csp-teal); }
-.csp-sub-crumb-link .bi-chevron-left { font-size: 10px; color: var(--csp-navy-40); }
-.csp-sub-crumb-logo {
-  height: 16px;
-  width: auto;
-  display: block;
-}
+/* ── Navy identity/nav band ───────────────────────────────────────── */
 .csp-sub-nav-band {
   background: var(--csp-navy);
   border-bottom: 3px solid var(--accent-color, var(--csp-teal));
@@ -513,26 +533,6 @@ body,
   height: var(--csp-sub-height);
 }
 
-/* ── Parent crumb ─────────────────────────────────────────────────── */
-.csp-crumb {
-  display: flex; align-items: center; gap: 6px;
-  padding-right: 18px; margin-right: 18px;
-  border-right: 1px solid rgba(0,0,0,.1);
-  text-decoration: none; flex-shrink: 0;
-}
-.csp-crumb-chevron {
-  color: var(--csp-navy-40); font-size: .8rem;
-  transition: transform .2s var(--ease), color .15s;
-}
-.csp-crumb:hover .csp-crumb-chevron { transform: translateX(-3px); color: var(--csp-navy); }
-.csp-crumb-logo { height: 22px; opacity: .6; transition: opacity .15s; }
-.csp-crumb:hover .csp-crumb-logo { opacity: 1; }
-.csp-crumb-label {
-  font-size: .72rem; font-weight: 600; letter-spacing: .04em;
-  color: var(--csp-navy-60); white-space: nowrap; transition: color .15s;
-}
-.csp-crumb:hover .csp-crumb-label { color: var(--csp-navy); }
-
 /* ── Subsite identity ─────────────────────────────────────────────── */
 .csp-sub-identity { display: flex; align-items: center; gap: 9px; flex-shrink: 0; }
 .csp-sub-icon {
@@ -569,6 +569,42 @@ body,
 .csp-sub-link:hover     { color: var(--csp-navy); border-bottom-color: var(--csp-gold); }
 .csp-sub-link.is-active { color: var(--csp-navy); font-weight: 600; border-bottom-color: var(--csp-gold); }
 
+/* ── Dropdown-capable nav items (desktop) ─────────────────────────────
+   .csp-sub-item wraps a .csp-sub-trigger button and its .csp-sub-dropdown
+   panel. Entirely separate class namespace from the system-wide nav's
+   .csp-nav-item/.csp-dropdown (different classes, own JS controller
+   below) so the two dropdown systems can run side by side without
+   conflicting, even on the same page. */
+.csp-sub-item { position: relative; }
+.csp-sub-trigger {
+  border: none; border-bottom: 2px solid transparent; background: none;
+  font: inherit; cursor: pointer; gap: 5px;
+}
+.csp-sub-caret { width: 11px; height: 11px; flex-shrink: 0; transition: transform var(--csp-duration) var(--ease); }
+.csp-sub-item.is-open .csp-sub-caret { transform: rotate(180deg); }
+.csp-sub-dropdown {
+  position: absolute; top: 100%; left: 0; min-width: 240px; margin-top: 1px;
+  background: #fff; border-top: 3px solid var(--csp-gold);
+  border-radius: 0 0 var(--csp-drop-radius) var(--csp-drop-radius);
+  box-shadow: var(--csp-drop-shadow); padding: 8px 4px; z-index: 1020;
+  opacity: 0; visibility: hidden; transform: translateY(-8px); pointer-events: none;
+  transition: opacity var(--csp-duration) var(--ease), transform var(--csp-duration) var(--ease), visibility var(--csp-duration);
+}
+.csp-sub-item.is-open .csp-sub-dropdown {
+  opacity: 1; visibility: visible; transform: translateY(0); pointer-events: auto;
+}
+.csp-sub-dropdown-item {
+  display: block; padding: 8px 16px; font-size: .875rem; color: #333;
+  text-decoration: none; border-radius: 6px; font-family: var(--font-body);
+  transition: background .1s, color .1s, padding-left .15s;
+}
+.csp-sub-dropdown-item:hover { background: var(--csp-gold-light); color: var(--csp-navy); padding-left: 20px; }
+/* Navy band: open state matches the existing hover/active treatment */
+.csp-sub-nav-band .csp-sub-item.is-open > .csp-sub-link {
+  color: #fff;
+  border-bottom-color: var(--accent-color, var(--csp-teal));
+}
+
 /* ── CTA button ───────────────────────────────────────────────────── */
 .csp-sub-cta-wrap {
   display: flex; align-items: center;
@@ -582,13 +618,20 @@ body,
   border: 1.5px solid transparent; transition: background .15s, color .15s;
 }
 
-/* ── Mobile collapse panel ────────────────────────────────────────── */
+/* ── Mobile collapse panel ─────────────────────────────────────────
+   QA-007: max-height:0 alone only visually clips closed content —
+   it stays in the tab order and accessibility tree. The panel now
+   also carries a `hidden` attribute by default, toggled by JS
+   (toggleSubNav/toggleDisclosurePanel) in sync with this transition,
+   so closed links are genuinely unreachable. max-height is bumped
+   well past any realistic content height (including 200%+ text) so
+   it only drives the animation and never clips. */
 .csp-sub-collapse {
   max-height: 0; overflow: hidden;
   transition: max-height .28s var(--ease);
   border-top: 0 solid rgba(0,0,0,.07);
 }
-.csp-sub-collapse.is-open { max-height: 480px; border-top-width: 1px; }
+.csp-sub-collapse.is-open { max-height: 2000px; border-top-width: 1px; }
 .csp-sub-collapse-inner { padding: 8px 0 14px; }
 .csp-sub-mobile-link {
   display: flex; align-items: center; gap: 10px;
@@ -611,14 +654,40 @@ body,
   border: 1.5px solid transparent;
 }
 
+/* ── Mobile dropdown accordion (nested inside .csp-sub-collapse) ─────
+   Same independence rationale as the desktop dropdowns above: own
+   classes, own toggleSubDropdown() function, no shared state with the
+   system-wide nav's mobile Bootstrap collapse. */
+.csp-sub-mobile-trigger {
+  width: 100%; border: none; border-left: 3px solid transparent; background: none;
+  font: inherit; justify-content: space-between; cursor: pointer;
+}
+.csp-sub-mobile-trigger .csp-sub-caret { transition: transform var(--csp-duration) var(--ease); }
+.csp-sub-mobile-trigger[aria-expanded="true"] .csp-sub-caret { transform: rotate(180deg); }
+.csp-sub-mobile-dropdown {
+  /* QA-007 (same pattern as .csp-sub-collapse above): `hidden` does the
+     real a11y hiding, JS-coordinated with this transition; max-height
+     is just the animation and is bumped well past realistic content
+     height so it doesn't clip at 200%+ text. */
+  max-height: 0; overflow: hidden;
+  transition: max-height .22s var(--ease);
+}
+.csp-sub-mobile-dropdown.is-open { max-height: 1000px; }
+.csp-sub-mobile-dropdown-item {
+  display: block; padding: 9px 16px 9px 34px; font-size: .875rem;
+  color: #555; text-decoration: none; border-left: 3px solid transparent;
+  transition: background .12s, color .12s, border-color .12s;
+}
+.csp-sub-mobile-dropdown-item:hover {
+  background: var(--csp-gold-light); color: var(--csp-navy); border-left-color: var(--csp-gold);
+}
+
 /* ── Accent variants ──────────────────────────────────────────────── */
 
 /* Teal — Curriculum & Instruction Center */
 .accent-teal .csp-sub-icon             { background: var(--csp-teal-light); color: var(--csp-teal); }
-.accent-teal .csp-sub-cta              { background: var(--csp-teal); color: #fff; }
-.accent-teal .csp-sub-cta:hover        { background: var(--csp-teal-hover); }
-.accent-teal .csp-sub-mobile-cta       { background: var(--csp-teal); color: #fff; }
-.accent-teal .csp-sub-mobile-cta:hover { background: var(--csp-teal-hover); }
+.accent-teal .csp-sub-cta, .accent-teal .csp-sub-mobile-cta { background: var(--csp-teal-action); color: #fff !important; }
+.accent-teal .csp-sub-cta:hover, .accent-teal .csp-sub-mobile-cta:hover { background: var(--csp-teal-action-hover); }
 
 /* Gold — Writing Center */
 .accent-gold .csp-sub-icon             { background: var(--csp-gold-light); color: #8a6a0d; }
@@ -630,8 +699,10 @@ body,
 /* Navy — Archives & Special Collections */
 .accent-navy .csp-sub-icon             { background: var(--csp-navy-10); color: var(--csp-navy); }
 .accent-navy .csp-sub-cta              { background: var(--csp-navy); color: #fff; }
+.accent-navy .csp-sub-cta:visited      { color: #fff !important; }
 .accent-navy .csp-sub-cta:hover        { background: var(--csp-navy-80); }
 .accent-navy .csp-sub-mobile-cta       { background: var(--csp-navy); color: #fff; }
+.accent-navy .csp-sub-mobile-cta:visited { color: #fff !important; }
 .accent-navy .csp-sub-mobile-cta:hover { background: var(--csp-navy-80); }
 
 /* ── Mobile (≤ 767px) ─────────────────────────────────────────────── */
@@ -639,13 +710,11 @@ body,
   .csp-sub-toggle  { display: flex; align-items: center; }
   .csp-sub-right   { display: none; }
   .csp-sub-name    { font-size: .85rem; overflow: hidden; text-overflow: ellipsis; max-width: 38vw; }
-  .csp-crumb-label { display: none; }
-  .csp-crumb       { padding-right: 12px; margin-right: 12px; }
 }
 
 /* ═══════════════════════════════════════════════════════════════════
    SUBSITE FOOTER — shared styles for CIC, Writing Center, Archives, etc.
-   Place the accent class on the <footer> element itself.
+   Place the accent class on the footer element itself.
    ═══════════════════════════════════════════════════════════════════ */
 
 .csp-sub-footer {
@@ -678,7 +747,7 @@ body,
   color: #fff; margin: 0 0 8px;
 }
 .csp-sub-footer-tagline {
-  font-size: .825rem; color: rgba(255,255,255,.5);
+  font-size: .825rem; color: var(--csp-on-navy-muted);
   line-height: 1.6; margin: 0 0 24px; max-width: 28ch;
 }
 .csp-sub-footer-logo {
@@ -702,6 +771,7 @@ body,
   font-size: .875rem; display: inline-flex; align-items: center; gap: 7px;
   transition: color .15s;
 }
+.csp-sub-footer-links a:visited { color: rgba(255,255,255,.55) !important; }
 .csp-sub-footer-links a:hover { color: #fff; }
 .csp-sub-footer-links a i { opacity: .45; font-size: .85rem; flex-shrink: 0; transition: opacity .15s; }
 .csp-sub-footer-links a:hover i { opacity: 1; }
@@ -712,16 +782,19 @@ body,
   display: flex; align-items: center; justify-content: space-between;
   flex-wrap: wrap; gap: 10px;
 }
-.csp-sub-footer-bottom p { margin: 0; font-size: .78rem; color: rgba(255,255,255,.3); }
+.csp-sub-footer-bottom p { margin: 0; font-size: .78rem; color: var(--csp-on-navy-muted); }
 .csp-sub-footer-bottom a {
-  font-size: .78rem; color: rgba(255,255,255,.3);
+  font-size: .78rem; color: var(--csp-on-navy-muted);
   text-decoration: none; transition: color .15s;
   display: inline-flex; align-items: center; gap: 5px;
 }
-.csp-sub-footer-bottom a:hover { color: rgba(255,255,255,.7); }
+.csp-sub-footer-bottom a:visited { color: var(--csp-on-navy-muted) !important; }
+.csp-sub-footer-bottom a:hover, .csp-sub-footer-bottom a:focus-visible { color: #fff !important; }
 
 /* ── Mobile (≤ 767px) ─────────────────────────────────────────────── */
 @media (max-width: 767px) {
   .csp-sub-footer { padding: 36px 0 0; }
   .csp-sub-footer-grid { grid-template-columns: 1fr; gap: 28px; }
 }
+
+</style>

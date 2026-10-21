@@ -1,12 +1,15 @@
 <!-- ═══════════════════════════════════════════════════════════════════
    CSP LIBRARY — SITE-WIDE FOOTER
    LibGuides Admin → System Settings → Look & Feel → Header & Footer → Footer
+   Version: 2
    ═══════════════════════════════════════════════════════════════════
 
    CHANGES IN THIS VERSION:
+   • QA-004: Admin link styled by .footer-admin in Custom CSS (readable
+     muted color; inline styles and mouseover handlers removed)
+   • QA-005: "Back to top" points to #s-lg-public-skiplink (the old
+     #main-content target never existed on the page)
    • LibGuides default footer (#s-lib-footer-public) is hidden via Custom CSS
-   • Admin login link added next to "Back to top" (very low opacity — visible
-     on hover, unobtrusive to public users)
    • Admin link points to /libapps/login.php (standard LibApps login URL)
 ════════════════════════════════════════════════════════════════════ -->
 
@@ -85,15 +88,12 @@
       <div class="footer-bottom">
         <p>© Concordia University, St. Paul · <a href="https://library.csp.edu/about/policies">Library Policies</a></p>
         <div style="display:flex;align-items:center;gap:20px;">
-          <a href="#main-content">
+          <!-- Targets the LibGuides platform skip link, the first focusable
+               element on every page, so focus lands at the real top. -->
+          <a href="#s-lg-public-skiplink">
             <i class="bi bi-arrow-up" aria-hidden="true"></i>Back to top
           </a>
-          <a href="/libapps/login.php" style="font-size:.72rem;color:rgba(255,255,255,.2);text-decoration:none;transition:color .15s;" onmouseover="this.style.color='rgba(255,255,255,.5)'" onmouseout="this.style.color='rgba(255,255,255,.2)'">
-            Admin
-          </a>
-          <a href="#" id="retro-toggle" onclick="toggleRetro(event)" style="font-size:.72rem;color:rgba(255,255,255,.25);text-decoration:none;font-family:'Courier New',Courier,monospace;transition:color .15s;" onmouseover="this.style.color='rgba(255,255,255,.6)'" onmouseout="if(!document.body.classList.contains('retro-mode'))this.style.color='rgba(255,255,255,.25)'">
-            [Go retro]
-          </a>
+          <a class="footer-admin" href="/libapps/login.php">Admin</a>
         </div>
       </div>
 
