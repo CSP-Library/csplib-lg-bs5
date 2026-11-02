@@ -2,7 +2,7 @@
 /* ═══════════════════════════════════════════════════════════════════
    CSP LIBRARY — CUSTOM CSS
    LibGuides Admin → System Settings → Look & Feel → Custom JS/CSS → Custom CSS
-   Version: 3
+   Version: 4
 
    INSTRUCTIONS:
    1. Paste the entire contents of this file into the Custom CSS field,
@@ -463,6 +463,19 @@ body,
   transform: translateX(-50%);
   max-width: 100vw;
 }
+/* LibGuides' own .s-lib-floating-box-content (added automatically when
+   "Floating Box" is checked) carries a 20px padding on all sides. That's
+   fine for an ordinary floating box, but it leaves an unwanted 20px gap
+   above and below our full-bleed hero, which already handles its own
+   spacing — zero it out specifically where it's wrapping a hero. The
+   #s-lg-guide-main prefix isn't just scoping: LibGuides' own platform
+   CSS sets this padding via an ID-qualified selector, which beats a
+   plain two-class selector even with !important — confirmed live that
+   dropping the ID prefix here silently loses the specificity fight. */
+#s-lg-guide-main .s-lib-floating-box-content:has(.s-lg-box-wrapper-hero) {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
 
 /* ═══════════════════════════════════════════════════════════════════
    SUBSITE NAV — shared styles for CIC, Writing Center, Archives, etc.
@@ -476,9 +489,9 @@ body,
    About, grouped under one .csp-nav-main-item hook class since they're
    toggled together — can each be hidden on a subsite-by-subsite basis
    (see libguides-3-header-html.html for the hook classes). CIC hides
-   its CTAs because "Get Support" already duplicates Get Help; the main
-   nav toggle is built but left off for every subsite below until there's
-   a reason to use it — delete the comment markers to enable it for one.
+   both: its CTAs because "Get Support" already duplicates Get Help, and
+   the main nav trio because CIC's own nav (Policies, Teaching Resources,
+   Course Design) already covers in-subsite navigation.
    Each subsite's outer nav div (.csp-subsite-nav) carries its own
    subsite-[name] class (in addition to its accent-* color class) for
    these rules to key off of. CTAs and main nav are independent — enable
@@ -487,9 +500,9 @@ body:has(.csp-subsite-nav.subsite-cic) .csp-navbar .csp-nav-cta-hours,
 body:has(.csp-subsite-nav.subsite-cic) .csp-navbar .csp-nav-cta-help {
   display: none !important;
 }
-/* body:has(.csp-subsite-nav.subsite-cic) .csp-navbar .csp-nav-main-item {
+body:has(.csp-subsite-nav.subsite-cic) .csp-navbar .csp-nav-main-item {
   display: none !important;
-} */
+}
 
 /* ── Nav shell ────────────────────────────────────────────────────── */
 .csp-subsite-nav {
@@ -822,28 +835,36 @@ body:has(.csp-subsite-nav.subsite-cic) .csp-navbar .csp-nav-cta-help {
 }
 
 /* ═══════════════════════════════════════════════════════════════════
-   CIC GUIDE CONTENT BOXES — match the homepage "Core Services" card
-   look (white bg, no border, rounded corners, slight shadow) for the
-   native LibGuides boxes on the CIC guide (Welcome!, Support Quick
-   Links, Teams, staff directory, etc. — .s-lib-box/.s-lib-box-std is
-   LibGuides' own box markup, not custom HTML in this repo). Unlike
-   .service-card, there's no hover background shift here — scoped to
-   CIC via body:has() so other guide templates keep LibGuides' default
-   box chrome (see QA-009 in docs/qa/ about not doing this globally).
+   GUIDE CONTENT BOXES — site-wide default, matching the homepage
+   "Core Services" card look (white bg, no border, rounded corners,
+   slight shadow) for native LibGuides boxes (.s-lib-box/.s-lib-box-std
+   — LibGuides' own box markup, not custom HTML in this repo). Unlike
+   .service-card, there's no hover background shift here.
+   Excludes any box wrapping a full-bleed hero (.s-lg-box-wrapper-hero)
+   — card chrome behind/around a full-bleed image breaks it; confirmed
+   live on the homepage hero box (id s-lg-box-36059895), which would
+   otherwise pick up this rule too since it's also #s-lg-guide-main
+   .s-lib-box.
+   This was CIC-only at first; QA-009 flags that broad guide-box rules
+   have regression potential across guide layouts (sidebar guides,
+   database lists, multi-page guides), so treat this as the new
+   default and add a scoped exception (same pattern as the hero
+   exclusion below) if a specific layout needs to opt out — verified
+   so far on the CIC guide and the main homepage only.
    ═══════════════════════════════════════════════════════════════════ */
-body:has(.csp-subsite-nav.subsite-cic) #s-lg-guide-main .s-lib-box {
+#s-lg-guide-main .s-lib-box:not(:has(.s-lg-box-wrapper-hero)) {
   background: #fff !important;
   border: none !important;
   border-radius: 8px !important;
   box-shadow: 0 2px 14px rgba(0,0,0,.07) !important;
 }
-body:has(.csp-subsite-nav.subsite-cic) #s-lg-guide-main .s-lib-box:hover {
+#s-lg-guide-main .s-lib-box:not(:has(.s-lg-box-wrapper-hero)):hover {
   background: #fff !important;
 }
-body:has(.csp-subsite-nav.subsite-cic) #s-lg-guide-main .s-lib-box-title {
+#s-lg-guide-main .s-lib-box:not(:has(.s-lg-box-wrapper-hero)) .s-lib-box-title {
   border-radius: 8px 8px 0 0 !important;
 }
-body:has(.csp-subsite-nav.subsite-cic) #s-lg-guide-main .s-lib-box-content {
+#s-lg-guide-main .s-lib-box:not(:has(.s-lg-box-wrapper-hero)) .s-lib-box-content {
   padding: 20px 22px !important;
 }
 
