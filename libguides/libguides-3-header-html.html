@@ -1,7 +1,7 @@
 <!-- ═══════════════════════════════════════════════════════════════════
    CSP LIBRARY — SITE-WIDE HEADER
    LibGuides Admin → System Settings → Look & Feel → Header & Footer → Header
-   Version: 3
+   Version: 4
    ═══════════════════════════════════════════════════════════════════
 
    INSTRUCTIONS:
@@ -42,8 +42,10 @@
      of <body>; a second copy was a duplicate and a third pointed at a
      #main-content target that never existed. -->
 
-<!-- Announcement bar -->
-  <div class="announcement-bar" role="banner" style="display:block">
+<!-- Announcement bar — hidden for now (markup/link kept; the CSS default
+     for .announcement-bar is display:none, so this just reverts to that;
+     set style="display:block" here to turn it back on). -->
+  <div class="announcement-bar" role="banner" style="display:none">
     Library summer hours now in effect.
     <a href="https://csp.libcal.com/hours/">See current hours →</a>
   </div>

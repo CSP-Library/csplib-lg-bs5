@@ -2,7 +2,7 @@
 /* ═══════════════════════════════════════════════════════════════════
    CSP LIBRARY — CUSTOM CSS
    LibGuides Admin → System Settings → Look & Feel → Custom JS/CSS → Custom CSS
-   Version: 4
+   Version: 5
 
    INSTRUCTIONS:
    1. Paste the entire contents of this file into the Custom CSS field,
@@ -502,6 +502,16 @@ body:has(.csp-subsite-nav.subsite-cic) .csp-navbar .csp-nav-cta-help {
 }
 body:has(.csp-subsite-nav.subsite-cic) .csp-navbar .csp-nav-main-item {
   display: none !important;
+}
+/* Hiding the main nav trio removes the tallest item from the row —
+   .csp-nav-link sets its own height to --csp-nav-height (68px), so with
+   those gone the row collapses to the next-tallest item (the 34px brand
+   logo) and the whole navbar visibly shrinks. Restore --csp-nav-height
+   as a min-height on the row so the navbar stays the same size as the
+   main site even with the trio hidden. Pair this with the display:none
+   rule above for any future subsite that hides the main nav trio. */
+body:has(.csp-subsite-nav.subsite-cic) .csp-navbar .navbar-nav {
+  min-height: var(--csp-nav-height);
 }
 
 /* ── Nav shell ────────────────────────────────────────────────────── */
