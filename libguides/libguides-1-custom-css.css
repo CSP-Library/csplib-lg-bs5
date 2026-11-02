@@ -2,7 +2,7 @@
 /* ═══════════════════════════════════════════════════════════════════
    CSP LIBRARY — CUSTOM CSS
    LibGuides Admin → System Settings → Look & Feel → Custom JS/CSS → Custom CSS
-   Version: 2
+   Version: 3
 
    INSTRUCTIONS:
    1. Paste the entire contents of this file into the Custom CSS field,
@@ -167,6 +167,23 @@
     .hero.accent-navy .hero-eyebrow         { color: var(--csp-navy-20); }
     .hero.accent-navy .hero-eyebrow::before { background: var(--csp-navy-20); }
     .hero.accent-navy .hero-heading em      { color: var(--csp-navy-20); }
+
+    /* A subsite using the two-band nav layout (.csp-sub-nav-band) already
+       has its own accent-colored border-bottom right above the hero, so
+       the hero's own ::before accent bar is a redundant second line with
+       a stray 1px white sliver between the two (from the outer
+       .csp-subsite-nav wrapper's border/shadow). Single-band subsites
+       (no .csp-sub-nav-band yet) have no border of their own there, so
+       they keep the hero's ::before bar as their only accent line. */
+    body:has(.csp-sub-nav-band) .hero.accent-teal::before,
+    body:has(.csp-sub-nav-band) .hero.accent-gold::before,
+    body:has(.csp-sub-nav-band) .hero.accent-navy::before {
+      display: none;
+    }
+    body:has(.csp-sub-nav-band) .csp-subsite-nav {
+      border-bottom: none;
+      box-shadow: none;
+    }
 
     /* ── Subsite hero — CTA buttons (replace the search form) ────── */
     .hero-ctas { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 24px; }
@@ -453,19 +470,26 @@ body,
    appropriate accent class (accent-teal / accent-gold / accent-navy).
    ═══════════════════════════════════════════════════════════════════ */
 
-/* ── Subsite header CTA visibility ───────────────────────────────────
-   The system-wide navbar's Hours/Get Help buttons (.csp-nav-cta-hours /
-   .csp-nav-cta-help in libguides-3-header-html.html) can be hidden on a
-   subsite-by-subsite basis when that subsite's own nav already has an
-   equivalent CTA — e.g. CIC's "Get Support" duplicates Get Help.
+/* ── Subsite header element visibility ───────────────────────────────
+   The system-wide navbar's CTA buttons (.csp-nav-cta-hours /
+   .csp-nav-cta-help) and its main nav trio — Find Resources, Services,
+   About, grouped under one .csp-nav-main-item hook class since they're
+   toggled together — can each be hidden on a subsite-by-subsite basis
+   (see libguides-3-header-html.html for the hook classes). CIC hides
+   its CTAs because "Get Support" already duplicates Get Help; the main
+   nav toggle is built but left off for every subsite below until there's
+   a reason to use it — delete the comment markers to enable it for one.
    Each subsite's outer nav div (.csp-subsite-nav) carries its own
    subsite-[name] class (in addition to its accent-* color class) for
-   this to key off of. To opt a subsite in, add a block like CIC's
-   below; to opt back out, delete or comment out its block. */
+   these rules to key off of. CTAs and main nav are independent — enable
+   either, both, or neither per subsite. */
 body:has(.csp-subsite-nav.subsite-cic) .csp-navbar .csp-nav-cta-hours,
 body:has(.csp-subsite-nav.subsite-cic) .csp-navbar .csp-nav-cta-help {
   display: none !important;
 }
+/* body:has(.csp-subsite-nav.subsite-cic) .csp-navbar .csp-nav-main-item {
+  display: none !important;
+} */
 
 /* ── Nav shell ────────────────────────────────────────────────────── */
 .csp-subsite-nav {
@@ -795,6 +819,32 @@ body:has(.csp-subsite-nav.subsite-cic) .csp-navbar .csp-nav-cta-help {
 @media (max-width: 767px) {
   .csp-sub-footer { padding: 36px 0 0; }
   .csp-sub-footer-grid { grid-template-columns: 1fr; gap: 28px; }
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   CIC GUIDE CONTENT BOXES — match the homepage "Core Services" card
+   look (white bg, no border, rounded corners, slight shadow) for the
+   native LibGuides boxes on the CIC guide (Welcome!, Support Quick
+   Links, Teams, staff directory, etc. — .s-lib-box/.s-lib-box-std is
+   LibGuides' own box markup, not custom HTML in this repo). Unlike
+   .service-card, there's no hover background shift here — scoped to
+   CIC via body:has() so other guide templates keep LibGuides' default
+   box chrome (see QA-009 in docs/qa/ about not doing this globally).
+   ═══════════════════════════════════════════════════════════════════ */
+body:has(.csp-subsite-nav.subsite-cic) #s-lg-guide-main .s-lib-box {
+  background: #fff !important;
+  border: none !important;
+  border-radius: 8px !important;
+  box-shadow: 0 2px 14px rgba(0,0,0,.07) !important;
+}
+body:has(.csp-subsite-nav.subsite-cic) #s-lg-guide-main .s-lib-box:hover {
+  background: #fff !important;
+}
+body:has(.csp-subsite-nav.subsite-cic) #s-lg-guide-main .s-lib-box-title {
+  border-radius: 8px 8px 0 0 !important;
+}
+body:has(.csp-subsite-nav.subsite-cic) #s-lg-guide-main .s-lib-box-content {
+  padding: 20px 22px !important;
 }
 
 </style>
