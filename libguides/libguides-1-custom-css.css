@@ -1,16 +1,25 @@
-<style>
 /* ═══════════════════════════════════════════════════════════════════
    CSP LIBRARY — CUSTOM CSS
-   LibGuides Admin → System Settings → Look & Feel → Custom JS/CSS → Custom CSS
-   Version: 7
+   Version: 8
 
-   INSTRUCTIONS:
-   1. Paste the entire contents of this file into the Custom CSS field,
-      including the opening and closing style tags — LibGuides does NOT
-      wrap this field automatically; the tags must be pasted in manually.
-   2. External dependencies (Bootstrap 5, Bootstrap Icons, Google Fonts)
-      are loaded via link tags in libguides-3-header-html.html — do NOT
-      add @import rules here, as LibGuides may strip them.
+   DEV PHASE (current): this file is NOT pasted into Admin. It's loaded
+   directly via <link> in libguides-3-header-html.html from this repo's
+   own Amplify deploy — see "CSS hosting" in CLAUDE.md. That's also why
+   it has no <style>/</style> wrapper right now: a linked stylesheet
+   must be pure CSS, and a leading <style> tag with no clean boundary
+   before the :root{} block right after it causes browsers to discard
+   the entire :root block as part of one broken rule — confirmed live
+   (2026-11), it's what silently dropped every color/font/spacing token
+   sitewide while leaving hardcoded-value rules intact.
+
+   TO REVERT TO THE ADMIN-PASTE METHOD: add <style> as a new first line
+   and </style> as a new last line, then paste the whole file into
+   Admin → System Settings → Look & Feel → Custom JS/CSS → Custom CSS
+   (LibGuides does not add this wrapper automatically).
+
+   External dependencies (Bootstrap 5, Bootstrap Icons, Google Fonts)
+   are loaded via link tags in libguides-3-header-html.html — do NOT
+   add @import rules here, as LibGuides may strip them.
    ═══════════════════════════════════════════════════════════════════ */
 
 /* ═══════════════════════════════════════════════════════════════
@@ -888,5 +897,3 @@ body:has(.csp-subsite-nav.subsite-cic) .csp-navbar .navbar-nav {
 #s-lg-guide-main .s-lib-box:not(:has(.s-lg-box-wrapper-hero)) .s-lib-box-content {
   padding: 20px 22px !important;
 }
-
-</style>
