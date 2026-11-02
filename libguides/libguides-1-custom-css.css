@@ -1,6 +1,6 @@
 /* ═══════════════════════════════════════════════════════════════════
    CSP LIBRARY — CUSTOM CSS
-   Version: 8
+   Version: 9
 
    DEV PHASE (current): this file is NOT pasted into Admin. It's loaded
    directly via <link> in libguides-3-header-html.html from this repo's
@@ -58,6 +58,16 @@
       --csp-sub-height:  56px;
     }
     *, *::before, *::after { box-sizing: border-box; }
+    /* Sitewide horizontal scrollbar fix: every full-bleed section
+       (.s-lg-box-wrapper-hero, used by the hero and any other
+       edge-to-edge box) sizes itself with 100vw, which includes the
+       vertical scrollbar's own width — wider than the actual visible
+       viewport whenever a vertical scrollbar is present (i.e. on
+       every normal page). That overflow is meant to bleed off-screen,
+       but without this it manifests as a real, scrollable horizontal
+       scrollbar instead. Needs overflow-x:hidden on BOTH html and
+       body — confirmed live that html alone doesn't suppress it. */
+    html, body { overflow-x: hidden; }
     html { scroll-behavior: smooth; }
     /* QA-005: keep skip-link landings clear of the sticky navbar */
     #s-lg-guide-main { scroll-margin-top: calc(var(--csp-nav-height) + 16px); }
