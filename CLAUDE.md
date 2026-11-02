@@ -15,7 +15,7 @@ Each `libguides/` file maps to exactly one Admin field.
 
 | File | LibGuides destination |
 |---|---|
-| `libguides-1-custom-css.css` | Admin → System Settings → Look & Feel → Custom JS/CSS → Custom CSS |
+| `libguides-1-custom-css.css` | **Dev phase (current):** not pasted into Admin — loaded via `<link>` in `libguides-3-header-html.html` from this repo's own Amplify deploy. See "CSS hosting" below. |
 | `libguides-2-custom-js.js` | Admin → System Settings → Look & Feel → Custom JS/CSS → Custom JS |
 | `libguides-3-header-html.html` | Admin → System Settings → Look & Feel → Header & Footer → Header |
 | `libguides-4-footer-html.html` | Admin → System Settings → Look & Feel → Header & Footer → Footer |
@@ -26,12 +26,20 @@ Each `libguides/` file maps to exactly one Admin field.
 
 ### Version tracking
 
-Every paste-target file above carries a hand-maintained `Version: N` line in its top comment block. Bump it by 1 whenever you edit that specific file (each file has its own independent counter — editing the CSS doesn't bump the JS's version). This lets the version number pasted into a LibGuides Admin field be visually compared against the repo's current version to tell whether that field is stale, without needing git access from inside Admin. `libguides-5-homepage-content.html` is excluded (it's reference-only, not a paste target — see below).
+Every paste-target file above carries a hand-maintained `Version: N` line in its top comment block. Bump it by 1 whenever you edit that specific file (each file has its own independent counter — editing the CSS doesn't bump the JS's version). This lets the version number pasted into a LibGuides Admin field be visually compared against the repo's current version to tell whether that field is stale, without needing git access from inside Admin. `libguides-5-homepage-content.html` is excluded (it's reference-only, not a paste target — see below). `libguides-1-custom-css.css` still carries its own `Version: N` even though it's no longer pasted into Admin (see below) — it still documents what changed, and it's not worth special-casing out of the convention.
+
+### CSS hosting (dev phase, 2026-11–)
+
+`libguides-1-custom-css.css` outgrew the Admin Custom CSS field's ~59K character limit (see below). This repo is itself connected to Amplify (the `updates` branch, same branch all dev work happens on), so instead of pasting the file into Admin, `libguides-3-header-html.html` loads it directly via `<link rel="stylesheet" href="https://updates.d1owbq5psbdlss.amplifyapp.com/libguides/libguides-1-custom-css.css">` — confirmed live that Amplify serves the raw repo tree with correct `text/css` content-type, and that the file's own `<style>`/`</style>` wrapper (still needed for the Admin-paste method on every other file) is harmless there — browsers just skip it as invalid CSS and parse the rest normally, so no separate stripped file is needed. Amplify invalidates its CDN cache on every deploy, so a `git push` to `updates` is live within moments, no manual re-paste and no cache-busting needed.
+
+This means CSS edits no longer need a Header re-paste — just push to `updates`. The Custom CSS Admin field itself should be **empty** while this is in place; don't maintain a pasted copy alongside the linked one, they'll fight each other. If you ever need to revert to the paste method (e.g. the `<link>` approach breaks for some reason), the file is still fully self-contained and paste-ready as-is.
+
+This is explicitly a dev-phase convenience, not the intended long-term home — a separate Amplify-backed repo (`comet.csplib.io`) already hosts other static assets (images) and is the likely production target once the redesign stabilizes and the codebase gets consolidated/condensed. Don't treat the `updates.d1owbq5psbdlss.amplifyapp.com` URL as a permanent production dependency.
 
 ## Critical LibGuides Constraints
 
 - **No `@import` in Custom CSS** — LibGuides strips them. All external CDN dependencies (Bootstrap 5, Bootstrap Icons, Google Fonts) are loaded via `<link>` tags in `libguides-3-header-html.html` only.
-- **Custom CSS character limit is ~59K characters** — confirmed by a live truncation (not the ~50–100K originally assumed). The Admin field silently cuts off anything past this length *without* closing the `<style>` tag, which breaks the entire page (everything after becomes inert text inside the unclosed style element — the page renders blank). Always verify after pasting that the field didn't truncate. No base64 data URIs; use hosted image URLs.
+- **Custom CSS character limit is ~59K characters** — confirmed by a live truncation (not the ~50–100K originally assumed). The Admin field silently cuts off anything past this length *without* closing the `<style>` tag, which breaks the entire page (everything after becomes inert text inside the unclosed style element — the page renders blank). Always verify after pasting that the field didn't truncate. No base64 data URIs; use hosted image URLs. **Not a live constraint right now** — see "CSS hosting" above — but still applies to every other Admin-pasted field, and to the CSS file too if it's ever reverted to the paste method.
 - A "retro terminal mode" easter egg (a `body.retro-mode`-scoped CSS block, a "Go retro" footer link, and a JS toggle) existed briefly and was removed (2026-10) specifically because it pushed the CSS file past this character limit and broke the live site. Don't re-add a similar feature without first confirming there's headroom under the ~59K limit.
 - **Full-bleed sections** require wrapping in `<div class="s-lg-box-wrapper-hero">` and checking "Floating Box" on the box.
 - **`toggleSubNav()`** must stay in global scope in `libguides-2-custom-js.js` — it is called via inline `onclick` attributes on subsite nav toggle buttons and cannot be inside `DOMContentLoaded`.

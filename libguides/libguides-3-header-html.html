@@ -1,7 +1,7 @@
 <!-- ═══════════════════════════════════════════════════════════════════
    CSP LIBRARY — SITE-WIDE HEADER
    LibGuides Admin → System Settings → Look & Feel → Header & Footer → Header
-   Version: 4
+   Version: 5
    ═══════════════════════════════════════════════════════════════════
 
    INSTRUCTIONS:
@@ -9,7 +9,9 @@
    the accordion). Do NOT include this comment block if the field doesn't
    accept HTML comments — start from the <link> tags below.
 
-   The <link> tags load Bootstrap 5.3, Bootstrap Icons, and Google Fonts.
+   The <link> tags load Bootstrap 5.3, Bootstrap Icons, Google Fonts,
+   and (during active dev) the project's own Custom CSS from this
+   repo's Amplify deploy — see the comment above that link below.
    If your Custom CSS @import approach works for icons/fonts, you can
    remove those <link> tags and keep only the nav HTML.
 
@@ -30,6 +32,16 @@
 
 <!-- Google Fonts: Barlow Condensed + Barlow -->
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Barlow:wght@400;500;600&display=swap"
+      rel="stylesheet">
+
+<!-- CSP Library Custom CSS — loaded from this repo's own Amplify deploy
+     (updates branch) instead of pasted into the Custom CSS Admin field,
+     so it's no longer limited by that field's ~59K character cap and
+     doesn't need re-pasting after every edit. Dev-phase only; see
+     CLAUDE.md for the plan to consolidate hosting once the redesign
+     stabilizes. The Custom CSS Admin field should be left empty while
+     this is in place — don't maintain both at once. -->
+<link href="https://updates.d1owbq5psbdlss.amplifyapp.com/libguides/libguides-1-custom-css.css"
       rel="stylesheet">
 
 <!-- Bootstrap 5.3 JS bundle (includes Popper) -->
