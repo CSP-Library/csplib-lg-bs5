@@ -2,7 +2,7 @@
 /* ═══════════════════════════════════════════════════════════════════
    CSP LIBRARY — CUSTOM CSS
    LibGuides Admin → System Settings → Look & Feel → Custom JS/CSS → Custom CSS
-   Version: 5
+   Version: 6
 
    INSTRUCTIONS:
    1. Paste the entire contents of this file into the Custom CSS field,
@@ -581,7 +581,7 @@ body:has(.csp-subsite-nav.subsite-cic) .csp-navbar .navbar-nav {
 }
 
 /* ── Subsite identity ─────────────────────────────────────────────── */
-.csp-sub-identity { display: flex; align-items: center; gap: 9px; flex-shrink: 0; }
+.csp-sub-identity { display: flex; align-items: center; gap: 9px; flex-shrink: 0; text-decoration: none; }
 .csp-sub-icon {
   width: 28px; height: 28px; border-radius: 7px; flex-shrink: 0;
   display: flex; align-items: center; justify-content: center; font-size: .95rem;

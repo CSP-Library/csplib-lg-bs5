@@ -1,7 +1,7 @@
 <!-- ==========================================================================
    CIC Subsite Nav — Group Custom Header
    Paste into: LibGuides → [CIC group] → Look & Feel → Header/Footer → Custom Header
-   Version: 1
+   Version: 2
 
    Relies on the system-wide Header (libguides-3-header-html.html) being
    inherited above this at the Group level — that's where the CSP Library
@@ -17,10 +17,10 @@
     <div class="container">
       <div class="csp-sub-toprow">
 
-        <div class="csp-sub-identity">
+        <a class="csp-sub-identity" href="https://library.csp.edu/cic/home">
           <div class="csp-sub-icon"><i class="bi bi-mortarboard" aria-hidden="true"></i></div>
           <span class="csp-sub-name">Curriculum &amp; Instruction Center</span>
-        </div>
+        </a>
 
         <button class="csp-sub-toggle"
           aria-expanded="false"
@@ -32,8 +32,6 @@
         </button>
 
         <div class="csp-sub-right" role="navigation" aria-label="CIC links">
-          <a class="csp-sub-link" href="https://library.csp.edu/cic/home">Home</a>
-
           <div class="csp-sub-item">
             <button class="csp-sub-link csp-sub-trigger" type="button" aria-expanded="false" aria-controls="cicDropPolicies">
               Policies
@@ -89,8 +87,6 @@
 
       <div class="csp-sub-collapse" id="cicCollapse" hidden role="navigation" aria-label="CIC mobile menu">
         <div class="csp-sub-collapse-inner">
-          <a class="csp-sub-mobile-link" href="https://library.csp.edu/cic/home">Home</a>
-
           <div class="csp-sub-mobile-item">
             <button class="csp-sub-mobile-link csp-sub-mobile-trigger" type="button"
               aria-expanded="false" aria-controls="cicMobDropPolicies"
