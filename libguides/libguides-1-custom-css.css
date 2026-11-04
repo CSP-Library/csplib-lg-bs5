@@ -1,6 +1,6 @@
 /* ═══════════════════════════════════════════════════════════════════
    CSP LIBRARY — CUSTOM CSS
-   Version: 10
+   Version: 11
 
    DEV PHASE (current): this file is NOT pasted into Admin. It's loaded
    directly via <link> in libguides-3-header-html.html from this repo's
@@ -168,7 +168,7 @@
        legacy page into the hero). CSS grid with auto-fit reflows
        columns at any width without extra breakpoints; reusable by any
        subsite hero, not Tutoring-specific. */
-    .hero-quick-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 12px; max-width: 620px; }
+    .hero-quick-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px; max-width: 620px; }
     .hero-quick-tile { display: flex; flex-direction: column; align-items: center; gap: 10px; padding: 18px 10px; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.14); border-radius: 10px; text-decoration: none; text-align: center; transition: background .15s, border-color .15s, transform .15s; }
     .hero-quick-tile:hover { background: rgba(255,255,255,.16); border-color: var(--accent-color, var(--csp-gold)); transform: translateY(-2px); }
     .hero-quick-icon { width: 42px; height: 42px; border-radius: 10px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; background: var(--accent-color, var(--csp-gold)); color: var(--csp-navy); font-size: 1.15rem; }
