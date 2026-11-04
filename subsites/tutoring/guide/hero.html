@@ -1,6 +1,6 @@
 <!-- ==========================================================================
    Tutoring Support Hero — Box Custom Content
-   Version: 2
+   Version: 3
 
    PASTE AS RAW HTML, NOT VIA THE VISUAL EDITOR: open the box, click
    "Edit HTML Source" (the <> icon) in the Rich Text/HTML box toolbar,
@@ -14,13 +14,18 @@
 
    Box settings: check "Floating Box" to enable the full-bleed wrapper.
 
-   Background image: no Tutoring-specific photo yet, so .hero-bg has no
-   inline override here — it inherits the default background-image set
-   on .hero-bg in libguides-1-custom-css.css (the main site's hero
-   photo). Same situation CIC started in; add an inline
-   style="background-image:url('...')" on .hero-bg once a
-   Tutoring-specific photo exists (comet.csplib.io is the current host
-   for CIC's — see "Known Issues" in CLAUDE.md).
+   Background image: Tutoring-specific photo (a student writing math on
+   a whiteboard), cropped to drop the top third per request — the
+   original had a mostly-empty graph in the upper area, cropped away to
+   keep focus on the person and the denser equations lower down. Source
+   file kept at images/csp-library-hero-tutoring.jpg in this repo for
+   reference; served from this repo's own Amplify deploy
+   (dev-phase, same as libguides-1-custom-css.css — see "CSS hosting"
+   in CLAUDE.md) since that's the only host available with write
+   access right now. comet.csplib.io (CIC's host) is a separate repo
+   this one doesn't have push access to; fold this image in there (or
+   wherever the eventual single image host ends up) when that gets
+   sorted out — don't treat this Amplify URL as permanent.
 
    Quick-link grid: replaces the usual .hero-ctas row. These are the
    six "quick access" tiles from the legacy page
@@ -37,7 +42,9 @@
 <div class="s-lg-box-wrapper-hero">
   <section class="hero accent-gold" aria-labelledby="tutoring-hero-heading">
 
-    <div class="hero-bg" aria-hidden="true"></div>
+    <div class="hero-bg"
+         style="background-image: url('https://updates.d1owbq5psbdlss.amplifyapp.com/images/csp-library-hero-tutoring.jpg'); background-position: 20% 30%;"
+         aria-hidden="true"></div>
     <div class="hero-overlay" aria-hidden="true"></div>
 
     <div class="hero-inner">
