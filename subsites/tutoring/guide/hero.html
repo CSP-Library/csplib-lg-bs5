@@ -1,7 +1,16 @@
 <!-- ==========================================================================
    Tutoring Support Hero — Box Custom Content
-   Paste into: LibGuides → [Tutoring Support guide] → Box → Rich Text / HTML source
-   Version: 1
+   Version: 2
+
+   PASTE AS RAW HTML, NOT VIA THE VISUAL EDITOR: open the box, click
+   "Edit HTML Source" (the <> icon) in the Rich Text/HTML box toolbar,
+   paste this whole file there, and save — do NOT paste into the plain
+   WYSIWYG view. Confirmed live (2026-11): pasting this kind of nested
+   markup through the visual Rich Text editor gets "cleaned up" by its
+   sanitizer, which silently split every .hero-quick-tile's two inline
+   children into 3 separate orphaned elements and broke the whole grid.
+   The same applies to every other subsite header/footer/hero file in
+   this repo, not just this one.
 
    Box settings: check "Floating Box" to enable the full-bleed wrapper.
 
@@ -19,7 +28,10 @@
    and rebuilt as a responsive CSS grid using Bootstrap Icons instead
    of the original raster icon images — same .hero-quick-grid/
    .hero-quick-tile component as any other subsite's hero could reuse
-   (see libguides-1-custom-css.css, "Hero quick-link grid").
+   (see libguides-1-custom-css.css, "Hero quick-link grid"). Each tile
+   is a flat <a><i></i>Label text</a> — no wrapping <span>s — matching
+   .csp-sub-dropdown-item's already-proven-safe shape; see the version
+   history if you're wondering why this isn't nested more "cleanly".
    ========================================================================== -->
 
 <div class="s-lg-box-wrapper-hero">
@@ -38,28 +50,22 @@
 
       <div class="hero-quick-grid" aria-label="Tutoring quick links">
         <a class="hero-quick-tile" href="https://library.csp.edu/tutor/peer">
-          <span class="hero-quick-icon"><i class="bi bi-people" aria-hidden="true"></i></span>
-          <span class="hero-quick-label">Peer Tutoring</span>
+          <i class="bi bi-people" aria-hidden="true"></i>Peer Tutoring
         </a>
         <a class="hero-quick-tile" href="https://library.csp.edu/tutor/brainfuse">
-          <span class="hero-quick-icon"><i class="bi bi-laptop" aria-hidden="true"></i></span>
-          <span class="hero-quick-label">Brainfuse Tutoring</span>
+          <i class="bi bi-laptop" aria-hidden="true"></i>Brainfuse Tutoring
         </a>
         <a class="hero-quick-tile" href="https://library.csp.edu/students/policies">
-          <span class="hero-quick-icon"><i class="bi bi-question-circle" aria-hidden="true"></i></span>
-          <span class="hero-quick-label">Policies &amp; FAQs</span>
+          <i class="bi bi-question-circle" aria-hidden="true"></i>Policies &amp; FAQs
         </a>
         <a class="hero-quick-tile" href="https://library.csp.edu/students/peer-tutor">
-          <span class="hero-quick-icon"><i class="bi bi-person-plus" aria-hidden="true"></i></span>
-          <span class="hero-quick-label">Become a Tutor</span>
+          <i class="bi bi-person-plus" aria-hidden="true"></i>Become a Tutor
         </a>
         <a class="hero-quick-tile" href="https://library.csp.edu/students/meet-your-tutor">
-          <span class="hero-quick-icon"><i class="bi bi-person-badge" aria-hidden="true"></i></span>
-          <span class="hero-quick-label">Meet the Tutors</span>
+          <i class="bi bi-person-badge" aria-hidden="true"></i>Meet the Tutors
         </a>
         <a class="hero-quick-tile" href="https://library.csp.edu/tutoring-support-faculty/services">
-          <span class="hero-quick-icon"><i class="bi bi-easel" aria-hidden="true"></i></span>
-          <span class="hero-quick-label">Information for Faculty</span>
+          <i class="bi bi-easel" aria-hidden="true"></i>Information for Faculty
         </a>
       </div>
 
