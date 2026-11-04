@@ -25,7 +25,15 @@
 <div id="system-header">Loading system header…</div>
 <div id="subsite-header">Loading subsite header…</div>
 <div id="subsite-hero">Loading hero…</div>
-<div id="s-lg-guide-main" style="min-height:200px"></div>
+<div id="s-lg-guide-main" style="padding:32px 16px">
+  <!-- Mimics a real LibGuides box's wrapper classes so site-wide
+       .s-lib-box rules (white card, rounded corners, shadow, title
+       bar) render the same way they would on a real guide page. -->
+  <div class="s-lib-box s-lib-box-std" style="max-width:900px;margin:0 auto">
+    <h2 class="s-lib-box-title">Need help deciding which tutoring service is right for you?</h2>
+    <div class="s-lib-box-content" id="compare-services">Loading comparison…</div>
+  </div>
+</div>
 <div id="subsite-footer">Loading footer…</div>
 
 <script>
@@ -34,11 +42,22 @@ async function loadInto(id, path) {
   const html = await res.text();
   document.getElementById(id).outerHTML = html;
 }
+async function loadContentInto(id, path) {
+  // Unlike loadInto, this fills the target's innerHTML rather than
+  // replacing the element outright — used where the target element
+  // itself (e.g. .s-lib-box-content) needs to persist as a real
+  // wrapper, mimicking how LibGuides places a box's Rich Text content
+  // inside its own fixed wrapper markup.
+  const res = await fetch(path);
+  const html = await res.text();
+  document.getElementById(id).innerHTML = html;
+}
 (async () => {
   await Promise.all([
     loadInto('system-header', '/libguides/libguides-3-header-html.html'),
     loadInto('subsite-header', '/subsites/tutoring/group/header.html'),
     loadInto('subsite-hero', '/subsites/tutoring/guide/hero.html'),
+    loadContentInto('compare-services', '/subsites/tutoring/guide/compare-services.html'),
     loadInto('subsite-footer', '/subsites/tutoring/group/footer.html'),
   ]);
   const jsRes = await fetch('/libguides/libguides-2-custom-js.js');
