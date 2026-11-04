@@ -1,0 +1,68 @@
+<!-- ==========================================================================
+   Tutoring Support Hero — Box Custom Content
+   Paste into: LibGuides → [Tutoring Support guide] → Box → Rich Text / HTML source
+   Version: 1
+
+   Box settings: check "Floating Box" to enable the full-bleed wrapper.
+
+   Background image: no Tutoring-specific photo yet, so .hero-bg has no
+   inline override here — it inherits the default background-image set
+   on .hero-bg in libguides-1-custom-css.css (the main site's hero
+   photo). Same situation CIC started in; add an inline
+   style="background-image:url('...')" on .hero-bg once a
+   Tutoring-specific photo exists (comet.csplib.io is the current host
+   for CIC's — see "Known Issues" in CLAUDE.md).
+
+   Quick-link grid: replaces the usual .hero-ctas row. These are the
+   six "quick access" tiles from the legacy page
+   (https://library.csp.edu/tutoring-support/home), moved into the hero
+   and rebuilt as a responsive CSS grid using Bootstrap Icons instead
+   of the original raster icon images — same .hero-quick-grid/
+   .hero-quick-tile component as any other subsite's hero could reuse
+   (see libguides-1-custom-css.css, "Hero quick-link grid").
+   ========================================================================== -->
+
+<div class="s-lg-box-wrapper-hero">
+  <section class="hero accent-gold" aria-labelledby="tutoring-hero-heading">
+
+    <div class="hero-bg" aria-hidden="true"></div>
+    <div class="hero-overlay" aria-hidden="true"></div>
+
+    <div class="hero-inner">
+
+      <p class="hero-eyebrow">Tutoring Support</p>
+      <h1 class="hero-heading" id="tutoring-hero-heading">
+        Strengthen your skills.<br>Build your <em>confidence</em>.
+      </h1>
+      <p class="hero-sub">Free peer and online tutoring for every Concordia student — designed to help you succeed in your classes.</p>
+
+      <div class="hero-quick-grid" aria-label="Tutoring quick links">
+        <a class="hero-quick-tile" href="https://library.csp.edu/tutor/peer">
+          <span class="hero-quick-icon"><i class="bi bi-people" aria-hidden="true"></i></span>
+          <span class="hero-quick-label">Peer Tutoring</span>
+        </a>
+        <a class="hero-quick-tile" href="https://library.csp.edu/tutor/brainfuse">
+          <span class="hero-quick-icon"><i class="bi bi-laptop" aria-hidden="true"></i></span>
+          <span class="hero-quick-label">Brainfuse Tutoring</span>
+        </a>
+        <a class="hero-quick-tile" href="https://library.csp.edu/students/policies">
+          <span class="hero-quick-icon"><i class="bi bi-question-circle" aria-hidden="true"></i></span>
+          <span class="hero-quick-label">Policies &amp; FAQs</span>
+        </a>
+        <a class="hero-quick-tile" href="https://library.csp.edu/students/peer-tutor">
+          <span class="hero-quick-icon"><i class="bi bi-person-plus" aria-hidden="true"></i></span>
+          <span class="hero-quick-label">Become a Tutor</span>
+        </a>
+        <a class="hero-quick-tile" href="https://library.csp.edu/students/meet-your-tutor">
+          <span class="hero-quick-icon"><i class="bi bi-person-badge" aria-hidden="true"></i></span>
+          <span class="hero-quick-label">Meet the Tutors</span>
+        </a>
+        <a class="hero-quick-tile" href="https://library.csp.edu/tutoring-support-faculty/services">
+          <span class="hero-quick-icon"><i class="bi bi-easel" aria-hidden="true"></i></span>
+          <span class="hero-quick-label">Information for Faculty</span>
+        </a>
+      </div>
+
+    </div>
+  </section>
+</div><!-- /s-lg-box-wrapper-hero -->

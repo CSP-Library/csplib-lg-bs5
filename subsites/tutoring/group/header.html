@@ -1,0 +1,153 @@
+<!-- ==========================================================================
+   Tutoring Support Subsite Nav — Group Custom Header
+   Paste into: LibGuides → [Tutoring Support group] → Look & Feel → Header/Footer → Custom Header
+   Version: 1
+
+   Relies on the system-wide Header (libguides-3-header-html.html) being
+   inherited above this at the Group level — that's where the CSP Library
+   navbar/logo and the "back to library" affordance live, and where
+   Bootstrap 5 CSS/JS, Bootstrap Icons, and the Google Fonts link are
+   loaded. This file has no back-to-library crumb of its own; it would
+   just duplicate what the inherited system header already provides.
+
+   Nav structure/links scraped from the live legacy nav at
+   https://library.csp.edu/tutoring-support/home (2026-11) — "Meet with
+   a Tutor" / "Students" / "Faculty" dropdowns, same three-dropdown
+   shape as CIC's nav. The nav CTA ("Get Tutoring Help" → Brainfuse)
+   matches the existing homepage Core Services card for Tutoring
+   Support exactly (libguides-5-box2-core-services.html), not a new
+   destination.
+   ========================================================================== -->
+
+<div class="csp-subsite-nav accent-gold subsite-tutoring">
+
+  <nav class="csp-sub-nav-band" aria-label="Tutoring Support navigation">
+    <div class="container">
+      <div class="csp-sub-toprow">
+
+        <a class="csp-sub-identity" href="https://library.csp.edu/tutoring-support/home">
+          <div class="csp-sub-icon"><i class="bi bi-people" aria-hidden="true"></i></div>
+          <span class="csp-sub-name">Tutoring Support</span>
+        </a>
+
+        <button class="csp-sub-toggle"
+          aria-expanded="false"
+          aria-controls="tutoringCollapse"
+          aria-label="Toggle Tutoring Support navigation"
+          onclick="toggleSubNav(this,'tutoringCollapse')">
+          <i class="bi bi-list icon-open" aria-hidden="true"></i>
+          <i class="bi bi-x-lg icon-close" aria-hidden="true"></i>
+        </button>
+
+        <div class="csp-sub-right" role="navigation" aria-label="Tutoring Support links">
+          <div class="csp-sub-item">
+            <button class="csp-sub-link csp-sub-trigger" type="button" aria-expanded="false" aria-controls="tutoringDropMeet">
+              Meet with a Tutor
+              <svg class="csp-sub-caret" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                <path d="M2.5 5l4.5 4.5L11.5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+            <div class="csp-sub-dropdown" id="tutoringDropMeet" role="region" aria-label="Meet with a Tutor">
+              <a class="csp-sub-dropdown-item" href="https://library.csp.edu/tutor/peer">Peer Tutoring</a>
+              <a class="csp-sub-dropdown-item" href="https://library.csp.edu/tutor/brainfuse">Brainfuse Tutoring</a>
+            </div>
+          </div>
+
+          <div class="csp-sub-item">
+            <button class="csp-sub-link csp-sub-trigger" type="button" aria-expanded="false" aria-controls="tutoringDropStudents">
+              Students
+              <svg class="csp-sub-caret" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                <path d="M2.5 5l4.5 4.5L11.5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+            <div class="csp-sub-dropdown" id="tutoringDropStudents" role="region" aria-label="Students">
+              <a class="csp-sub-dropdown-item" href="https://library.csp.edu/students/peer-tutor">Become a Peer Tutor</a>
+              <a class="csp-sub-dropdown-item" href="https://library.csp.edu/students/policies">Policies &amp; FAQs</a>
+              <a class="csp-sub-dropdown-item" href="https://library.csp.edu/students/meet-your-tutor">Meet Your Tutors</a>
+            </div>
+          </div>
+
+          <div class="csp-sub-item">
+            <button class="csp-sub-link csp-sub-trigger" type="button" aria-expanded="false" aria-controls="tutoringDropFaculty">
+              Faculty
+              <svg class="csp-sub-caret" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                <path d="M2.5 5l4.5 4.5L11.5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+            <div class="csp-sub-dropdown" id="tutoringDropFaculty" role="region" aria-label="Faculty">
+              <a class="csp-sub-dropdown-item" href="https://library.csp.edu/tutoring-support-faculty/services">Overview of Services</a>
+              <a class="csp-sub-dropdown-item" href="https://library.csp.edu/tutoring-support-faculty/recommend-tutor">Recommend a Tutor</a>
+              <a class="csp-sub-dropdown-item" href="https://library.csp.edu/tutoring-support-faculty/class-visit">Request Classroom Support</a>
+              <a class="csp-sub-dropdown-item" href="https://library.csp.edu/tutoring-support-faculty/learning-assistant">Learning Assistant Information</a>
+            </div>
+          </div>
+
+          <div class="csp-sub-cta-wrap">
+            <a class="csp-sub-cta" href="https://library.csp.edu/tutor/brainfuse">
+              <i class="bi bi-laptop" aria-hidden="true"></i>Get Tutoring Help
+            </a>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="csp-sub-collapse" id="tutoringCollapse" hidden role="navigation" aria-label="Tutoring Support mobile menu">
+        <div class="csp-sub-collapse-inner">
+          <div class="csp-sub-mobile-item">
+            <button class="csp-sub-mobile-link csp-sub-mobile-trigger" type="button"
+              aria-expanded="false" aria-controls="tutoringMobDropMeet"
+              onclick="toggleSubDropdown(this,'tutoringMobDropMeet')">
+              Meet with a Tutor
+              <svg class="csp-sub-caret" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                <path d="M2.5 5l4.5 4.5L11.5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+            <div class="csp-sub-mobile-dropdown" id="tutoringMobDropMeet" hidden>
+              <a class="csp-sub-mobile-dropdown-item" href="https://library.csp.edu/tutor/peer">Peer Tutoring</a>
+              <a class="csp-sub-mobile-dropdown-item" href="https://library.csp.edu/tutor/brainfuse">Brainfuse Tutoring</a>
+            </div>
+          </div>
+
+          <div class="csp-sub-mobile-item">
+            <button class="csp-sub-mobile-link csp-sub-mobile-trigger" type="button"
+              aria-expanded="false" aria-controls="tutoringMobDropStudents"
+              onclick="toggleSubDropdown(this,'tutoringMobDropStudents')">
+              Students
+              <svg class="csp-sub-caret" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                <path d="M2.5 5l4.5 4.5L11.5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+            <div class="csp-sub-mobile-dropdown" id="tutoringMobDropStudents" hidden>
+              <a class="csp-sub-mobile-dropdown-item" href="https://library.csp.edu/students/peer-tutor">Become a Peer Tutor</a>
+              <a class="csp-sub-mobile-dropdown-item" href="https://library.csp.edu/students/policies">Policies &amp; FAQs</a>
+              <a class="csp-sub-mobile-dropdown-item" href="https://library.csp.edu/students/meet-your-tutor">Meet Your Tutors</a>
+            </div>
+          </div>
+
+          <div class="csp-sub-mobile-item">
+            <button class="csp-sub-mobile-link csp-sub-mobile-trigger" type="button"
+              aria-expanded="false" aria-controls="tutoringMobDropFaculty"
+              onclick="toggleSubDropdown(this,'tutoringMobDropFaculty')">
+              Faculty
+              <svg class="csp-sub-caret" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                <path d="M2.5 5l4.5 4.5L11.5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+            <div class="csp-sub-mobile-dropdown" id="tutoringMobDropFaculty" hidden>
+              <a class="csp-sub-mobile-dropdown-item" href="https://library.csp.edu/tutoring-support-faculty/services">Overview of Services</a>
+              <a class="csp-sub-mobile-dropdown-item" href="https://library.csp.edu/tutoring-support-faculty/recommend-tutor">Recommend a Tutor</a>
+              <a class="csp-sub-mobile-dropdown-item" href="https://library.csp.edu/tutoring-support-faculty/class-visit">Request Classroom Support</a>
+              <a class="csp-sub-mobile-dropdown-item" href="https://library.csp.edu/tutoring-support-faculty/learning-assistant">Learning Assistant Information</a>
+            </div>
+          </div>
+
+          <a class="csp-sub-mobile-cta" href="https://library.csp.edu/tutor/brainfuse">
+            <i class="bi bi-laptop" aria-hidden="true"></i>Get Tutoring Help
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </nav>
+
+</div>
