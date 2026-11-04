@@ -64,8 +64,12 @@ The Google Fonts `<link>` for Barlow Condensed/Barlow lives only in `libguides-3
 
 Apply one accent class to the root element (`<nav>`, `<footer>`, `<section class="hero">`). All color variations cascade from that single class:
 - `accent-teal` — CIC (Curriculum & Instruction Center)
-- `accent-gold` — Writing Center
+- `accent-gold` — Writing Center, Tutoring Support
 - `accent-navy` — Archives & Special Collections
+
+Writing Center and Tutoring intentionally (as of 2026-11) share `accent-gold` — nothing in the system requires each subsite to have a unique color, but it does mean the two won't be visually distinguishable by accent alone. Revisit if that turns out to matter once both are live.
+
+Each `.accent-teal`/`.accent-gold`/`.accent-navy` class defines three custom properties (`libguides-1-custom-css.css`, "Accent tokens"): `--accent-color` and `--accent-light` for use on light/white backgrounds (dropdown panels, hero quick-link tiles, mobile menus), and `--accent-on-dark` for use against the navy nav-band specifically — navy's own `--accent-color` is literally that band's background color, so anything using it there would be invisible; `--accent-on-dark` substitutes a lighter navy tint instead. Any new subsite component that needs to read the subsite's accent color should use one of these three vars (with a sensible fallback), not hardcode a color.
 
 Each subsite needs its own `subsites/[subsite]/header.html` (group Custom Header), `footer.html` (group Custom Footer), and optionally `hero.html` (floating box on the subsite homepage). The system-wide header/footer from `libguides/` renders on every page — the group-level header appears **above** the system-wide header. Confirmed working (2026-10) on a CIC guide placed in its own dedicated Group with the Group's own Look & Feel → Header/Footer set to `subsites/cic/group/header.html` / `footer.html`: the system-wide header/footer rendered correctly above/below it.
 
@@ -79,7 +83,9 @@ Each subsite's outer nav wrapper (`.csp-subsite-nav` in its `header.html`) carri
 
 ### Hero Variants
 
-The main library homepage hero (Box 1) includes a OneSearch form and feature bar. Subsite heroes replace the search form with `.hero-ctas` (primary + ghost CTA buttons) and keep `.hero-search-alts` for quick links. The background image is set inline on `.hero-bg` so each subsite can use a different photo without touching the CSS.
+The main library homepage hero (Box 1) includes a OneSearch form and feature bar. Subsite heroes replace the search form with `.hero-ctas` (primary + ghost CTA buttons) and keep `.hero-search-alts` for quick links. The background image is set inline on `.hero-bg` so each subsite can use a different photo without touching the CSS — if a subsite doesn't have its own photo yet, leave the inline override off entirely and it inherits the default (main site) photo baked into `.hero-bg` in the CSS, rather than hardcoding that URL as a placeholder (see `subsites/tutoring/guide/hero.html`).
+
+A third hero option, `.hero-quick-grid`/`.hero-quick-tile`/`.hero-quick-icon`/`.hero-quick-label`, is a responsive icon-tile grid (CSS grid with `auto-fit`, no manual breakpoints) for a subsite that wants several quick-link destinations in the hero instead of (or alongside) `.hero-ctas` — built for Tutoring Support's six "quick access" tiles, moved into the hero from the legacy page and rebuilt with Bootstrap Icons instead of the original raster icon images. Not Tutoring-specific; any subsite hero can use it. The tile icon background uses `var(--accent-color)`, so it recolors automatically per subsite.
 
 ## Repo Structure
 
@@ -87,6 +93,7 @@ The main library homepage hero (Box 1) includes a OneSearch form and feature bar
 - `csp-subsite-nav-pattern2.html` — full demo showing all three subsite nav variants side-by-side; use as the template when adding a new subsite
 - `cic-subsite-nav.html` — CIC-specific demo with parent nav context for visual comparison
 - `csp-homepage-global-style.html`, `csp-brand-comparison.html` — design reference mockups
+- `tutoring-preview.html` — same-origin preview harness: assembles a subsite's header/hero/footer with the real system header and custom JS at runtime via `fetch()` (works because this file and the files it loads are served from the same Amplify deploy — no CORS issue, unlike fetching them cross-origin from library.csp.edu). Nothing in it is hand-copied from the real files, so it can't drift out of sync. Built for Tutoring since it has no Group/guide in Admin yet to test against directly; reusable for any subsite by changing the three subsite paths at the bottom of the file. If you fetch `libguides-2-custom-js.js` this way, strip its `<script>`/`</script>` wrapper before using the text as a dynamically-created script element's content — and build that wrapper string via concatenation, not as a literal `<script>`/`</script>` substring, or the *outer* file's own inline script gets cut short by its own HTML parser (confirmed live: this exact mistake silently truncated the harness's script block and broke every dropdown).
 
 **`libguides-5-homepage-content.html` is NOT a paste target** — it's the original monolithic file the `box1`–`box6` files were split out of (May 2026), kept only as a single-file reference for reading the whole homepage at once. The **`box1`–`box6` files are the only ones actually pasted into LibGuides**, per the table above. This file is not updated automatically when the box files change — if you edit a box file's content, manually mirror the change here too, or this file silently goes stale (it already has once: a fix landed in a box file but not here, and the stale copy got mistaken for the source of truth, pointing a re-paste at the wrong file entirely). When in doubt about which is current, diff this file's section against the corresponding box file rather than assuming either is right.
 
@@ -94,7 +101,7 @@ The main library homepage hero (Box 1) includes a OneSearch form and feature bar
 - `cic/` — Curriculum & Instruction Center (header ✓, footer ✓, hero ✓). Split into `group/` (header.html, footer.html — pasted at the Group level) and `guide/` (hero.html — pasted at the individual guide level), since those are two different Admin locations. Other subsites haven't been split this way yet; do it as each one picks up a hero/guide-level file of its own.
 - `writing/` — Writing Center (header ✓; footer and hero pending)
 - `archives/` — Archives & Special Collections (not yet started)
-- `tutoring/` — Tutoring Support (not yet started)
+- `tutoring/` — Tutoring Support (header ✓, footer ✓, hero ✓). Split into `group/` (header.html, footer.html) and `guide/` (hero.html) from the start, following CIC's pattern — not yet confirmed live on an actual LibGuides page (no dedicated Group/guide set up in Admin yet).
 - `digital-scholarship/` — Digital Scholarship (not yet started)
 
 ## Subsite Status
@@ -104,8 +111,10 @@ The main library homepage hero (Box 1) includes a OneSearch form and feature bar
 | CIC | ✓ `subsites/cic/group/` | ✓ `subsites/cic/group/` | ✓ `subsites/cic/guide/` |
 | Writing Center | ✓ `subsites/writing/` | not yet created | not yet created |
 | Archives | not yet created | not yet created | not yet created |
-| Tutoring | not yet created | not yet created | not yet created |
+| Tutoring | ✓ `subsites/tutoring/group/` | ✓ `subsites/tutoring/group/` | ✓ `subsites/tutoring/guide/` |
 | Digital Scholarship | not yet created | not yet created | not yet created |
+
+Tutoring's nav/footer links and content were scraped from the live legacy page (`https://library.csp.edu/tutoring-support/home`, 2026-11) — three dropdowns (Meet with a Tutor / Students / Faculty), matching CIC's three-dropdown shape. Not yet pasted into an actual LibGuides Group/guide, so — unlike CIC — not yet confirmed working end-to-end on a real page; verified instead via `working/tutoring-preview.html` (see below).
 
 Table above tracks whether the files exist in this repo, not whether they're live. CIC is the only subsite confirmed working end-to-end on an actual LibGuides page (a guide in its own dedicated Group, system header correctly inheriting above the group header) — that's the known-good reference setup to replicate for the others. The production `/cic/home` guide (no dev group) is still on LibGuides' old default theme and hasn't been migrated.
 
