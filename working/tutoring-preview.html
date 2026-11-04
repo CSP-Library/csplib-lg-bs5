@@ -43,10 +43,17 @@ async function loadInto(id, path) {
   ]);
   const jsRes = await fetch('/libguides/libguides-2-custom-js.js');
   let jsText = await jsRes.text();
-  // Unlike the CSS, this file still carries its <script>/</script>
-  // wrapper (it's still pasted into the Admin Custom JS field as-is) —
-  // strip it here since we're creating the <script> element ourselves.
-  jsText = jsText.replace(/^\s*<script>/, '').replace(/<\/script>\s*$/, '');
+  // Unlike the CSS, this file still carries its own wrapper tag pair
+  // (it's still pasted into the Admin Custom JS field as-is) — strip
+  // it here since we're creating the script element ourselves. Built
+  // via concatenation, not written as a literal tag, so the HTML
+  // parser of THIS file can't mistake it for a real closing tag and
+  // end this inline script block early.
+  const openTag = '<' + 'script>';
+  const closeTag = '<' + '/' + 'script>';
+  jsText = jsText.trim();
+  if (jsText.startsWith(openTag)) jsText = jsText.slice(openTag.length);
+  if (jsText.endsWith(closeTag)) jsText = jsText.slice(0, -closeTag.length);
   const script = document.createElement('script');
   script.textContent = jsText;
   document.body.appendChild(script);
