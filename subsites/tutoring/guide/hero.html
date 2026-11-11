@@ -1,6 +1,13 @@
 <!-- ==========================================================================
    Tutoring Support Hero — Box Custom Content
-   Version: 3
+   Version: 4
+
+   The <section> now also carries subsite-tutoring (alongside its
+   accent-gold class) so a few hero tweaks that are specific to this
+   page — not every accent-gold hero, since Writing Center shares that
+   same accent — can be scoped to .hero.subsite-tutoring in the CSS
+   instead of changing the shared .hero-eyebrow/.hero-sub rules every
+   hero uses.
 
    PASTE AS RAW HTML, NOT VIA THE VISUAL EDITOR: open the box, click
    "Edit HTML Source" (the <> icon) in the Rich Text/HTML box toolbar,
@@ -40,7 +47,7 @@
    ========================================================================== -->
 
 <div class="s-lg-box-wrapper-hero">
-  <section class="hero accent-gold" aria-labelledby="tutoring-hero-heading">
+  <section class="hero accent-gold subsite-tutoring" aria-labelledby="tutoring-hero-heading">
 
     <div class="hero-bg"
          style="background-image: url('https://updates.d1owbq5psbdlss.amplifyapp.com/images/csp-library-hero-tutoring.jpg'); background-position: 20% 30%;"
@@ -51,7 +58,7 @@
 
       <p class="hero-eyebrow">Tutoring Support</p>
       <h1 class="hero-heading" id="tutoring-hero-heading">
-        Strengthen your skills.<br>Build your <em>confidence</em>.
+        Strengthen your skills<br>Build your <em>confidence</em>
       </h1>
       <p class="hero-sub">Free peer and online tutoring for every Concordia student — designed to help you succeed in your classes.</p>
 
