@@ -1,6 +1,6 @@
 /* ═══════════════════════════════════════════════════════════════════
    CSP LIBRARY — CUSTOM CSS
-   Version: 14
+   Version: 15
 
    DEV PHASE (current): this file is NOT pasted into Admin. It's loaded
    directly via <link> in libguides-3-header-html.html from this repo's
@@ -939,6 +939,12 @@ body:has(.csp-subsite-nav.subsite-tutoring) .csp-navbar .navbar-nav {
 }
 #s-lg-guide-main .s-lib-box:not(:has(.s-lg-box-wrapper-hero)) .s-lib-box-title {
   border-radius: 8px 8px 0 0 !important;
+  /* LibGuides' default box-title color is a medium gray (#545454,
+     confirmed live on both a standard guide and a CIC guide box) —
+     lighter than every other heading level on the page, including
+     the H4s inside the box's own content. Darkened to make it read as
+     the most prominent heading, not the weakest one. */
+  color: #000 !important;
 }
 #s-lg-guide-main .s-lib-box:not(:has(.s-lg-box-wrapper-hero)) .s-lib-box-content {
   padding: 20px 22px !important;
