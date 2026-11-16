@@ -1,6 +1,6 @@
 /* ═══════════════════════════════════════════════════════════════════
    CSP LIBRARY — CUSTOM CSS
-   Version: 15
+   Version: 16
 
    DEV PHASE (current): this file is NOT pasted into Admin. It's loaded
    directly via <link> in libguides-3-header-html.html from this repo's
@@ -918,26 +918,34 @@ body:has(.csp-subsite-nav.subsite-tutoring) .csp-navbar .navbar-nav {
    .service-card, there's no hover background shift here.
    Excludes any box wrapping a full-bleed hero (.s-lg-box-wrapper-hero)
    — card chrome behind/around a full-bleed image breaks it; confirmed
-   live on the homepage hero box (id s-lg-box-36059895), which would
-   otherwise pick up this rule too since it's also #s-lg-guide-main
-   .s-lib-box.
+   live on the homepage hero box (id s-lg-box-36059895).
+   Scoped to body.s-lg-guide-body, not #s-lg-guide-main — confirmed
+   live (2026-11) that #s-lg-guide-main only wraps the main tab-content
+   column; a guide's sidebar boxes (e.g. MBA's "Help with Citations")
+   sit in a sibling container (#s-lg-guide-tabs) entirely outside it,
+   so the original #s-lg-guide-main scoping silently never reached
+   sidebar boxes on any guide, all session. body.s-lg-guide-body wraps
+   both and is specific to the guide template (confirmed absent on the
+   A-Z Databases template, which uses body.s-lib-public-body instead),
+   so this still can't leak into other page types.
    This was CIC-only at first; QA-009 flags that broad guide-box rules
    have regression potential across guide layouts (sidebar guides,
    database lists, multi-page guides), so treat this as the new
    default and add a scoped exception (same pattern as the hero
    exclusion below) if a specific layout needs to opt out — verified
-   so far on the CIC guide and the main homepage only.
+   so far on the CIC guide, the MBA guide (incl. its sidebar), and the
+   main homepage.
    ═══════════════════════════════════════════════════════════════════ */
-#s-lg-guide-main .s-lib-box:not(:has(.s-lg-box-wrapper-hero)) {
+body.s-lg-guide-body .s-lib-box:not(:has(.s-lg-box-wrapper-hero)) {
   background: #fff !important;
   border: none !important;
   border-radius: 8px !important;
   box-shadow: 0 2px 14px rgba(0,0,0,.07) !important;
 }
-#s-lg-guide-main .s-lib-box:not(:has(.s-lg-box-wrapper-hero)):hover {
+body.s-lg-guide-body .s-lib-box:not(:has(.s-lg-box-wrapper-hero)):hover {
   background: #fff !important;
 }
-#s-lg-guide-main .s-lib-box:not(:has(.s-lg-box-wrapper-hero)) .s-lib-box-title {
+body.s-lg-guide-body .s-lib-box:not(:has(.s-lg-box-wrapper-hero)) .s-lib-box-title {
   border-radius: 8px 8px 0 0 !important;
   /* LibGuides' default box-title color is a medium gray (#545454,
      confirmed live on both a standard guide and a CIC guide box) —
@@ -946,7 +954,7 @@ body:has(.csp-subsite-nav.subsite-tutoring) .csp-navbar .navbar-nav {
      the most prominent heading, not the weakest one. */
   color: #000 !important;
 }
-#s-lg-guide-main .s-lib-box:not(:has(.s-lg-box-wrapper-hero)) .s-lib-box-content {
+body.s-lg-guide-body .s-lib-box:not(:has(.s-lg-box-wrapper-hero)) .s-lib-box-content {
   padding: 20px 22px !important;
 }
 
