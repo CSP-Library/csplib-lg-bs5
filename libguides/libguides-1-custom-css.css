@@ -1,6 +1,6 @@
 /* ═══════════════════════════════════════════════════════════════════
    CSP LIBRARY — CUSTOM CSS
-   Version: 18
+   Version: 19
 
    DEV PHASE (current): this file is NOT pasted into Admin. It's loaded
    directly via <link> in libguides-3-header-html.html from this repo's
@@ -1081,11 +1081,11 @@ body.s-lg-guide-body h6:not([class]) {
   display: block;
   padding: 12px 16px !important;
   border-radius: 0 !important;
-  border-left: 4px solid transparent;
+  border-left: 4px solid transparent !important;
   color: var(--csp-navy) !important;
   font-family: var(--font-body);
   font-size: .9375rem;
-  font-weight: 600;
+  font-weight: 600 !important;
   text-decoration: none;
   transition: background .12s, border-color .12s;
 }
@@ -1094,8 +1094,8 @@ body.s-lg-guide-body h6:not([class]) {
 }
 #s-lg-guide-tabs .nav-link.active {
   background: var(--csp-gold-light) !important;
-  border-left-color: var(--csp-gold);
-  font-weight: 700;
+  border-left: 4px solid var(--csp-gold) !important;
+  font-weight: 700 !important;
 }
 /* Current page's own box-anchor jumps (.s-lg-boxnav) and a sibling
    page's collapsed sub-pages (.s-lg-subtab-ul) — same flat, indented
