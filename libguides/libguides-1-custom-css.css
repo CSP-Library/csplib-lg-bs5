@@ -1,6 +1,6 @@
 /* ═══════════════════════════════════════════════════════════════════
    CSP LIBRARY — CUSTOM CSS
-   Version: 19
+   Version: 20
 
    DEV PHASE (current): this file is NOT pasted into Admin. It's loaded
    directly via <link> in libguides-3-header-html.html from this repo's
@@ -1059,15 +1059,20 @@ body.s-lg-guide-body h6:not([class]) {
    aria-current="page" on the active top-level link is added by JS
    (libguides-2-custom-js.js) — CSS can't add a missing attribute.
    ═══════════════════════════════════════════════════════════════════ */
-#s-lg-guide-tabs {
+/* #s-lg-guide-tabs itself wraps MORE than just the page-list nav --
+   confirmed live (2026-11): it also contains a second child
+   (div.s-lg-row.margin-top-med) holding whatever sidebar boxes come
+   after the nav (e.g. "Help with Citations"). Card styling belongs on
+   the nav <ul> specifically (the direct child matching .nav.nav-pills)
+   -- putting it on #s-lg-guide-tabs itself bled the white background/
+   shadow/padding down across those other boxes too. */
+#s-lg-guide-tabs > .nav.nav-pills {
   background: #fff !important;
   border-radius: 8px !important;
   box-shadow: 0 2px 14px rgba(0,0,0,.07) !important;
   padding: 4px 0 !important;
-  margin-bottom: 20px;
+  margin-bottom: 20px !important;
   overflow: hidden;
-}
-#s-lg-guide-tabs .nav.nav-pills {
   display: flex;
   flex-direction: column;
 }
@@ -1090,7 +1095,13 @@ body.s-lg-guide-body h6:not([class]) {
   transition: background .12s, border-color .12s;
 }
 #s-lg-guide-tabs .nav-link:hover {
-  background: var(--csp-gray);
+  /* Confirmed live: without !important this lost to some other
+     hover rule setting a solid dark-navy background -- combined with
+     this nav's own navy text color, that made the text disappear on
+     hover entirely. Forcing both background and color here so hover
+     can't silently inherit a color pairing from somewhere else again. */
+  background: var(--csp-gray) !important;
+  color: var(--csp-navy) !important;
 }
 #s-lg-guide-tabs .nav-link.active {
   background: var(--csp-gold-light) !important;
@@ -1115,14 +1126,20 @@ body.s-lg-guide-body h6:not([class]) {
 }
 #s-lg-guide-tabs .list-group-item a,
 #s-lg-guide-tabs .dropdown-item a {
-  color: var(--csp-navy-80);
+  color: var(--csp-navy-80) !important;
   font-size: .875rem;
   font-weight: 500;
   text-decoration: none;
+  background: transparent !important;
 }
 #s-lg-guide-tabs .list-group-item a:hover,
-#s-lg-guide-tabs .dropdown-item a:hover {
-  color: var(--csp-navy);
+#s-lg-guide-tabs .dropdown-item a:hover,
+#s-lg-guide-tabs .list-group-item:hover,
+#s-lg-guide-tabs .dropdown-item:hover {
+  /* Same fix as .nav-link:hover above, forced the same way -- don't
+     let hover background/color come from anywhere but this rule. */
+  background: var(--csp-gray) !important;
+  color: var(--csp-navy) !important;
   text-decoration: underline;
 }
 #s-lg-guide-tabs .s-lg-tab-drop {
