@@ -1,6 +1,6 @@
 /* ═══════════════════════════════════════════════════════════════════
    CSP LIBRARY — CUSTOM CSS
-   Version: 20
+   Version: 21
 
    DEV PHASE (current): this file is NOT pasted into Admin. It's loaded
    directly via <link> in libguides-3-header-html.html from this repo's
@@ -1144,6 +1144,56 @@ body.s-lg-guide-body h6:not([class]) {
 }
 #s-lg-guide-tabs .s-lg-tab-drop {
   color: var(--csp-navy-60);
+}
+
+/* ── Mobile collapse (≤ 991.98px, same breakpoint as the system nav's
+   own navbar-expand-lg toggle) ───────────────────────────────────────
+   The toggle button itself (.csp-guide-nav-toggle) doesn't exist in
+   LibGuides' markup -- created by JS (libguides-2-custom-js.js) since
+   it needs the current page's own name as its label, which CSS can't
+   read. Hidden by default (desktop); shown and made functional only
+   below the breakpoint. The nav list collapses via max-height, same
+   pattern as the subsite nav's own mobile menu elsewhere in this file. */
+.csp-guide-nav-toggle { display: none; }
+@media (max-width: 991.98px) {
+  .csp-guide-nav-toggle {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--csp-gold-light);
+    border: none;
+    padding: 14px 16px;
+    font-family: var(--font-body);
+    font-size: .9375rem;
+    font-weight: 700;
+    color: var(--csp-navy);
+    cursor: pointer;
+    border-radius: 8px 8px 0 0;
+  }
+  .csp-guide-nav-toggle .csp-guide-nav-caret {
+    width: 13px; height: 13px; flex-shrink: 0;
+    transition: transform .2s ease;
+  }
+  .csp-guide-nav-toggle[aria-expanded="true"] .csp-guide-nav-caret {
+    transform: rotate(180deg);
+  }
+  #s-lg-guide-tabs > .nav.nav-pills {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height .25s ease;
+    border-radius: 0 0 8px 8px !important;
+  }
+  #s-lg-guide-tabs > .nav.nav-pills.is-open {
+    max-height: 2000px;
+  }
+  /* The expanded panel already states the current page in the toggle
+     button itself -- showing its .nav-item again as the first (highlighted)
+     item in the list below is a dead, redundant link to the page
+     you're already on, so hide just that one item once open. */
+  #s-lg-guide-tabs > .nav.nav-pills.is-open > .nav-item.active {
+    display: none;
+  }
 }
 
 /* ═══════════════════════════════════════════════════════════════════

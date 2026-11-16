@@ -2,7 +2,7 @@
 /* ═══════════════════════════════════════════════════════════════════
    CSP LIBRARY — CUSTOM JS
    LibGuides Admin → System Settings → Look & Feel → Custom JS/CSS → Custom JS
-   Version: 2
+   Version: 3
 
    INSTRUCTIONS:
    Paste the entire contents of this file into the Custom JS field,
@@ -154,19 +154,42 @@ document.addEventListener('DOMContentLoaded', function () {
       }, { passive: true });
     })();
 
-  /* ─── Guide sidebar nav — aria-current for the active page ──────────
+  /* ─── Guide sidebar nav — aria-current + mobile collapse toggle ─────
      LibGuides marks the current guide page with class="active" on its
      #s-lg-guide-tabs nav-item/nav-link, which is enough for the visual
      treatment but gives screen reader users no indication of which
      page they're on — CSS can't add a missing attribute, so this is
      the one piece of the sidebar-nav redesign that has to be JS, not
      CSS. Scoped to #s-lg-guide-tabs specifically so it never touches
-     the system nav's own (unrelated) .active classes elsewhere. */
+     the system nav's own (unrelated) .active classes elsewhere.
+
+     Also builds the mobile collapse toggle button — it doesn't exist
+     in LibGuides' markup, and needs the current page's own name as its
+     label (e.g. "Find Sources"), which CSS has no way to read. Hidden
+     above the breakpoint, shown and made functional below it via CSS
+     (libguides-1-custom-css.css, "Mobile collapse"). */
   (function () {
     var tabs = document.getElementById('s-lg-guide-tabs');
     if (!tabs) return;
-    var current = tabs.querySelector('.nav-item.active > .nav-link');
+    var navUl = tabs.querySelector('.nav.nav-pills');
+    var current = navUl ? navUl.querySelector('.nav-item.active > .nav-link') : null;
     if (current) current.setAttribute('aria-current', 'page');
+    if (!navUl || !current) return;
+
+    var label = current.textContent.trim();
+    var btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'csp-guide-nav-toggle';
+    btn.setAttribute('aria-expanded', 'false');
+    btn.innerHTML = '<span>' + label + '</span>' +
+      '<svg class="csp-guide-nav-caret" viewBox="0 0 14 14" fill="none" aria-hidden="true">' +
+      '<path d="M2.5 5l4.5 4.5L11.5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+    navUl.parentNode.insertBefore(btn, navUl);
+
+    btn.addEventListener('click', function () {
+      var isOpen = navUl.classList.toggle('is-open');
+      btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    });
   })();
 
 }); /* end DOMContentLoaded */
