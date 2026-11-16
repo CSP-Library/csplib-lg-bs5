@@ -1,6 +1,6 @@
 /* ═══════════════════════════════════════════════════════════════════
    CSP LIBRARY — CUSTOM CSS
-   Version: 17
+   Version: 18
 
    DEV PHASE (current): this file is NOT pasted into Admin. It's loaded
    directly via <link> in libguides-3-header-html.html from this repo's
@@ -1017,6 +1017,116 @@ body.s-lg-guide-body h5:not([class]) {
 body.s-lg-guide-body h6:not([class]) {
   font-size: 1rem !important;
   font-weight: 500 !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   GUIDE SIDEBAR NAV (#s-lg-guide-tabs) — USWDS-inspired reskin of
+   LibGuides' own guide-page-list sidebar (left column on a sidebar
+   guide, e.g. the MBA guide). Real markup, confirmed live (2026-11):
+
+     #s-lg-guide-tabs[role=navigation][aria-label="Guide Pages"]
+       ul.nav.nav-pills.flex-column          (top-level guide pages)
+         li.nav-item[.active]
+           a.nav-link[.active]
+           ul.list-group.s-lg-boxnav          (*)
+             li.list-group-item > a
+         li.nav-item.dropdown
+           a.nav-link + button.s-lg-tab-drop  (collapsed by default)
+           ul.s-lg-subtab-ul.nav-stacked
+             li.dropdown-item > a
+
+     (*) Only appears under the CURRENTLY ACTIVE top-level page, and
+     only when that guide uses "box titles as anchor links" — these
+     are same-page anchor jumps to a box further down the page (hrefs
+     are #s-lg-box-NNNN, not separate URLs), not a second navigation
+     level with its own "current" state. A guide using "display
+     subpages" instead won't have this list at all; a guide with
+     neither won't either. Don't assume every guide has it.
+
+   Previously: Bootstrap's own .nav-pills (rounded pill buttons) and
+   .list-group (bordered, shadowed card per item) defaults, which is
+   the "boxed card" look explicitly not wanted here. Reskinned to a
+   flat, bordered-divider list with a left-border accent on the
+   current page — same shape as USWDS's side navigation component
+   (nav > ul > li, .usa-current gets a border + bold weight, nested
+   sublists get further indent, no per-item card chrome) — rather
+   than literally copying USWDS's own blue color palette.
+
+   The whole nav is one white card (matching .s-lib-box elsewhere) so
+   it reads as part of the same sidebar-box stack as any other boxes
+   below it (e.g. "Help with Citations").
+
+   aria-current="page" on the active top-level link is added by JS
+   (libguides-2-custom-js.js) — CSS can't add a missing attribute.
+   ═══════════════════════════════════════════════════════════════════ */
+#s-lg-guide-tabs {
+  background: #fff !important;
+  border-radius: 8px !important;
+  box-shadow: 0 2px 14px rgba(0,0,0,.07) !important;
+  padding: 4px 0 !important;
+  margin-bottom: 20px;
+  overflow: hidden;
+}
+#s-lg-guide-tabs .nav.nav-pills {
+  display: flex;
+  flex-direction: column;
+}
+#s-lg-guide-tabs .nav-item {
+  border-bottom: 1px solid var(--csp-gray);
+}
+#s-lg-guide-tabs .nav-item:last-child {
+  border-bottom: none;
+}
+#s-lg-guide-tabs .nav-link {
+  display: block;
+  padding: 12px 16px !important;
+  border-radius: 0 !important;
+  border-left: 4px solid transparent;
+  color: var(--csp-navy) !important;
+  font-family: var(--font-body);
+  font-size: .9375rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background .12s, border-color .12s;
+}
+#s-lg-guide-tabs .nav-link:hover {
+  background: var(--csp-gray);
+}
+#s-lg-guide-tabs .nav-link.active {
+  background: var(--csp-gold-light) !important;
+  border-left-color: var(--csp-gold);
+  font-weight: 700;
+}
+/* Current page's own box-anchor jumps (.s-lg-boxnav) and a sibling
+   page's collapsed sub-pages (.s-lg-subtab-ul) — same flat, indented
+   treatment for both, no card/border/shadow per item. */
+#s-lg-guide-tabs .list-group.s-lg-boxnav,
+#s-lg-guide-tabs .s-lg-subtab-ul {
+  margin: 0 !important;
+  padding: 0 0 8px !important;
+  border-radius: 0 !important;
+}
+#s-lg-guide-tabs .list-group-item,
+#s-lg-guide-tabs .dropdown-item {
+  background: transparent !important;
+  border: none !important;
+  border-radius: 0 !important;
+  padding: 7px 16px 7px 36px !important;
+}
+#s-lg-guide-tabs .list-group-item a,
+#s-lg-guide-tabs .dropdown-item a {
+  color: var(--csp-navy-80);
+  font-size: .875rem;
+  font-weight: 500;
+  text-decoration: none;
+}
+#s-lg-guide-tabs .list-group-item a:hover,
+#s-lg-guide-tabs .dropdown-item a:hover {
+  color: var(--csp-navy);
+  text-decoration: underline;
+}
+#s-lg-guide-tabs .s-lg-tab-drop {
+  color: var(--csp-navy-60);
 }
 
 /* ═══════════════════════════════════════════════════════════════════

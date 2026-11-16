@@ -2,7 +2,7 @@
 /* ═══════════════════════════════════════════════════════════════════
    CSP LIBRARY — CUSTOM JS
    LibGuides Admin → System Settings → Look & Feel → Custom JS/CSS → Custom JS
-   Version: 1
+   Version: 2
 
    INSTRUCTIONS:
    Paste the entire contents of this file into the Custom JS field,
@@ -153,6 +153,21 @@ document.addEventListener('DOMContentLoaded', function () {
         if (openItem) closeNow(openItem);
       }, { passive: true });
     })();
+
+  /* ─── Guide sidebar nav — aria-current for the active page ──────────
+     LibGuides marks the current guide page with class="active" on its
+     #s-lg-guide-tabs nav-item/nav-link, which is enough for the visual
+     treatment but gives screen reader users no indication of which
+     page they're on — CSS can't add a missing attribute, so this is
+     the one piece of the sidebar-nav redesign that has to be JS, not
+     CSS. Scoped to #s-lg-guide-tabs specifically so it never touches
+     the system nav's own (unrelated) .active classes elsewhere. */
+  (function () {
+    var tabs = document.getElementById('s-lg-guide-tabs');
+    if (!tabs) return;
+    var current = tabs.querySelector('.nav-item.active > .nav-link');
+    if (current) current.setAttribute('aria-current', 'page');
+  })();
 
 }); /* end DOMContentLoaded */
 
