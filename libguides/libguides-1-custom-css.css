@@ -1,6 +1,6 @@
 /* ═══════════════════════════════════════════════════════════════════
    CSP LIBRARY — CUSTOM CSS
-   Version: 16
+   Version: 17
 
    DEV PHASE (current): this file is NOT pasted into Admin. It's loaded
    directly via <link> in libguides-3-header-html.html from this repo's
@@ -947,15 +947,76 @@ body.s-lg-guide-body .s-lib-box:not(:has(.s-lg-box-wrapper-hero)):hover {
 }
 body.s-lg-guide-body .s-lib-box:not(:has(.s-lg-box-wrapper-hero)) .s-lib-box-title {
   border-radius: 8px 8px 0 0 !important;
-  /* LibGuides' default box-title color is a medium gray (#545454,
-     confirmed live on both a standard guide and a CIC guide box) —
-     lighter than every other heading level on the page, including
-     the H4s inside the box's own content. Darkened to make it read as
-     the most prominent heading, not the weakest one. */
-  color: #000 !important;
+  /* Color/size/weight for .s-lib-box-title live in the "GUIDE HEADING
+     BASELINE" section below, alongside every other content heading
+     level — not here, to avoid two rules doing the same job. */
 }
 body.s-lg-guide-body .s-lib-box:not(:has(.s-lg-box-wrapper-hero)) .s-lib-box-content {
   padding: 20px 22px !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   GUIDE HEADING BASELINE — resets every *generic* content heading
+   (the native guide-title H1, .s-lib-box-title, and any unclassed
+   H1-H6 inside a box's rich-text content) to Bootstrap 5's own
+   heading scale, confirmed from the loaded bootstrap.min.css rather
+   than assumed: h1 2.5rem, h2 2rem, h3 1.75rem, h4 1.5rem, h5 1.25rem,
+   h6 1rem, weight 500, line-height 1.2, margin-top 0 / margin-bottom
+   .5rem. Color is #1a1a1a (this file's own body text color, not navy
+   — content headings shouldn't compete with the brand chrome's navy
+   for attention). H1 is kept at weight 700 rather than Bootstrap's
+   500: the native guide-title H1 already was 700, and a page title
+   the same weight as its own subheadings reads flat.
+
+   "Generic" is deliberately narrow: any heading we've actually
+   designed (.hero-heading, .section-title, .service-title,
+   .ne-card-title, Bootstrap's own .modal-title, .s-lg-db-panel-title
+   on the A-Z Databases template, etc.) already carries a class, so
+   :not([class]) exempts all of them automatically — nothing to
+   maintain an exclusion list for. .s-lib-box-title is the one
+   exception: it's a class, but it's LibGuides' own generic one, not
+   a component we designed, so it's included by name instead.
+
+   Font-family is deliberately NOT touched here — still Poppins,
+   same as before. Extending the site's Barlow Condensed/Barlow
+   typography into guide content is a separate decision for later,
+   not bundled into this pass.
+
+   Scoped to body.s-lg-guide-body (not #s-lg-guide-main — see the
+   note on the box rules above) so this can't reach the A-Z Databases
+   template or anything else outside the guide template.
+   ═══════════════════════════════════════════════════════════════════ */
+body.s-lg-guide-body :where(h1, h2, h3, h4, h5, h6):not([class]),
+body.s-lg-guide-body .s-lib-box-title {
+  color: #1a1a1a !important;
+  line-height: 1.2 !important;
+  margin-top: 0 !important;
+  margin-bottom: .5rem !important;
+}
+body.s-lg-guide-body h1:not([class]) {
+  font-size: 2.5rem !important;
+  font-weight: 700 !important;
+}
+body.s-lg-guide-body h2:not([class]),
+body.s-lg-guide-body .s-lib-box-title {
+  font-size: 2rem !important;
+  font-weight: 500 !important;
+}
+body.s-lg-guide-body h3:not([class]) {
+  font-size: 1.75rem !important;
+  font-weight: 500 !important;
+}
+body.s-lg-guide-body h4:not([class]) {
+  font-size: 1.5rem !important;
+  font-weight: 500 !important;
+}
+body.s-lg-guide-body h5:not([class]) {
+  font-size: 1.25rem !important;
+  font-weight: 500 !important;
+}
+body.s-lg-guide-body h6:not([class]) {
+  font-size: 1rem !important;
+  font-weight: 500 !important;
 }
 
 /* ═══════════════════════════════════════════════════════════════════
