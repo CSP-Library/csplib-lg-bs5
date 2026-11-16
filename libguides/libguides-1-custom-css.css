@@ -1,6 +1,6 @@
 /* ═══════════════════════════════════════════════════════════════════
    CSP LIBRARY — CUSTOM CSS
-   Version: 21
+   Version: 22
 
    DEV PHASE (current): this file is NOT pasted into Admin. It's loaded
    directly via <link> in libguides-3-header-html.html from this repo's
@@ -1157,19 +1157,19 @@ body.s-lg-guide-body h6:not([class]) {
 .csp-guide-nav-toggle { display: none; }
 @media (max-width: 991.98px) {
   .csp-guide-nav-toggle {
-    display: flex;
-    width: 100%;
+    display: flex !important;
+    width: 100% !important;
     align-items: center;
     justify-content: space-between;
-    background: var(--csp-gold-light);
-    border: none;
-    padding: 14px 16px;
+    background: var(--csp-gold-light) !important;
+    border: none !important;
+    padding: 14px 16px !important;
     font-family: var(--font-body);
     font-size: .9375rem;
-    font-weight: 700;
-    color: var(--csp-navy);
+    font-weight: 700 !important;
+    color: var(--csp-navy) !important;
     cursor: pointer;
-    border-radius: 8px 8px 0 0;
+    border-radius: 8px 8px 0 0 !important;
   }
   .csp-guide-nav-toggle .csp-guide-nav-caret {
     width: 13px; height: 13px; flex-shrink: 0;
@@ -1188,10 +1188,15 @@ body.s-lg-guide-body h6:not([class]) {
     max-height: 2000px;
   }
   /* The expanded panel already states the current page in the toggle
-     button itself -- showing its .nav-item again as the first (highlighted)
-     item in the list below is a dead, redundant link to the page
-     you're already on, so hide just that one item once open. */
-  #s-lg-guide-tabs > .nav.nav-pills.is-open > .nav-item.active {
+     button itself -- showing it again as the first (highlighted) link
+     in the list below is a dead, redundant link to the page you're
+     already on. Hide just the <a>, not the whole .nav-item: the
+     current page's own box-anchor jump links (.s-lg-boxnav --
+     OneSearch, Searching in OneSearch, etc.) are the active item's
+     *sibling*, not the link's child, and should stay usable once
+     open -- confirmed live that hiding the whole .nav-item took those
+     down with it, which is more than intended. */
+  #s-lg-guide-tabs > .nav.nav-pills.is-open > .nav-item.active > .nav-link {
     display: none;
   }
 }
