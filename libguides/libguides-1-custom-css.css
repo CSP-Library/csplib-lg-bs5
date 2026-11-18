@@ -1,6 +1,6 @@
 /* ═══════════════════════════════════════════════════════════════════
    CSP LIBRARY — CUSTOM CSS
-   Version: 27
+   Version: 28
 
    DEV PHASE (current): this file is NOT pasted into Admin. It's loaded
    directly via <link> in libguides-3-header-html.html from this repo's
@@ -1135,6 +1135,75 @@ body.s-lg-guide-body h5:not([class]) {
 body.s-lg-guide-body h6:not([class]) {
   font-size: 1rem !important;
   font-weight: 500 !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   IN-CONTENT TABS & ACCORDION — brand styling for Bootstrap's stock
+   .nav-tabs/.tab-content and .accordion components, offered as
+   copy-paste snippets from tools/style-guide.html for guide owners to
+   paste into a Rich Text/HTML box. No --bs-primary override exists
+   anywhere in this file, so unstyled these would render stock
+   Bootstrap blue -- jarring next to the rest of the brand-styled
+   site. Scoped to body.s-lg-guide-body like the rest of guide-content
+   styling, so these stay untouched anywhere else (.nav-tabs/.accordion
+   used by some other, unrelated Bootstrap-powered widget).
+   ═══════════════════════════════════════════════════════════════════ */
+body.s-lg-guide-body .nav-tabs {
+  border-bottom: 2px solid var(--csp-gray);
+  gap: 4px;
+}
+body.s-lg-guide-body .nav-tabs .nav-link {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: .9375rem;
+  color: var(--csp-navy);
+  opacity: .6;
+  background: transparent;
+  border: none;
+  border-bottom: 3px solid transparent;
+  border-radius: 0;
+  padding: 10px 16px;
+  margin-bottom: -2px;
+}
+body.s-lg-guide-body .nav-tabs .nav-link:hover {
+  opacity: 1;
+  border-bottom-color: var(--csp-gray);
+}
+body.s-lg-guide-body .nav-tabs .nav-link.active {
+  opacity: 1;
+  color: var(--csp-navy);
+  background: transparent;
+  border-bottom-color: var(--csp-gold);
+}
+body.s-lg-guide-body .tab-content {
+  padding: 20px 2px;
+}
+
+body.s-lg-guide-body .accordion-item {
+  border: 1px solid var(--csp-gray);
+  border-radius: 8px !important;
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+body.s-lg-guide-body .accordion-item:last-child {
+  margin-bottom: 0;
+}
+body.s-lg-guide-body .accordion-button {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--csp-navy);
+  background: #fff;
+  box-shadow: none !important;
+}
+body.s-lg-guide-body .accordion-button:not(.collapsed) {
+  color: var(--csp-navy);
+  background: var(--csp-gold-light);
+}
+body.s-lg-guide-body .accordion-button:focus-visible {
+  outline: 2px solid var(--csp-teal-action);
+  outline-offset: -2px;
+  box-shadow: none !important;
 }
 
 /* ═══════════════════════════════════════════════════════════════════

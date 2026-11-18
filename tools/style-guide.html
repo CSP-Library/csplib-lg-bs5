@@ -1,0 +1,548 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CSP Library — Content Style Guide</title>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+   NOT a LibGuides paste target. An interactive reference + HTML-
+   snippet generator for guide owners: shows what headings and a
+   couple of common interactive components (tabs, accordion) actually
+   look like on the real site, and lets you customize the content and
+   copy out ready-to-paste HTML (Edit HTML Source, same as every other
+   custom block in this repo -- see CLAUDE.md).
+
+   HOW THIS STAYS ACCURATE (read before editing):
+
+   1. CSS fidelity. This page loads the exact same stylesheet chain,
+      in the exact same order, as a real LibGuides guide page:
+        LibGuides' own base theme (lg-public-bs535.min.css)
+        → LibGuides' Look & Feel Custom CSS (lookfeel.css)
+        → Bootstrap 5.3 → Bootstrap Icons → Google Fonts
+        → this repo's own custom CSS (libguides-1-custom-css.css),
+          loaded live from Amplify, same as every real page.
+      Nothing here is a hand-copied value. When libguides-1-custom-css.css
+      changes and redeploys, this page reflects it on next load --
+      no maintenance needed for the CSS side. <body class="s-lg-guide-body">
+      below matches the class our CSS keys off of on a real guide page,
+      so every scoped rule (heading baseline, box styling, tabs/
+      accordion) applies exactly as it would there.
+
+      Not replicated: two small inline <style> blocks LibGuides
+      injects on real pages (account-specific, generated per request,
+      not something you'd hand-copy anyway) -- so this is close to
+      production but not guaranteed pixel-identical. If something
+      looks meaningfully different here vs. a real guide, that's
+      worth a look, not necessarily a bug in this page.
+
+   2. "Which CSS source actually wins" (Bootstrap vs. LibGuides vs.
+      ours) for headings is answered by reading the browser's own
+      resolved getComputedStyle() for each heading, not by a table
+      someone has to remember to update -- see renderComputed() below.
+      That number is always correct, by construction, regardless of
+      what changes upstream.
+
+   3. What DOES need manual upkeep: the actual snippet templates this
+      page generates (the Tabs/Accordion HTML strings) are hand-
+      written below, matching Bootstrap 5's own documented component
+      markup. They're low-churn by nature (stable upstream pattern),
+      but if the required markup or classes ever change, update the
+      build*Html() functions -- that's the one real source of drift
+      risk on this page, and it's isolated to those functions.
+   ═══════════════════════════════════════════════════════════════════ -->
+
+<!-- LibGuides' own base theme -- defines .s-lib-box/.s-lib-box-title
+     and friends. Loaded first, same position it holds on a real page. -->
+<link href="https://static-assets-us.libguides.com/web/css3.31.6/lg-public-bs535.min.css" rel="stylesheet">
+<!-- LibGuides Look & Feel → Custom CSS (System Settings), confirmed
+     live as the account's base typography (Poppins, etc.) that our
+     own CSS then overrides via !important where it cares to. -->
+<link href="https://library.csp.edu/lookfeel.css" rel="stylesheet">
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://updates.d1owbq5psbdlss.amplifyapp.com/libguides/libguides-1-custom-css.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<style>
+  /* Tool chrome only -- everything inside a .sg-preview box renders
+     with ZERO extra rules from here, so it's exactly what a real
+     guide page would show. "sg-" prefix throughout to keep this
+     page's own scaffolding from ever colliding with a real site
+     class. */
+  :root { --sg-ink: #1a2733; }
+  html, body { background: #eef1f3; }
+  .sg-toolbar {
+    background: var(--sg-ink); color: #fff; padding: 14px 20px;
+    position: sticky; top: 0; z-index: 20; display: flex; flex-wrap: wrap;
+    align-items: center; gap: 4px 18px; font-family: system-ui, sans-serif;
+  }
+  .sg-toolbar strong { font-size: .9375rem; margin-right: 8px; }
+  .sg-toolbar a { color: #c3d0d9; text-decoration: none; font-size: .8125rem; }
+  .sg-toolbar a:hover { color: #fff; text-decoration: underline; }
+
+  .sg-wrap { max-width: 980px; margin: 0 auto; padding: 32px 16px 80px; }
+  .sg-section { background: #fff; border: 1px solid #d8dfe4; border-radius: 10px; padding: 28px 28px 32px; margin-bottom: 28px; }
+  .sg-section > h2 { font-family: system-ui, sans-serif !important; font-size: 1.375rem !important; font-weight: 700 !important; color: var(--sg-ink) !important; margin: 0 0 4px !important; }
+  .sg-section > .sg-desc { font-family: system-ui, sans-serif; font-size: .875rem; color: #5a6b78; margin-bottom: 20px; max-width: 70ch; }
+
+  .sg-note {
+    font-family: system-ui, sans-serif; font-size: .8125rem; color: #5a6b78;
+    background: #f3f6f8; border: 1px solid #e1e8ec; border-radius: 6px;
+    padding: 10px 14px; margin: 10px 0 0;
+  }
+  .sg-note strong { color: var(--sg-ink); }
+
+  .sg-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 14px; align-items: start; }
+  @media (max-width: 760px) { .sg-row { grid-template-columns: 1fr; } }
+  .sg-label { font-family: system-ui, sans-serif; font-size: .75rem; font-weight: 700; text-transform: uppercase; letter-spacing: .03em; color: #5a6b78; display: block; margin-bottom: 6px; }
+
+  .sg-preview {
+    border: 1px dashed #c7d0d6; border-radius: 6px; padding: 18px;
+    background: #fff;
+  }
+  .sg-preview-plain { border: none; padding: 0; }
+
+  .sg-field { width: 100%; font: inherit; font-family: system-ui, sans-serif; font-size: .875rem; padding: 7px 10px; border: 1px solid #c7d0d6; border-radius: 6px; box-sizing: border-box; }
+  textarea.sg-field { min-height: 70px; resize: vertical; font-family: ui-monospace, "SF Mono", Consolas, monospace; font-size: .8125rem; }
+
+  .sg-btn {
+    font-family: system-ui, sans-serif; font-size: .8125rem; font-weight: 600;
+    border: 1px solid #c7d0d6; background: #fff; color: var(--sg-ink);
+    border-radius: 6px; padding: 7px 14px; cursor: pointer;
+  }
+  .sg-btn:hover { background: #f3f6f8; }
+  .sg-btn-primary { background: #0d3a5c; border-color: #0d3a5c; color: #fff; }
+  .sg-btn-primary:hover { background: #0a2d47; }
+  .sg-btn-ghost { border-color: transparent; background: transparent; color: #8a98a3; padding: 6px 8px; }
+  .sg-btn-ghost:hover { color: #c0392b; background: transparent; }
+  .sg-btn-sm { padding: 4px 10px; font-size: .75rem; }
+
+  .sg-item-card { border: 1px solid #e1e8ec; border-radius: 8px; padding: 14px; margin-bottom: 10px; background: #fafbfc; }
+  .sg-item-card-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+  .sg-item-card-head span { font-family: system-ui, sans-serif; font-size: .75rem; font-weight: 700; color: #8a98a3; }
+
+  .sg-copy-bar { display: flex; justify-content: flex-end; gap: 8px; margin-top: 16px; }
+
+  .sg-code {
+    display: none; margin-top: 12px; background: #0d1620; color: #d6e2ea;
+    font-family: ui-monospace, "SF Mono", Consolas, monospace; font-size: .75rem;
+    line-height: 1.5; padding: 14px 16px; border-radius: 8px; overflow-x: auto;
+    white-space: pre;
+  }
+  .sg-code.is-shown { display: block; }
+</style>
+</head>
+<body class="s-lg-guide-body">
+
+<div class="sg-toolbar">
+  <strong>CSP Library · Content Style Guide</strong>
+  <a href="#headings">Headings</a>
+  <a href="#box-title">Box Titles</a>
+  <a href="#tabs">Tabs</a>
+  <a href="#accordion">Accordion</a>
+</div>
+
+<div class="sg-wrap">
+
+  <div class="sg-section">
+    <h2>How to use this page</h2>
+    <p class="sg-desc" style="margin-bottom:0">
+      Everything below renders with the site's real, live CSS — what you see is what it will look like once pasted into a guide.
+      Edit the sample text where offered, then use <strong>Copy HTML</strong> and paste into a Rich Text/HTML box via
+      <strong>Edit HTML Source</strong> (never the plain visual editor — see CLAUDE.md on why). This page itself isn't a paste
+      target; it only exists to generate snippets for you to use elsewhere.
+    </p>
+  </div>
+
+  <!-- ═══════════════════ HEADINGS ═══════════════════ -->
+  <section class="sg-section" id="headings">
+    <h2>Headings</h2>
+    <p class="sg-desc">
+      Guide content headings follow one site-wide baseline (Bootstrap 5's own default scale), regardless of which page
+      you're on. <strong>H1 is reserved for the guide's own title</strong>, set automatically by LibGuides — don't add
+      another one inside your content. Start your own content headings at H2.
+    </p>
+    <div id="headingsList"></div>
+  </section>
+
+  <!-- ═══════════════════ BOX TITLE ═══════════════════ -->
+  <section class="sg-section" id="box-title">
+    <h2>Box Titles</h2>
+    <p class="sg-desc">
+      Set via each box's own <strong>Title</strong> field in LibGuides Admin — not pasted HTML, so there's no snippet to
+      copy here. Shown for reference so you know what it'll look like; it follows the same size/weight/color as an H2.
+    </p>
+    <div class="sg-preview">
+      <div class="s-lib-box s-lib-box-std">
+        <h2 class="s-lib-box-title">Example Box Title</h2>
+        <div class="s-lib-box-content">
+          <p>This is a box's own Rich Text content, shown here just to frame the title realistically.</p>
+        </div>
+      </div>
+    </div>
+    <div class="sg-note" id="boxTitleComputed"></div>
+  </section>
+
+  <!-- ═══════════════════ TABS ═══════════════════ -->
+  <section class="sg-section" id="tabs">
+    <h2>Tabs</h2>
+    <p class="sg-desc">
+      Good for splitting related content (e.g. "Books" / "Articles" / "Websites") into switchable panels without a long
+      scroll. Each panel's content box accepts raw HTML — write it the same way you would directly in a guide box.
+    </p>
+
+    <div class="sg-label">Live preview</div>
+    <div class="sg-preview" id="tabsPreview"></div>
+
+    <div class="sg-label" style="margin-top:20px">Edit tabs</div>
+    <div id="tabsEditor"></div>
+    <button type="button" class="sg-btn" id="tabsAddBtn">+ Add tab</button>
+
+    <div class="sg-copy-bar">
+      <button type="button" class="sg-btn" id="tabsShowCodeBtn">Show HTML</button>
+      <button type="button" class="sg-btn sg-btn-primary" id="tabsCopyBtn">Copy HTML</button>
+    </div>
+    <pre class="sg-code" id="tabsCode"></pre>
+  </section>
+
+  <!-- ═══════════════════ ACCORDION ═══════════════════ -->
+  <section class="sg-section" id="accordion">
+    <h2>Accordion</h2>
+    <p class="sg-desc">
+      Good for FAQs or anything a reader should be able to skim by heading first (e.g. "How do I request an interlibrary
+      loan?") without every answer taking up space at once. Each item's body accepts raw HTML.
+    </p>
+
+    <div class="sg-label">Live preview</div>
+    <div class="sg-preview" id="accordionPreview"></div>
+
+    <div class="sg-label" style="margin-top:20px">Edit items</div>
+    <div id="accordionEditor"></div>
+    <button type="button" class="sg-btn" id="accordionAddBtn">+ Add item</button>
+
+    <div class="sg-copy-bar">
+      <button type="button" class="sg-btn" id="accordionShowCodeBtn">Show HTML</button>
+      <button type="button" class="sg-btn sg-btn-primary" id="accordionCopyBtn">Copy HTML</button>
+    </div>
+    <pre class="sg-code" id="accordionCode"></pre>
+  </section>
+
+</div>
+
+<script>
+(function () {
+  'use strict';
+
+  function escapeHtml(str) {
+    return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  }
+  function uid() {
+    return Math.random().toString(36).slice(2, 8);
+  }
+  async function copyText(text, btn) {
+    var original = btn.textContent;
+    var ok = false;
+    try { await navigator.clipboard.writeText(text); ok = true; }
+    catch (e) {
+      var ta = document.createElement('textarea');
+      ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+      document.body.appendChild(ta); ta.focus(); ta.select();
+      try { document.execCommand('copy'); ok = true; } catch (e2) { ok = false; }
+      document.body.removeChild(ta);
+    }
+    btn.textContent = ok ? 'Copied!' : 'Copy failed — select manually';
+    setTimeout(function () { btn.textContent = original; }, 1800);
+  }
+
+  /* ─── Headings ──────────────────────────────────────────────────── */
+  var HEADING_SAMPLE = {
+    h1: 'Guide Title (reserved — set by LibGuides)',
+    h2: 'A Major Section',
+    h3: 'A Subsection',
+    h4: 'A Smaller Heading',
+    h5: 'An Even Smaller Heading',
+    h6: 'The Smallest Heading'
+  };
+  var headingsList = document.getElementById('headingsList');
+
+  Object.keys(HEADING_SAMPLE).forEach(function (tag) {
+    var row = document.createElement('div');
+    row.className = 'sg-row';
+    row.style.marginBottom = '22px';
+
+    var previewCol = document.createElement('div');
+    var label = document.createElement('div');
+    label.className = 'sg-label';
+    label.textContent = tag.toUpperCase() + (tag === 'h1' ? ' — reference only' : '');
+    var preview = document.createElement('div');
+    preview.className = 'sg-preview sg-preview-plain';
+    var headingEl = document.createElement(tag);
+    headingEl.textContent = HEADING_SAMPLE[tag];
+    preview.appendChild(headingEl);
+    var computedNote = document.createElement('div');
+    computedNote.className = 'sg-note';
+    previewCol.appendChild(label);
+    previewCol.appendChild(preview);
+    previewCol.appendChild(computedNote);
+
+    var editCol = document.createElement('div');
+    if (tag !== 'h1') {
+      var editLabel = document.createElement('div');
+      editLabel.className = 'sg-label';
+      editLabel.textContent = 'Your text';
+      var input = document.createElement('input');
+      input.type = 'text';
+      input.className = 'sg-field';
+      input.value = HEADING_SAMPLE[tag];
+      input.addEventListener('input', function () {
+        headingEl.textContent = input.value || HEADING_SAMPLE[tag];
+      });
+      var copyBtn = document.createElement('button');
+      copyBtn.type = 'button';
+      copyBtn.className = 'sg-btn sg-btn-primary sg-btn-sm';
+      copyBtn.style.marginTop = '10px';
+      copyBtn.textContent = 'Copy HTML';
+      copyBtn.addEventListener('click', function () {
+        var text = (input.value || HEADING_SAMPLE[tag]).trim();
+        copyText('<' + tag + '>' + escapeHtml(text) + '</' + tag + '>', copyBtn);
+      });
+      editCol.appendChild(editLabel);
+      editCol.appendChild(input);
+      editCol.appendChild(copyBtn);
+    } else {
+      var note = document.createElement('div');
+      note.className = 'sg-note';
+      note.innerHTML = '<strong>No snippet here.</strong> This level is set automatically by the guide\'s own title — nothing to paste.';
+      editCol.appendChild(note);
+    }
+
+    row.appendChild(previewCol);
+    row.appendChild(editCol);
+    headingsList.appendChild(row);
+
+    // Live computed style -- always reflects whichever CSS layer
+    // (Bootstrap default, LibGuides lookfeel.css, or our own
+    // baseline reset) actually wins, with no hand-maintained table
+    // to go stale.
+    requestAnimationFrame(function () {
+      var cs = getComputedStyle(headingEl);
+      computedNote.innerHTML = '<strong>Resolved style:</strong> ' +
+        cs.fontSize + ' / weight ' + cs.fontWeight + ' / ' + cs.color +
+        ' / line-height ' + cs.lineHeight;
+    });
+  });
+
+  requestAnimationFrame(function () {
+    var titleEl = document.querySelector('.s-lib-box-title');
+    var cs = getComputedStyle(titleEl);
+    document.getElementById('boxTitleComputed').innerHTML =
+      '<strong>Resolved style:</strong> ' + cs.fontSize + ' / weight ' + cs.fontWeight + ' / ' + cs.color;
+  });
+
+  /* ─── Shared item-list editor builder (used by Tabs + Accordion) ─── */
+  function makeListEditor(opts) {
+    // opts: { state, editorEl, fields: [{key, kind:'text'|'textarea', placeholder}],
+    //         onChange, minItems }
+    function render() {
+      opts.editorEl.innerHTML = '';
+      opts.state.forEach(function (item, i) {
+        var card = document.createElement('div');
+        card.className = 'sg-item-card';
+
+        var head = document.createElement('div');
+        head.className = 'sg-item-card-head';
+        var span = document.createElement('span');
+        span.textContent = 'Item ' + (i + 1);
+        head.appendChild(span);
+        if (opts.state.length > opts.minItems) {
+          var rm = document.createElement('button');
+          rm.type = 'button';
+          rm.className = 'sg-btn sg-btn-ghost sg-btn-sm';
+          rm.textContent = 'Remove';
+          rm.addEventListener('click', function () {
+            opts.state.splice(i, 1);
+            render();
+            opts.onChange();
+          });
+          head.appendChild(rm);
+        }
+        card.appendChild(head);
+
+        opts.fields.forEach(function (f) {
+          var lbl = document.createElement('div');
+          lbl.className = 'sg-label';
+          lbl.textContent = f.label;
+          var field = document.createElement(f.kind === 'textarea' ? 'textarea' : 'input');
+          field.className = 'sg-field';
+          if (f.kind !== 'textarea') field.type = 'text';
+          field.value = item[f.key];
+          field.placeholder = f.placeholder || '';
+          field.style.marginBottom = '8px';
+          field.addEventListener('input', function () {
+            item[f.key] = field.value;
+            opts.onChange();
+          });
+          card.appendChild(lbl);
+          card.appendChild(field);
+        });
+
+        opts.editorEl.appendChild(card);
+      });
+    }
+    return { render: render };
+  }
+
+  /* ─── Tabs ──────────────────────────────────────────────────────── */
+  var tabsState = [
+    { label: 'Books', html: '<p>Describe where to find books on this topic.</p>' },
+    { label: 'Articles', html: '<p>Describe where to find articles on this topic.</p>' },
+    { label: 'Websites', html: '<p>Describe recommended websites on this topic.</p>' }
+  ];
+  var tabsPreview = document.getElementById('tabsPreview');
+  var tabsCodeEl = document.getElementById('tabsCode');
+
+  function renderTabsPreview() {
+    var prefix = 'sg-tabs-preview';
+    var navItems = tabsState.map(function (t, i) {
+      return '<li class="nav-item" role="presentation">' +
+        '<button class="nav-link' + (i === 0 ? ' active' : '') + '" id="' + prefix + '-' + i + '-tab" ' +
+        'data-bs-toggle="tab" data-bs-target="#' + prefix + '-' + i + '" type="button" role="tab" ' +
+        'aria-controls="' + prefix + '-' + i + '" aria-selected="' + (i === 0 ? 'true' : 'false') + '">' +
+        escapeHtml(t.label || 'Tab ' + (i + 1)) + '</button></li>';
+    }).join('');
+    var panes = tabsState.map(function (t, i) {
+      return '<div class="tab-pane fade' + (i === 0 ? ' show active' : '') + '" id="' + prefix + '-' + i + '" ' +
+        'role="tabpanel" aria-labelledby="' + prefix + '-' + i + '-tab" tabindex="0">' + t.html + '</div>';
+    }).join('');
+    tabsPreview.innerHTML =
+      '<ul class="nav nav-tabs" role="tablist">' + navItems + '</ul>' +
+      '<div class="tab-content">' + panes + '</div>';
+  }
+
+  function buildTabsHtml() {
+    var prefix = 'tabs-' + uid();
+    var navItems = tabsState.map(function (t, i) {
+      return '  <li class="nav-item" role="presentation">\n' +
+        '    <button class="nav-link' + (i === 0 ? ' active' : '') + '" id="' + prefix + '-' + i + '-tab"\n' +
+        '            data-bs-toggle="tab" data-bs-target="#' + prefix + '-' + i + '" type="button"\n' +
+        '            role="tab" aria-controls="' + prefix + '-' + i + '" aria-selected="' + (i === 0 ? 'true' : 'false') + '">\n' +
+        '      ' + escapeHtml(t.label || 'Tab ' + (i + 1)) + '\n' +
+        '    </button>\n' +
+        '  </li>';
+    }).join('\n');
+    var panes = tabsState.map(function (t, i) {
+      return '  <div class="tab-pane fade' + (i === 0 ? ' show active' : '') + '" id="' + prefix + '-' + i + '"\n' +
+        '       role="tabpanel" aria-labelledby="' + prefix + '-' + i + '-tab" tabindex="0">\n' +
+        '    ' + t.html + '\n' +
+        '  </div>';
+    }).join('\n');
+    return '<ul class="nav nav-tabs" role="tablist">\n' + navItems + '\n</ul>\n' +
+      '<div class="tab-content">\n' + panes + '\n</div>';
+  }
+
+  var tabsEditor = makeListEditor({
+    state: tabsState,
+    editorEl: document.getElementById('tabsEditor'),
+    fields: [
+      { key: 'label', kind: 'text', label: 'Tab label' },
+      { key: 'html', kind: 'textarea', label: 'Panel content (HTML)' }
+    ],
+    minItems: 1,
+    onChange: renderTabsPreview
+  });
+  tabsEditor.render();
+  renderTabsPreview();
+
+  document.getElementById('tabsAddBtn').addEventListener('click', function () {
+    tabsState.push({ label: 'New Tab', html: '<p>...</p>' });
+    tabsEditor.render();
+    renderTabsPreview();
+  });
+  document.getElementById('tabsShowCodeBtn').addEventListener('click', function () {
+    tabsCodeEl.textContent = buildTabsHtml();
+    tabsCodeEl.classList.toggle('is-shown');
+  });
+  document.getElementById('tabsCopyBtn').addEventListener('click', function (e) {
+    copyText(buildTabsHtml(), e.currentTarget);
+  });
+
+  /* ─── Accordion ─────────────────────────────────────────────────── */
+  var accordionState = [
+    { title: 'How do I request an interlibrary loan?', html: '<p>Explain the process here.</p>' },
+    { title: 'What are the library\'s hours?', html: '<p>Explain or link to current hours here.</p>' }
+  ];
+  var accordionPreview = document.getElementById('accordionPreview');
+  var accordionCodeEl = document.getElementById('accordionCode');
+
+  function renderAccordionPreview() {
+    var prefix = 'sg-accordion-preview';
+    var items = accordionState.map(function (a, i) {
+      return '<div class="accordion-item">' +
+        '<h2 class="accordion-header">' +
+        '<button class="accordion-button' + (i === 0 ? '' : ' collapsed') + '" type="button" ' +
+        'data-bs-toggle="collapse" data-bs-target="#' + prefix + '-' + i + '" ' +
+        'aria-expanded="' + (i === 0 ? 'true' : 'false') + '" aria-controls="' + prefix + '-' + i + '">' +
+        escapeHtml(a.title || 'Item ' + (i + 1)) + '</button></h2>' +
+        '<div id="' + prefix + '-' + i + '" class="accordion-collapse collapse' + (i === 0 ? ' show' : '') + '" ' +
+        'data-bs-parent="#' + prefix + '">' +
+        '<div class="accordion-body">' + a.html + '</div></div></div>';
+    }).join('');
+    accordionPreview.innerHTML = '<div class="accordion" id="' + prefix + '">' + items + '</div>';
+  }
+
+  function buildAccordionHtml() {
+    var prefix = 'accordion-' + uid();
+    var items = accordionState.map(function (a, i) {
+      return '  <div class="accordion-item">\n' +
+        '    <h2 class="accordion-header">\n' +
+        '      <button class="accordion-button' + (i === 0 ? '' : ' collapsed') + '" type="button"\n' +
+        '              data-bs-toggle="collapse" data-bs-target="#' + prefix + '-' + i + '"\n' +
+        '              aria-expanded="' + (i === 0 ? 'true' : 'false') + '" aria-controls="' + prefix + '-' + i + '">\n' +
+        '        ' + escapeHtml(a.title || 'Item ' + (i + 1)) + '\n' +
+        '      </button>\n' +
+        '    </h2>\n' +
+        '    <div id="' + prefix + '-' + i + '" class="accordion-collapse collapse' + (i === 0 ? ' show' : '') + '"\n' +
+        '         data-bs-parent="#' + prefix + '">\n' +
+        '      <div class="accordion-body">\n' +
+        '        ' + a.html + '\n' +
+        '      </div>\n' +
+        '    </div>\n' +
+        '  </div>';
+    }).join('\n');
+    return '<div class="accordion" id="' + prefix + '">\n' + items + '\n</div>';
+  }
+
+  var accordionEditor = makeListEditor({
+    state: accordionState,
+    editorEl: document.getElementById('accordionEditor'),
+    fields: [
+      { key: 'title', kind: 'text', label: 'Item title' },
+      { key: 'html', kind: 'textarea', label: 'Item body (HTML)' }
+    ],
+    minItems: 1,
+    onChange: renderAccordionPreview
+  });
+  accordionEditor.render();
+  renderAccordionPreview();
+
+  document.getElementById('accordionAddBtn').addEventListener('click', function () {
+    accordionState.push({ title: 'New Item', html: '<p>...</p>' });
+    accordionEditor.render();
+    renderAccordionPreview();
+  });
+  document.getElementById('accordionShowCodeBtn').addEventListener('click', function () {
+    accordionCodeEl.textContent = buildAccordionHtml();
+    accordionCodeEl.classList.toggle('is-shown');
+  });
+  document.getElementById('accordionCopyBtn').addEventListener('click', function (e) {
+    copyText(buildAccordionHtml(), e.currentTarget);
+  });
+
+})();
+</script>
+
+</body>
+</html>
