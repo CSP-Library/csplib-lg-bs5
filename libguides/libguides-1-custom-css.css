@@ -1,6 +1,6 @@
 /* ═══════════════════════════════════════════════════════════════════
    CSP LIBRARY — CUSTOM CSS
-   Version: 29
+   Version: 30
 
    DEV PHASE (current): this file is NOT pasted into Admin. It's loaded
    directly via <link> in libguides-3-header-html.html from this repo's
@@ -1263,6 +1263,56 @@ body.s-lg-guide-body .alert-success {
   color: #0e4f27;
 }
 body.s-lg-guide-body .alert-success > .bi { color: #1e8449; }
+
+/* ═══════════════════════════════════════════════════════════════════
+   IN-CONTENT BUTTONS — Bootstrap's stock .btn/.btn-* (standard base
+   class, so sizing/spacing/disabled-state utilities all still apply),
+   lightly recolored for brand consistency, same approach as Alerts
+   above. .btn-accent is the one non-stock variant name (gold, no
+   Bootstrap default to override) -- everything else keeps Bootstrap's
+   own naming. Offered as a copy-paste snippet from
+   tools/style-guide.html for a single link styled as a button.
+   Scoped to body.s-lg-guide-body like the rest of guide-content
+   styling.
+   ═══════════════════════════════════════════════════════════════════ */
+body.s-lg-guide-body .btn {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: .875rem;
+  letter-spacing: .02em;
+  padding: 10px 22px;
+  border-radius: 6px;
+}
+body.s-lg-guide-body .btn-primary {
+  background: var(--csp-navy);
+  border-color: var(--csp-navy);
+  color: #fff;
+}
+body.s-lg-guide-body .btn-primary:hover {
+  background: var(--csp-navy-80);
+  border-color: var(--csp-navy-80);
+  color: #fff;
+}
+body.s-lg-guide-body .btn-accent {
+  background: var(--csp-gold);
+  border-color: var(--csp-gold);
+  color: var(--csp-navy);
+}
+body.s-lg-guide-body .btn-accent:hover {
+  background: var(--csp-gold-hover);
+  border-color: var(--csp-gold-hover);
+  color: var(--csp-navy);
+}
+body.s-lg-guide-body .btn-outline-secondary {
+  background: transparent;
+  border-color: var(--csp-navy-20);
+  color: var(--csp-navy);
+}
+body.s-lg-guide-body .btn-outline-secondary:hover {
+  background: var(--csp-gray);
+  border-color: var(--csp-navy-80);
+  color: var(--csp-navy);
+}
 
 /* ═══════════════════════════════════════════════════════════════════
    GUIDE SIDEBAR NAV (#s-lg-guide-tabs) — USWDS-inspired reskin of

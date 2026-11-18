@@ -142,6 +142,7 @@
   <a href="#headings">Headings</a>
   <a href="#box-title">Box Titles</a>
   <a href="#alerts">Alerts</a>
+  <a href="#buttons">Buttons</a>
   <a href="#feature">Feature Cards</a>
   <a href="#tabs">Tabs</a>
   <a href="#accordion">Accordion</a>
@@ -205,6 +206,17 @@
       Bootstrap's flat pastel block, matching the rest of the site's accent language.
     </p>
     <div id="alertsList"></div>
+  </section>
+
+  <!-- ═══════════════════ BUTTONS ═══════════════════ -->
+  <section class="sg-section" id="buttons">
+    <h2>Buttons</h2>
+    <p class="sg-desc">
+      A link styled as a button — for "fill out this form" / "start a chat" / "view the database" type calls to
+      action. Standard Bootstrap <code>.btn</code> base class, lightly recolored for brand consistency, same approach
+      as Alerts above. Set the label and the URL it should open; that's the whole job of this one.
+    </p>
+    <div id="buttonsList"></div>
   </section>
 
   <!-- ═══════════════════ FEATURE CARDS ═══════════════════ -->
@@ -531,6 +543,79 @@
     }
     return { render: render };
   }
+
+  /* ─── Buttons ───────────────────────────────────────────────────── */
+  var BUTTON_VARIANTS = [
+    { key: 'primary', label: 'Primary', text: 'Make an Appointment', url: 'https://library.csp.edu/services/appointment' },
+    { key: 'accent', label: 'Accent', text: 'Chat Now', url: 'https://library.csp.edu/chat' },
+    { key: 'outline-secondary', label: 'Outline / secondary', text: 'Learn More', url: 'https://library.csp.edu/about' }
+  ];
+  var buttonsList = document.getElementById('buttonsList');
+
+  function buildButtonHtml(variant, text, url) {
+    return '<a class="btn btn-' + variant.key + '" href="' + escapeHtml(url || '#') + '">' + escapeHtml(text || variant.label) + '</a>';
+  }
+
+  BUTTON_VARIANTS.forEach(function (variant) {
+    var row = document.createElement('div');
+    row.className = 'sg-row';
+    row.style.marginBottom = '18px';
+    row.style.alignItems = 'center';
+
+    var previewCol = document.createElement('div');
+    var label = document.createElement('div');
+    label.className = 'sg-label';
+    label.textContent = variant.label;
+    var preview = document.createElement('div');
+    preview.className = 'sg-preview sg-preview-plain';
+    previewCol.appendChild(label);
+    previewCol.appendChild(preview);
+
+    var editCol = document.createElement('div');
+    var textLabel = document.createElement('div');
+    textLabel.className = 'sg-label';
+    textLabel.textContent = 'Button text';
+    var textInput = document.createElement('input');
+    textInput.type = 'text';
+    textInput.className = 'sg-field';
+    textInput.value = variant.text;
+    textInput.style.marginBottom = '8px';
+
+    var urlLabel = document.createElement('div');
+    urlLabel.className = 'sg-label';
+    urlLabel.textContent = 'URL it opens';
+    var urlInput = document.createElement('input');
+    urlInput.type = 'url';
+    urlInput.className = 'sg-field';
+    urlInput.value = variant.url;
+    urlInput.style.marginBottom = '8px';
+
+    function renderButtonPreview() {
+      preview.innerHTML = buildButtonHtml(variant, textInput.value, urlInput.value);
+    }
+    textInput.addEventListener('input', renderButtonPreview);
+    urlInput.addEventListener('input', renderButtonPreview);
+
+    var copyBtn = document.createElement('button');
+    copyBtn.type = 'button';
+    copyBtn.className = 'sg-btn sg-btn-primary sg-btn-sm';
+    copyBtn.textContent = 'Copy HTML';
+    copyBtn.addEventListener('click', function () {
+      copyText(buildButtonHtml(variant, textInput.value, urlInput.value), copyBtn);
+    });
+
+    editCol.appendChild(textLabel);
+    editCol.appendChild(textInput);
+    editCol.appendChild(urlLabel);
+    editCol.appendChild(urlInput);
+    editCol.appendChild(copyBtn);
+
+    row.appendChild(previewCol);
+    row.appendChild(editCol);
+    buttonsList.appendChild(row);
+
+    renderButtonPreview();
+  });
 
   /* ─── Feature Cards ─────────────────────────────────────────────── */
   var featureState = [
