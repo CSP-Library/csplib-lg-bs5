@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Brightspace embed preview — dev tool</title>
+
+<!-- NOT a LibGuides paste target. A standalone dev tool: loads any
+     library.csp.edu guide URL into a real <iframe>, at a chosen
+     width, so Brightspace/D2L's narrow-iframe embedding (grid
+     stacking, the Brightspace-only sidebar-content relocation in
+     libguides-2-custom-js.js) can be checked without needing an
+     actual Brightspace course. Because the guide genuinely loads in
+     an <iframe> here, window.self !== window.top is true inside it
+     exactly as it would be in Brightspace — no separate "simulate
+     embedding" flag needed, this *is* embedding. -->
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<style>
+  :root { --bar-bg: #1a2733; --bar-fg: #fff; }
+  body { margin: 0; background: #e9edf0; font-family: system-ui, sans-serif; }
+
+  .toolbar {
+    background: var(--bar-bg); color: var(--bar-fg);
+    padding: 12px 16px; display: flex; flex-wrap: wrap;
+    gap: 10px; align-items: center; position: sticky; top: 0; z-index: 10;
+  }
+  .toolbar label { font-size: .8125rem; color: #b9c4cd; white-space: nowrap; }
+  .toolbar input[type="url"] {
+    flex: 1 1 320px; min-width: 220px;
+  }
+  .toolbar input[type="number"] { width: 90px; }
+  .width-presets { display: flex; gap: 4px; flex-wrap: wrap; }
+  .width-presets button.active { background: #0d6efd; color: #fff; border-color: #0d6efd; }
+
+  .stage {
+    padding: 24px 16px 48px; display: flex; justify-content: center;
+  }
+  .frame-wrap {
+    background: #fff; border: 1px solid #c7d0d6; border-radius: 4px;
+    resize: horizontal; overflow: auto; max-width: 100%;
+    box-shadow: 0 2px 10px rgba(0,0,0,.08);
+  }
+  .frame-wrap-label {
+    font-size: .75rem; color: #5a6b78; text-align: center; padding: 6px 0 0;
+  }
+  iframe {
+    display: block; width: 100%; height: 80vh; border: 0;
+  }
+  .empty-state {
+    text-align: center; color: #5a6b78; padding: 80px 20px; font-size: .9375rem;
+  }
+</style>
+</head>
+<body>
+
+<div class="toolbar">
+  <label for="guideUrl">Guide URL</label>
+  <input type="url" id="guideUrl" class="form-control form-control-sm"
+         placeholder="https://library.csp.edu/mba?bs5=1">
+  <button type="button" id="loadBtn" class="btn btn-sm btn-primary">Load</button>
+
+  <div class="width-presets" role="group" aria-label="Iframe width presets">
+    <button type="button" class="btn btn-sm btn-outline-light" data-width="400">400px</button>
+    <button type="button" class="btn btn-sm btn-outline-light" data-width="600">600px</button>
+    <button type="button" class="btn btn-sm btn-outline-light" data-width="768">768px (grid stack)</button>
+    <button type="button" class="btn btn-sm btn-outline-light" data-width="992">992px (nav collapse)</button>
+    <button type="button" class="btn btn-sm btn-outline-light" data-width="1200">1200px</button>
+  </div>
+  <label for="widthInput">Width (px)</label>
+  <input type="number" id="widthInput" class="form-control form-control-sm" min="280" max="2000" step="10">
+</div>
+
+<div class="stage">
+  <div>
+    <div class="frame-wrap" id="frameWrap">
+      <div class="empty-state" id="emptyState">Enter a library.csp.edu guide URL above and click Load.</div>
+    </div>
+    <div class="frame-wrap-label" id="widthLabel"></div>
+  </div>
+</div>
+
+<script>
+(function () {
+  var urlInput = document.getElementById('guideUrl');
+  var loadBtn = document.getElementById('loadBtn');
+  var widthInput = document.getElementById('widthInput');
+  var frameWrap = document.getElementById('frameWrap');
+  var widthLabel = document.getElementById('widthLabel');
+  var presetBtns = document.querySelectorAll('.width-presets button');
+  var DEFAULT_WIDTH = 768;
+
+  function storage() {
+    try { return window.localStorage; } catch (e) { return null; }
+  }
+
+  function setWidth(px) {
+    frameWrap.style.width = px + 'px';
+    widthInput.value = px;
+    widthLabel.textContent = px + 'px wide';
+    presetBtns.forEach(function (b) {
+      b.classList.toggle('active', Number(b.dataset.width) === px);
+    });
+    var s = storage();
+    if (s) { try { s.setItem('csp-bsp-width', px); } catch (e) {} }
+  }
+
+  function load(url) {
+    if (!url) return;
+    var iframe = frameWrap.querySelector('iframe');
+    if (!iframe) {
+      frameWrap.innerHTML = '';
+      iframe = document.createElement('iframe');
+      frameWrap.appendChild(iframe);
+    }
+    iframe.src = url;
+    var s = storage();
+    if (s) { try { s.setItem('csp-bsp-url', url); } catch (e) {} }
+  }
+
+  loadBtn.addEventListener('click', function () { load(urlInput.value.trim()); });
+  urlInput.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter') load(urlInput.value.trim());
+  });
+
+  widthInput.addEventListener('input', function () {
+    var px = Number(widthInput.value) || DEFAULT_WIDTH;
+    setWidth(px);
+  });
+
+  presetBtns.forEach(function (btn) {
+    btn.addEventListener('click', function () { setWidth(Number(btn.dataset.width)); });
+  });
+
+  // Keep the width label in sync with manual drag-resize (.frame-wrap has
+  // CSS `resize: horizontal`), not just the preset buttons/number input.
+  if (window.ResizeObserver) {
+    new ResizeObserver(function (entries) {
+      var w = Math.round(entries[0].contentRect.width);
+      widthInput.value = w;
+      widthLabel.textContent = w + 'px wide';
+      presetBtns.forEach(function (b) {
+        b.classList.toggle('active', Number(b.dataset.width) === w);
+      });
+    }).observe(frameWrap);
+  }
+
+  // Restore last session's URL/width — a per-browser convenience only,
+  // never relied on for anything beyond saving a re-type.
+  var s = storage();
+  var savedUrl = s ? s.getItem('csp-bsp-url') : null;
+  var savedWidth = s ? Number(s.getItem('csp-bsp-width')) : null;
+  setWidth(savedWidth || DEFAULT_WIDTH);
+  if (savedUrl) {
+    urlInput.value = savedUrl;
+    load(savedUrl);
+  }
+})();
+</script>
+
+</body>
+</html>
