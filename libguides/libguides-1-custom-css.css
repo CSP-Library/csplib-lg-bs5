@@ -1,6 +1,6 @@
 /* ═══════════════════════════════════════════════════════════════════
    CSP LIBRARY — CUSTOM CSS
-   Version: 25
+   Version: 26
 
    DEV PHASE (current): this file is NOT pasted into Admin. It's loaded
    directly via <link> in libguides-3-header-html.html from this repo's
@@ -516,6 +516,22 @@ body:not(:has(.s-lg-box-wrapper-hero)) #s-lg-guide-desc-container {
    case above) since it's a no-op on hero pages anyway -- #s-lg-guide-header
    is already hidden there, this just covers it directly too. */
 #s-lg-guide-header-search { display: none !important; }
+
+/* ── Brightspace/D2L iframe embedding ────────────────────────────────
+   libguides-2-custom-js.js adds .csp-embedded to <html> when it
+   detects real iframe embedding (window.self !== window.top) -- the
+   Brightspace case, not just a narrow browser window.
+
+   Bootstrap's .container snaps to quantized breakpoint max-widths
+   (540/720/960/1140/1320px per the default grid), centering whatever
+   is left over as auto side-margins. Confirmed live (2026-11): at a
+   sub-768px iframe width that lands in the 576-767.98px bracket,
+   .container caps at 540px, wasting over 100px of margin on each
+   side -- fine on an ordinary desktop window, wasteful when every
+   pixel of a cramped LMS iframe counts. Scoped to .csp-embedded only,
+   so the normal (unembedded) site keeps Bootstrap's default
+   breakpoint-centered look. */
+html.csp-embedded .container { max-width: 100% !important; }
 
 /* ── Suppress default LibGuides navigation and footer ───────────── */
 #s-lib-public-nav    { display: none !important; }
