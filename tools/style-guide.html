@@ -141,6 +141,8 @@
   <strong>CSP Library · Content Style Guide</strong>
   <a href="#headings">Headings</a>
   <a href="#box-title">Box Titles</a>
+  <a href="#alerts">Alerts</a>
+  <a href="#feature">Feature Cards</a>
   <a href="#tabs">Tabs</a>
   <a href="#accordion">Accordion</a>
 </div>
@@ -162,8 +164,10 @@
     <h2>Headings</h2>
     <p class="sg-desc">
       Guide content headings follow one site-wide baseline (Bootstrap 5's own default scale), regardless of which page
-      you're on. <strong>H1 is reserved for the guide's own title</strong>, set automatically by LibGuides — don't add
-      another one inside your content. Start your own content headings at H2.
+      you're on. <strong>H1 is reserved for the guide's own title</strong>, set automatically by LibGuides.
+      <strong>H2 is effectively reserved too</strong> — it's the same size/weight/color a box's own Title field
+      renders at (see Box Titles below), so an H2 typed into box content would look identical to a real box title and
+      read as confusing/duplicated. Start your own content headings at H3.
     </p>
     <div id="headingsList"></div>
   </section>
@@ -173,7 +177,8 @@
     <h2>Box Titles</h2>
     <p class="sg-desc">
       Set via each box's own <strong>Title</strong> field in LibGuides Admin — not pasted HTML, so there's no snippet to
-      copy here. Shown for reference so you know what it'll look like; it follows the same size/weight/color as an H2.
+      copy here. Shown for reference so you know what it'll look like; it follows the same size/weight/color as an H2
+      (which is why H2 is reserved — see note above).
     </p>
     <div class="sg-preview">
       <div class="s-lib-box s-lib-box-std">
@@ -184,6 +189,44 @@
       </div>
     </div>
     <div class="sg-note" id="boxTitleComputed"></div>
+    <div class="sg-note">
+      <strong>Font note:</strong> this still renders in the site-wide body font (Poppins), not the brand display
+      font used in nav/CTAs/headings elsewhere — a deliberate, not-yet-scheduled decision, not a bug in this page.
+      Confirmed (2026-11) this matches live production exactly.
+    </div>
+  </section>
+
+  <!-- ═══════════════════ ALERTS ═══════════════════ -->
+  <section class="sg-section" id="alerts">
+    <h2>Alerts</h2>
+    <p class="sg-desc">
+      For a single callout — a heads-up, a caution, a confirmation. Standard Bootstrap <code>.alert</code> component
+      and variant classes (so any Bootstrap reference applies), with a left accent border and icon instead of
+      Bootstrap's flat pastel block, matching the rest of the site's accent language.
+    </p>
+    <div id="alertsList"></div>
+  </section>
+
+  <!-- ═══════════════════ FEATURE CARDS ═══════════════════ -->
+  <section class="sg-section" id="feature">
+    <h2>Feature Cards</h2>
+    <p class="sg-desc">
+      Based on the "Core Services" cards on the library homepage — an icon, a title, a short description, and an
+      optional call-to-action button. Good for highlighting 2-4 services or resources side by side.
+    </p>
+
+    <div class="sg-label">Live preview</div>
+    <div class="sg-preview" id="featurePreview"></div>
+
+    <div class="sg-label" style="margin-top:20px">Edit cards</div>
+    <div id="featureEditor"></div>
+    <button type="button" class="sg-btn" id="featureAddBtn">+ Add card</button>
+
+    <div class="sg-copy-bar">
+      <button type="button" class="sg-btn" id="featureShowCodeBtn">Show HTML</button>
+      <button type="button" class="sg-btn sg-btn-primary" id="featureCopyBtn">Copy HTML</button>
+    </div>
+    <pre class="sg-code" id="featureCode"></pre>
   </section>
 
   <!-- ═══════════════════ TABS ═══════════════════ -->
@@ -260,11 +303,15 @@
   /* ─── Headings ──────────────────────────────────────────────────── */
   var HEADING_SAMPLE = {
     h1: 'Guide Title (reserved — set by LibGuides)',
-    h2: 'A Major Section',
-    h3: 'A Subsection',
-    h4: 'A Smaller Heading',
-    h5: 'An Even Smaller Heading',
+    h2: 'Same size/weight as a Box Title',
+    h3: 'A Major Section',
+    h4: 'A Subsection',
+    h5: 'A Smaller Heading',
     h6: 'The Smallest Heading'
+  };
+  var RESERVED_NOTE = {
+    h1: '<strong>No snippet here.</strong> This level is set automatically by the guide\'s own title — nothing to paste.',
+    h2: '<strong>No snippet here.</strong> This level renders identically to a box\'s own Title field (see Box Titles below) — using it inside content would look like a duplicate box title. Start your own headings at H3.'
   };
   var headingsList = document.getElementById('headingsList');
 
@@ -273,10 +320,11 @@
     row.className = 'sg-row';
     row.style.marginBottom = '22px';
 
+    var isReserved = !!RESERVED_NOTE[tag];
     var previewCol = document.createElement('div');
     var label = document.createElement('div');
     label.className = 'sg-label';
-    label.textContent = tag.toUpperCase() + (tag === 'h1' ? ' — reference only' : '');
+    label.textContent = tag.toUpperCase() + (isReserved ? ' — reference only' : '');
     var preview = document.createElement('div');
     preview.className = 'sg-preview sg-preview-plain';
     var headingEl = document.createElement(tag);
@@ -289,7 +337,7 @@
     previewCol.appendChild(computedNote);
 
     var editCol = document.createElement('div');
-    if (tag !== 'h1') {
+    if (!isReserved) {
       var editLabel = document.createElement('div');
       editLabel.className = 'sg-label';
       editLabel.textContent = 'Your text';
@@ -315,7 +363,7 @@
     } else {
       var note = document.createElement('div');
       note.className = 'sg-note';
-      note.innerHTML = '<strong>No snippet here.</strong> This level is set automatically by the guide\'s own title — nothing to paste.';
+      note.innerHTML = RESERVED_NOTE[tag];
       editCol.appendChild(note);
     }
 
@@ -342,7 +390,85 @@
       '<strong>Resolved style:</strong> ' + cs.fontSize + ' / weight ' + cs.fontWeight + ' / ' + cs.color;
   });
 
-  /* ─── Shared item-list editor builder (used by Tabs + Accordion) ─── */
+  /* ─── Alerts ────────────────────────────────────────────────────── */
+  var ALERT_VARIANTS = [
+    { key: 'info', icon: 'bi-info-circle', heading: 'Good to know', body: 'A neutral note or tip for the reader.' },
+    { key: 'warning', icon: 'bi-exclamation-triangle', heading: 'Heads up', body: 'Something the reader should be careful about or double-check.' },
+    { key: 'danger', icon: 'bi-x-octagon', heading: 'Important', body: 'Something urgent — a deadline, a known issue, a hard requirement.' },
+    { key: 'success', icon: 'bi-check-circle', heading: 'All set', body: 'A confirmation, or that a step is complete.' }
+  ];
+  var alertsList = document.getElementById('alertsList');
+
+  function buildAlertHtml(variant, heading, body) {
+    return '<div class="alert alert-' + variant.key + '" role="alert">\n' +
+      '  <i class="bi ' + variant.icon + '" aria-hidden="true"></i>\n' +
+      '  <div>\n' +
+      (heading ? '    <strong class="alert-heading">' + escapeHtml(heading) + '</strong>\n' : '') +
+      '    ' + body + '\n' +
+      '  </div>\n' +
+      '</div>';
+  }
+
+  ALERT_VARIANTS.forEach(function (variant) {
+    var row = document.createElement('div');
+    row.className = 'sg-row';
+    row.style.marginBottom = '18px';
+
+    var previewCol = document.createElement('div');
+    var label = document.createElement('div');
+    label.className = 'sg-label';
+    label.textContent = variant.key;
+    var preview = document.createElement('div');
+    preview.className = 'sg-preview sg-preview-plain';
+    previewCol.appendChild(label);
+    previewCol.appendChild(preview);
+
+    var editCol = document.createElement('div');
+    var headLabel = document.createElement('div');
+    headLabel.className = 'sg-label';
+    headLabel.textContent = 'Heading (optional)';
+    var headInput = document.createElement('input');
+    headInput.type = 'text';
+    headInput.className = 'sg-field';
+    headInput.value = variant.heading;
+    headInput.style.marginBottom = '8px';
+
+    var bodyLabel = document.createElement('div');
+    bodyLabel.className = 'sg-label';
+    bodyLabel.textContent = 'Body (HTML)';
+    var bodyInput = document.createElement('textarea');
+    bodyInput.className = 'sg-field';
+    bodyInput.value = variant.body;
+    bodyInput.style.marginBottom = '8px';
+
+    function renderAlertPreview() {
+      preview.innerHTML = buildAlertHtml(variant, headInput.value, bodyInput.value);
+    }
+    headInput.addEventListener('input', renderAlertPreview);
+    bodyInput.addEventListener('input', renderAlertPreview);
+
+    var copyBtn = document.createElement('button');
+    copyBtn.type = 'button';
+    copyBtn.className = 'sg-btn sg-btn-primary sg-btn-sm';
+    copyBtn.textContent = 'Copy HTML';
+    copyBtn.addEventListener('click', function () {
+      copyText(buildAlertHtml(variant, headInput.value, bodyInput.value), copyBtn);
+    });
+
+    editCol.appendChild(headLabel);
+    editCol.appendChild(headInput);
+    editCol.appendChild(bodyLabel);
+    editCol.appendChild(bodyInput);
+    editCol.appendChild(copyBtn);
+
+    row.appendChild(previewCol);
+    row.appendChild(editCol);
+    alertsList.appendChild(row);
+
+    renderAlertPreview();
+  });
+
+  /* ─── Shared item-list editor builder (used by Tabs + Accordion + Feature Cards) ─── */
   function makeListEditor(opts) {
     // opts: { state, editorEl, fields: [{key, kind:'text'|'textarea', placeholder}],
     //         onChange, minItems }
@@ -375,13 +501,24 @@
           var lbl = document.createElement('div');
           lbl.className = 'sg-label';
           lbl.textContent = f.label;
-          var field = document.createElement(f.kind === 'textarea' ? 'textarea' : 'input');
+          var field;
+          if (f.kind === 'select') {
+            field = document.createElement('select');
+            f.options.forEach(function (optVal) {
+              var opt = document.createElement('option');
+              opt.value = optVal;
+              opt.textContent = optVal;
+              field.appendChild(opt);
+            });
+          } else {
+            field = document.createElement(f.kind === 'textarea' ? 'textarea' : 'input');
+            if (f.kind !== 'textarea') field.type = 'text';
+            field.placeholder = f.placeholder || '';
+          }
           field.className = 'sg-field';
-          if (f.kind !== 'textarea') field.type = 'text';
           field.value = item[f.key];
-          field.placeholder = f.placeholder || '';
           field.style.marginBottom = '8px';
-          field.addEventListener('input', function () {
+          field.addEventListener(f.kind === 'select' ? 'change' : 'input', function () {
             item[f.key] = field.value;
             opts.onChange();
           });
@@ -394,6 +531,69 @@
     }
     return { render: render };
   }
+
+  /* ─── Feature Cards ─────────────────────────────────────────────── */
+  var featureState = [
+    { icon: 'bi-chat-dots', accent: 'teal', title: 'Research Assistance', desc: 'Help finding, evaluating, and citing sources from a professional librarian.', ctaLabel: 'Chat Now', ctaHref: 'https://library.csp.edu/chat' },
+    { icon: 'bi-mortarboard', accent: 'gold', title: 'Tutoring Support', desc: 'Course-specific tutoring from peer tutors and an online platform.', ctaLabel: 'Get Tutoring Help', ctaHref: 'https://library.csp.edu/tutoring-support' }
+  ];
+  var featurePreview = document.getElementById('featurePreview');
+  var featureCodeEl = document.getElementById('featureCode');
+
+  function featureCardHtml(f, indent) {
+    var pad = indent || '';
+    var cta = f.ctaLabel && f.ctaHref
+      ? pad + '  <a class="service-cta cta-' + f.accent + '" href="' + escapeHtml(f.ctaHref) + '">\n' +
+        pad + '    <i class="bi ' + f.icon + '" aria-hidden="true"></i>' + escapeHtml(f.ctaLabel) + '\n' +
+        pad + '  </a>\n'
+      : '';
+    return pad + '<article class="service-card">\n' +
+      pad + '  <div class="service-icon icon-' + f.accent + '" aria-hidden="true"><i class="bi ' + f.icon + '"></i></div>\n' +
+      pad + '  <h3 class="service-title">' + escapeHtml(f.title || 'Title') + '</h3>\n' +
+      pad + '  <p class="service-desc">' + escapeHtml(f.desc || '') + '</p>\n' +
+      cta +
+      pad + '</article>';
+  }
+
+  function renderFeaturePreview() {
+    featurePreview.innerHTML = '<div class="services-grid">' +
+      featureState.map(function (f) { return featureCardHtml(f); }).join('') + '</div>';
+  }
+  function buildFeatureHtml() {
+    return '<div class="services-grid">\n' +
+      featureState.map(function (f) { return featureCardHtml(f, '  '); }).join('\n') +
+      '\n</div>';
+  }
+
+  var featureEditor = makeListEditor({
+    state: featureState,
+    editorEl: document.getElementById('featureEditor'),
+    fields: [
+      { key: 'icon', kind: 'text', label: 'Bootstrap Icon class (e.g. bi-chat-dots)' },
+      { key: 'accent', kind: 'select', label: 'Accent color', options: ['teal', 'gold', 'navy'] },
+      { key: 'title', kind: 'text', label: 'Title' },
+      { key: 'desc', kind: 'textarea', label: 'Description' },
+      { key: 'ctaLabel', kind: 'text', label: 'Button label (optional)' },
+      { key: 'ctaHref', kind: 'text', label: 'Button link (optional)' }
+    ],
+    minItems: 1,
+    onChange: renderFeaturePreview
+  });
+  featureEditor.render();
+  renderFeaturePreview();
+
+  document.getElementById('featureAddBtn').addEventListener('click', function () {
+    featureState.push({ icon: 'bi-star', accent: 'navy', title: 'New Card', desc: 'Description here.', ctaLabel: '', ctaHref: '' });
+    featureEditor.render();
+    renderFeaturePreview();
+  });
+  document.getElementById('featureShowCodeBtn').addEventListener('click', function () {
+    featureCodeEl.textContent = buildFeatureHtml();
+    featureCodeEl.classList.toggle('is-shown');
+  });
+  document.getElementById('featureCopyBtn').addEventListener('click', function (e) {
+    copyText(buildFeatureHtml(), e.currentTarget);
+  });
 
   /* ─── Tabs ──────────────────────────────────────────────────────── */
   var tabsState = [

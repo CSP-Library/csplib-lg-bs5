@@ -1,6 +1,6 @@
 /* ═══════════════════════════════════════════════════════════════════
    CSP LIBRARY — CUSTOM CSS
-   Version: 28
+   Version: 29
 
    DEV PHASE (current): this file is NOT pasted into Admin. It's loaded
    directly via <link> in libguides-3-header-html.html from this repo's
@@ -1205,6 +1205,64 @@ body.s-lg-guide-body .accordion-button:focus-visible {
   outline-offset: -2px;
   box-shadow: none !important;
 }
+
+/* ═══════════════════════════════════════════════════════════════════
+   IN-CONTENT ALERTS — Bootstrap's stock .alert/.alert-* (standard
+   classes, so any Bootstrap reference/docs still apply) with small
+   brand-consistent refinements: a left accent border instead of a
+   flat pastel block, matching the subtle-accent language used
+   elsewhere on the site (sidebar nav active state, hero underline),
+   plus a leading icon and a bold .alert-heading lead-in. Offered as a
+   copy-paste snippet from tools/style-guide.html. Scoped to
+   body.s-lg-guide-body like the rest of guide-content styling.
+   ═══════════════════════════════════════════════════════════════════ */
+body.s-lg-guide-body .alert {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  border: none;
+  border-left: 4px solid;
+  border-radius: 6px;
+  padding: 14px 16px;
+  font-size: .9375rem;
+  line-height: 1.5;
+}
+body.s-lg-guide-body .alert > .bi {
+  font-size: 1.125rem;
+  line-height: 1;
+  margin-top: .15em;
+  flex-shrink: 0;
+}
+body.s-lg-guide-body .alert-heading {
+  display: block;
+  font-family: var(--font-display);
+  font-weight: 700;
+  margin-bottom: 2px;
+}
+body.s-lg-guide-body .alert-info {
+  background: #eaf6f6;
+  border-left-color: var(--csp-teal);
+  color: #0d4a47;
+}
+body.s-lg-guide-body .alert-info > .bi { color: var(--csp-teal); }
+body.s-lg-guide-body .alert-warning {
+  background: #fdf6e3;
+  border-left-color: var(--csp-gold);
+  color: #6b4e00;
+}
+body.s-lg-guide-body .alert-warning > .bi { color: #9a7300; }
+body.s-lg-guide-body .alert-danger {
+  background: #fdecea;
+  border-left-color: #c0392b;
+  color: #7a241c;
+}
+body.s-lg-guide-body .alert-danger > .bi { color: #c0392b; }
+body.s-lg-guide-body .alert-success {
+  background: #eaf7ee;
+  border-left-color: #1e8449;
+  color: #0e4f27;
+}
+body.s-lg-guide-body .alert-success > .bi { color: #1e8449; }
 
 /* ═══════════════════════════════════════════════════════════════════
    GUIDE SIDEBAR NAV (#s-lg-guide-tabs) — USWDS-inspired reskin of
