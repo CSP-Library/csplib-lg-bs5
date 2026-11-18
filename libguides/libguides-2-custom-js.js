@@ -2,7 +2,7 @@
 /* ═══════════════════════════════════════════════════════════════════
    CSP LIBRARY — CUSTOM JS
    LibGuides Admin → System Settings → Look & Feel → Custom JS/CSS → Custom JS
-   Version: 3
+   Version: 4
 
    INSTRUCTIONS:
    Paste the entire contents of this file into the Custom JS field,
@@ -185,6 +185,13 @@ document.addEventListener('DOMContentLoaded', function () {
       '<svg class="csp-guide-nav-caret" viewBox="0 0 14 14" fill="none" aria-hidden="true">' +
       '<path d="M2.5 5l4.5 4.5L11.5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';
     navUl.parentNode.insertBefore(btn, navUl);
+    /* Only now does the CSS's mobile max-height collapse actually
+       apply (see "Mobile collapse" in libguides-1-custom-css.css) --
+       the button that can open it again exists at this exact point
+       and not a moment before. Without this class present, the list
+       stays fully visible on mobile regardless of viewport width,
+       which is the deliberate fallback, not a bug. */
+    navUl.classList.add('csp-js-collapsible');
 
     btn.addEventListener('click', function () {
       var isOpen = navUl.classList.toggle('is-open');

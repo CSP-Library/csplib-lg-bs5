@@ -1,6 +1,6 @@
 /* ═══════════════════════════════════════════════════════════════════
    CSP LIBRARY — CUSTOM CSS
-   Version: 22
+   Version: 23
 
    DEV PHASE (current): this file is NOT pasted into Admin. It's loaded
    directly via <link> in libguides-3-header-html.html from this repo's
@@ -1151,9 +1151,20 @@ body.s-lg-guide-body h6:not([class]) {
    The toggle button itself (.csp-guide-nav-toggle) doesn't exist in
    LibGuides' markup -- created by JS (libguides-2-custom-js.js) since
    it needs the current page's own name as its label, which CSS can't
-   read. Hidden by default (desktop); shown and made functional only
-   below the breakpoint. The nav list collapses via max-height, same
-   pattern as the subsite nav's own mobile menu elsewhere in this file. */
+   read.
+
+   IMPORTANT: the actual collapsing (max-height:0) is gated behind
+   .csp-js-collapsible, a class JS adds to the nav list only once it
+   has successfully built the toggle button -- confirmed live (2026-11)
+   that collapsing by viewport width alone, with no such gate, breaks
+   the page for real mobile visitors during the window between this
+   CSS going live (instant, via Amplify) and the JS being re-pasted
+   into Admin (manual, can lag by however long that takes): the nav
+   ends up permanently shut with nothing on the page able to open it.
+   Without JS (or before it's pasted), the list now stays fully
+   visible on mobile -- long, same as it's always been, but never
+   inaccessible. Don't remove this gate to "simplify" the CSS; it's
+   the fallback, not incidental. */
 .csp-guide-nav-toggle { display: none; }
 @media (max-width: 991.98px) {
   .csp-guide-nav-toggle {
@@ -1178,13 +1189,13 @@ body.s-lg-guide-body h6:not([class]) {
   .csp-guide-nav-toggle[aria-expanded="true"] .csp-guide-nav-caret {
     transform: rotate(180deg);
   }
-  #s-lg-guide-tabs > .nav.nav-pills {
+  #s-lg-guide-tabs > .nav.nav-pills.csp-js-collapsible {
     max-height: 0;
     overflow: hidden;
     transition: max-height .25s ease;
     border-radius: 0 0 8px 8px !important;
   }
-  #s-lg-guide-tabs > .nav.nav-pills.is-open {
+  #s-lg-guide-tabs > .nav.nav-pills.csp-js-collapsible.is-open {
     max-height: 2000px;
   }
   /* The expanded panel already states the current page in the toggle
@@ -1196,7 +1207,7 @@ body.s-lg-guide-body h6:not([class]) {
      *sibling*, not the link's child, and should stay usable once
      open -- confirmed live that hiding the whole .nav-item took those
      down with it, which is more than intended. */
-  #s-lg-guide-tabs > .nav.nav-pills.is-open > .nav-item.active > .nav-link {
+  #s-lg-guide-tabs > .nav.nav-pills.csp-js-collapsible.is-open > .nav-item.active > .nav-link {
     display: none;
   }
 }
