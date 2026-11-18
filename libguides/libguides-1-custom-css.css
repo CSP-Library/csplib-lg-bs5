@@ -1,6 +1,6 @@
 /* ═══════════════════════════════════════════════════════════════════
    CSP LIBRARY — CUSTOM CSS
-   Version: 23
+   Version: 24
 
    DEV PHASE (current): this file is NOT pasted into Admin. It's loaded
    directly via <link> in libguides-3-header-html.html from this repo's
@@ -438,15 +438,86 @@
     @media (max-width: 991px) { .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; } }
     @media (max-width: 600px) { .footer-grid { grid-template-columns: 1fr; } }
 
-/* ── Hide LibGuides guide title bar, breadcrumbs, and guide search ──────────
-   If CSS alone doesn't hide them, change the guide template to
-   a "No Header" layout under Guide Settings → Template.             */
-#s-lg-guide-header-info,
-#s-lg-guide-info,
-#s-lg-bc,
-.s-lg-guide-info-title,
-.s-lg-tabs-title-bar,
-#s-lg-guide-header { display: none !important; }
+/* ── LibGuides native guide title bar / breadcrumb ───────────────────
+   Previously hidden sitewide, unconditionally (QA-009 flagged this as
+   broad-regression-prone: fine on a page with its own custom hero to
+   replace it, but on an ordinary guide with no hero -- most guides --
+   it just left nothing where the title/breadcrumb/context used to be,
+   confirmed live on the MBA guide, 2026-11).
+
+   Now only hidden on pages that actually have a custom hero
+   (.s-lg-box-wrapper-hero -- the homepage, CIC, Tutoring) to replace
+   it. Everywhere else, it's restyled below instead of left at
+   LibGuides' own unstyled default (confirmed live: in bs5 mode this
+   renders as plain black-on-white text, not the navy band the old
+   BS3 theme gave it -- so simply un-hiding it would NOT reproduce
+   that look; it needs real styling, same as every other native
+   LibGuides element in this redesign). */
+body:has(.s-lg-box-wrapper-hero) #s-lg-guide-header-info,
+body:has(.s-lg-box-wrapper-hero) #s-lg-guide-info,
+body:has(.s-lg-box-wrapper-hero) #s-lg-bc,
+body:has(.s-lg-box-wrapper-hero) .s-lg-guide-info-title,
+body:has(.s-lg-box-wrapper-hero) .s-lg-tabs-title-bar,
+body:has(.s-lg-box-wrapper-hero) #s-lg-guide-header { display: none !important; }
+
+/* Real markup, confirmed live (2026-11):
+     #s-lg-guide-header.container.s-lib-header.s-lib-side-borders
+       nav#s-lib-bc > ol#s-lib-bc-list.breadcrumb > li.breadcrumb-item...
+       div.float-end > #s-lg-guide-header-search > #s-lg-guide-search-box (search this guide)
+       #s-lg-guide-header-info > h1#s-lg-guide-name, #s-lg-guide-desc-container > #s-lg-guide-description
+   Kept at its own existing container width (not full-bleed like the
+   hero sections) -- matches every box/card below it on the page,
+   which are also container-width, not edge-to-edge. */
+body:not(:has(.s-lg-box-wrapper-hero)) #s-lg-guide-header {
+  background: var(--csp-navy) !important;
+  padding: 20px 24px 24px !important;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+body:not(:has(.s-lg-box-wrapper-hero)) #s-lib-bc-list.breadcrumb {
+  margin: 0 0 12px !important;
+  padding: 0;
+  font-size: .8125rem;
+}
+body:not(:has(.s-lg-box-wrapper-hero)) #s-lib-bc-list .breadcrumb-item,
+body:not(:has(.s-lg-box-wrapper-hero)) #s-lib-bc-list .breadcrumb-item a {
+  color: var(--csp-on-navy-muted) !important;
+  text-decoration: none;
+}
+body:not(:has(.s-lg-box-wrapper-hero)) #s-lib-bc-list .breadcrumb-item a:hover {
+  color: #fff !important;
+  text-decoration: underline;
+}
+body:not(:has(.s-lg-box-wrapper-hero)) #s-lib-bc-list .breadcrumb-item.active {
+  color: rgba(255,255,255,.85) !important;
+  font-weight: 600;
+}
+body:not(:has(.s-lg-box-wrapper-hero)) #s-lib-bc-list .breadcrumb-item + .breadcrumb-item::before {
+  color: var(--csp-on-navy-muted);
+}
+body:not(:has(.s-lg-box-wrapper-hero)) #s-lg-guide-name {
+  font-family: var(--font-display) !important;
+  color: #fff !important;
+  font-size: 2rem !important;
+  font-weight: 700 !important;
+  line-height: 1.15 !important;
+  margin: 0 0 6px !important;
+}
+body:not(:has(.s-lg-box-wrapper-hero)) #s-lg-guide-description,
+body:not(:has(.s-lg-box-wrapper-hero)) #s-lg-guide-desc-container {
+  color: var(--csp-on-navy-muted) !important;
+  font-family: var(--font-body);
+  font-size: .9375rem;
+}
+/* "Search this guide" box -- kept (distinct from sitewide OneSearch:
+   this searches this guide's own content, not the library catalog),
+   just squared up against the navy band it now sits on. */
+body:not(:has(.s-lg-box-wrapper-hero)) #s-lg-guide-search-terms {
+  border-radius: 4px 0 0 4px !important;
+}
+body:not(:has(.s-lg-box-wrapper-hero)) #s-lg-guide-header-search .btn {
+  border-radius: 0 4px 4px 0 !important;
+}
 
 /* ── Suppress default LibGuides navigation and footer ───────────── */
 #s-lib-public-nav    { display: none !important; }
