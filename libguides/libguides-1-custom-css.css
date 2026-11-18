@@ -1,6 +1,6 @@
 /* ═══════════════════════════════════════════════════════════════════
    CSP LIBRARY — CUSTOM CSS
-   Version: 24
+   Version: 25
 
    DEV PHASE (current): this file is NOT pasted into Admin. It's loaded
    directly via <link> in libguides-3-header-html.html from this repo's
@@ -509,15 +509,13 @@ body:not(:has(.s-lg-box-wrapper-hero)) #s-lg-guide-desc-container {
   font-family: var(--font-body);
   font-size: .9375rem;
 }
-/* "Search this guide" box -- kept (distinct from sitewide OneSearch:
-   this searches this guide's own content, not the library catalog),
-   just squared up against the navy band it now sits on. */
-body:not(:has(.s-lg-box-wrapper-hero)) #s-lg-guide-search-terms {
-  border-radius: 4px 0 0 4px !important;
-}
-body:not(:has(.s-lg-box-wrapper-hero)) #s-lg-guide-header-search .btn {
-  border-radius: 0 4px 4px 0 !important;
-}
+/* "Search this guide" box -- hidden site-wide per request. Was
+   initially kept and restyled (distinct from sitewide OneSearch: this
+   searches the guide's own content, not the library catalog), but
+   hiding it was the actual call. Unscoped (not just the no-hero
+   case above) since it's a no-op on hero pages anyway -- #s-lg-guide-header
+   is already hidden there, this just covers it directly too. */
+#s-lg-guide-header-search { display: none !important; }
 
 /* ── Suppress default LibGuides navigation and footer ───────────── */
 #s-lib-public-nav    { display: none !important; }
