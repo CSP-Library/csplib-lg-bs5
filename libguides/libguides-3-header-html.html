@@ -1,7 +1,7 @@
 <!-- ═══════════════════════════════════════════════════════════════════
    CSP LIBRARY — SITE-WIDE HEADER
    LibGuides Admin → System Settings → Look & Feel → Header & Footer → Header
-   Version: 5
+   Version: 6
    ═══════════════════════════════════════════════════════════════════
 
    INSTRUCTIONS:
@@ -82,6 +82,17 @@
               aria-controls="cspNavCollapse" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
+
+      <!-- Brightspace/D2L iframe embedding: hidden by default (see
+           "Brightspace embed" in libguides-1-custom-css.css), shown in
+           place of the hamburger toggle/collapsible nav above when
+           libguides-2-custom-js.js detects real iframe embedding. The
+           full site nav isn't worth replicating in a cramped LMS
+           iframe -- this sends the student to the real site instead. -->
+      <a class="csp-navbar-embed-link ms-auto me-2" href="https://library.csp.edu/home" target="_blank" rel="noopener">
+        Visit the full Library site
+        <i class="bi bi-box-arrow-up-right" aria-hidden="true"></i>
+      </a>
 
       <div class="collapse navbar-collapse" id="cspNavCollapse">
         <ul class="navbar-nav ms-auto align-items-lg-center" role="list">

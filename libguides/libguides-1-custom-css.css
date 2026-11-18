@@ -1,6 +1,6 @@
 /* ═══════════════════════════════════════════════════════════════════
    CSP LIBRARY — CUSTOM CSS
-   Version: 26
+   Version: 27
 
    DEV PHASE (current): this file is NOT pasted into Admin. It's loaded
    directly via <link> in libguides-3-header-html.html from this repo's
@@ -532,6 +532,39 @@ body:not(:has(.s-lg-box-wrapper-hero)) #s-lg-guide-desc-container {
    so the normal (unembedded) site keeps Bootstrap's default
    breakpoint-centered look. */
 html.csp-embedded .container { max-width: 100% !important; }
+
+/* Site-wide footer -- hidden entirely when embedded. It's a full
+   brand/sitemap footer (logo, address, four link columns, social
+   icons) meant for someone landing on a standalone page; redundant
+   and space-wasting inside a cramped LMS iframe where the student is
+   there for the guide content, not the rest of the site. */
+html.csp-embedded footer.site-footer { display: none !important; }
+
+/* Site-wide nav: replace the hamburger toggle (and the collapsible
+   nav it opens -- Find Resources/Services/About/Hours/Get Help) with
+   a single "visit the full site" link. Full site navigation isn't
+   worth replicating at iframe width; sending the student to the real
+   site covers it. Element itself lives in libguides-3-header-html.html,
+   already hidden by default -- this is what shows it and hides the
+   toggle/collapse it replaces. */
+html.csp-embedded .navbar-toggler,
+html.csp-embedded #cspNavCollapse { display: none !important; }
+.csp-navbar-embed-link { display: none; }
+html.csp-embedded .csp-navbar-embed-link {
+  display: inline-flex !important;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  font-family: var(--font-display);
+  font-size: .8125rem;
+  font-weight: 700;
+  color: var(--csp-navy) !important;
+  background: var(--csp-gray);
+  border-radius: 6px;
+  text-decoration: none;
+}
+html.csp-embedded .csp-navbar-embed-link:hover { text-decoration: underline; }
+html.csp-embedded .csp-navbar-embed-link .bi { font-size: .75rem; }
 
 /* ── Suppress default LibGuides navigation and footer ───────────── */
 #s-lib-public-nav    { display: none !important; }
