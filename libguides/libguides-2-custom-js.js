@@ -2,7 +2,7 @@
 /* ═══════════════════════════════════════════════════════════════════
    CSP LIBRARY — CUSTOM JS
    LibGuides Admin → System Settings → Look & Feel → Custom JS/CSS → Custom JS
-   Version: 4
+   Version: 5
 
    INSTRUCTIONS:
    Paste the entire contents of this file into the Custom JS field,
@@ -198,6 +198,36 @@ document.addEventListener('DOMContentLoaded', function () {
       btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
     });
   })();
+
+  /* ─── Brightspace/D2L iframe embedding — relocate secondary sidebar
+     content below main content ────────────────────────────────────
+     Guides get embedded via iframe in Brightspace, which constrains
+     width enough to trigger LibGuides' own Bootstrap grid (col-md-3/
+     col-md-9) to stack. Since the sidebar column comes first in the
+     DOM, anything a guide owner places after the page nav there (e.g.
+     "Help with Citations", "Magazines" — confirmed live as the second
+     child of #s-lg-guide-tabs, a div.s-lg-row.margin-top-med sibling
+     of the nav <ul>) renders above the actual guide content in the
+     cramped iframe. The nav itself stays put — short enough now (with
+     its own collapse toggle) not to need moving.
+
+     Scoped to real iframe embedding (window.self !== window.top), not
+     any viewport width, so a normal narrow phone browser is
+     untouched. Moves whatever isn't the toggle button or the nav list
+     itself, rather than targeting specific box IDs, so this keeps
+     working no matter what a guide owner adds to or removes from that
+     sidebar later. */
+  if (window.self !== window.top) {
+    document.documentElement.classList.add('csp-embedded');
+    var sideTabs = document.getElementById('s-lg-guide-tabs');
+    var mainCol = document.querySelector('.row > .col-md-9');
+    if (sideTabs && mainCol) {
+      Array.prototype.filter.call(sideTabs.children, function (el) {
+        return !el.classList.contains('csp-guide-nav-toggle') &&
+          !(el.tagName === 'UL' && el.classList.contains('nav-pills'));
+      }).forEach(function (el) { mainCol.appendChild(el); });
+    }
+  }
 
 }); /* end DOMContentLoaded */
 
